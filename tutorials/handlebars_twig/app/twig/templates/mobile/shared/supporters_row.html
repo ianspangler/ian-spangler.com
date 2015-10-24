@@ -1,0 +1,8 @@
+{% import "/shared/user_image.html" as user_image %}
+{% spaceless %}
+{% for row in supporters_row_fans|slice(0,num_fans) %}
+
+	{% include '/shared/mobile_fans_row_item.html' with { 'user_id': row.user_id, 'user_name': row.first_name~" "~row.last_name, 'user_pic': user_image.get_user_image(row.user_id, row.oauth_uid, row.user_pic) } %}
+
+ {% endfor %}
+{% endspaceless %}

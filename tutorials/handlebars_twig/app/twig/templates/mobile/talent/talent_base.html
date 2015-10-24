@@ -1,0 +1,264 @@
+{% include '/shared/mobile_head.html' %}
+
+{% include '/shared/metadata/talent_metadata.html' %}
+
+{% include '/shared/mobile_head_bottom.html' %}
+
+{% include '/shared/body_header.html' %}
+
+        <div class="pure-u-1 container">
+            <div class="pure-g purepad-tp">
+
+                <div class="pure-u-1 image_box profile_box"> 
+
+                    <div class="profile_box_image"  style="background: url('{{ profile_info.main_pic_url }}'); background-size: 100%;" title="{{ profile_info.name }}"></div>
+
+					<div class="inner_shadow"></div>
+                </div>
+
+                <div class="pure-u-24-24 title">
+                    <h1 title="" class="narrow_light {{ get_title_status(profile_info.status_group_id).class }}">{% if profile_info.name|length < 22 %}
+							<span class="large">{{profile_info.name }}</span> 
+						{% elseif profile_info.name|length < 30 %}
+							<span class="medium">{{profile_info.name }}</span>
+						{% else %}
+							<span class="small">{{profile_info.name }}</span> 
+						{% endif %}</h1>
+                </div>
+
+                <div class="pure-u-24-24 caption talent_caption">
+                    <ul class="narrow_light upper">
+                        {% include '/talent/profile_identity.html' %}
+                    </ul>
+                </div>
+            </div>
+
+        </div>
+   
+
+    <div class="pure-g purepad white_area">
+        <div class="pure-u-9-24">
+            <ul class="social_text">
+
+                <li class="narrow_book support_icon">&nbsp;&nbsp;
+					<span class="supporter_count">
+						<span class="sprite like_btn story_like{% if profile_info.liked == 'Y' %} activated{% endif %}" data-user_id="{{ session.id }}" show-tooltip="Y" data-liked="{{ profile_info.liked }}"></span><span class="digit" val="{{ profile_info.num_supporters }}">{{ number_format( profile_info.num_supporters , 0 ) }}</span>
+ 						<span class="lbl fans_txt narrow_light">Supporter{% if profile_info.num_supporters != 1 %}s{% endif %}</span>
+					</span>
+                   
+                </li> 
+            
+            </ul>
+            
+        </div>
+
+        <div class="pure-u-15-24 story_supporters">
+            <div class="pure-u-1">
+
+                <span class="supporters_row_pics">
+
+                    {% include '/shared/supporters_row.html' with {"num_fans":7} %}
+                                  
+                </span>
+                {% if profile_info.num_supporters > 0 %}
+                <h2 class="narrow_book supporters_more"><a href="#supporters_panel"><i class="fa fa-chevron-right"></i></a></h2>
+                {% endif %}
+            </div>
+        </div>
+       
+    </div>
+
+    <div class="soc_border">
+    </div>
+
+    <div class="pure-g purepad smoothtext">
+
+        <div class="pure-u-24-24 storyheading">
+            <h2 class="narrow_book">ABOUT</h2>
+        </div>
+ 
+        <div class="pure-u-24-24 talent_about"><p class="summary">
+            {% if profile_info.bio|length < 1 %}
+                <span class="none">No bio has been added for this story.</span>
+            {% else %}
+                {{ replaceSpecialCharacters(profile_info.bio)|raw }}
+            {% endif %}
+            </p>
+        </div>
+
+    </div>
+
+    {% if profile_info.is_actor == 'Y' %}
+    
+        <div class="pure-g purepad smoothtext">
+            <div class="pure-u-24-24 talentheading">
+                <h2 class="narrow_book">ACTING PROPOSALS <span class="num narrow_light">({{ number_format(overview.num_casting_proposals) }})</span></h2>
+            </div> 
+        </div>
+        {% include 'talent/top_rated_actor_titles.html' %}
+
+     {% endif %}  
+
+
+     {% if profile_info.is_filmmaker == 'Y' %}
+
+        <div class="pure-g purepad smoothtext film_prop_h"> 
+            <div class="pure-u-24-24 heading">
+                <h2 class="narrow_book">FILMMAKING PROPOSALS <span class="num narrow_light">({{ number_format(overview.num_filmmaking_proposals) }})</span></h2> 
+             </div> 
+        </div>
+        {% include 'talent/top_rated_crew_titles.html' %}
+        
+    {% endif %}
+   
+    {% if profile_info.is_actor == 'Y' %}
+
+         {% if overview.num_casting_credits > 0 %} 
+            <div class="pure-g purepad smoothtext">
+                <div class="pure-u-24-24 heading acting_credits_header">
+                    <h2 class="narrow_book">ACTING CREDITS <span class="num narrow_light">({{ number_format(overview.num_casting_credits) }})</span></h2> 
+                </div> 
+            </div>
+            {% include 'talent/top_rated_actor_credits.html' %} 
+        {% endif %}
+
+    {% endif %}
+
+    {% if profile_info.is_filmmaker == 'Y' %}
+
+        {% if overview.num_filmmaking_credits > 0 %} 
+            <div class="pure-g purepad smoothtext"> 
+                <div class="pure-u-24-24 heading acting_credits_header">
+                    <h2 class="narrow_book">FILMMAKING CREDITS <span class="num narrow_light">({{ number_format(overview.num_filmmaking_credits) }})</span></h2> 
+                </div> 
+            </div>  
+            {% include 'talent/top_rated_crew_credits.html' %} 
+        {% endif %}
+
+    {% endif %}
+
+
+    <!--
+     <div class="pure-u-1">
+        <div class="whitespacesmall">
+        </div>
+    </div>
+    -->
+
+    <div class="pure-g purepad smoothtext castingheader endorse_header endorsements_talent_header">
+        <div class="pure-u-24-24 heading">
+            <h2 class="narrow_book">ENDORSEMENTS <span class="num narrow_light">({{ number_format(comments_count) }})</span></h2> 
+        </div> 
+    </div>
+
+    {% if session.id|length > 0 %}
+         <div class="scroll_endorse endorsement_box">
+            {% include 'mobile/shared/comment_box.html' with {'show_user_pic': true, "comment_prompt": "Write an endorsement of this person...", "button_kw": "CLEAR"} %}
+        </div>
+    {% else %}
+        <div class="pure-g purepad scroll_endorse">
+            <div class="pure-u-1 login_to_endorse">
+                    <h2 class="narrow_book endorse_prompt"><a href="/login?form=comment">LOGIN</a> TO WRITE AN ENDORSEMENT</h2>
+            </div>
+        </div>
+    {% endif %}     
+    <div class="pure-g smoothtext user_comments endorsement_margin">
+        {% if comments_count < 1 %}
+        
+        {% endif %} 
+    </div>
+
+     <div class="pure-u-24-24 whitespace_footer"></div>
+
+   <!--  <div class="pure-u-1">
+        <div class="whitespace">
+        </div>
+    </div>
+    <div class="pure-u-1">
+        <div class="whitespacesmall">
+        </div>
+    </div>
+ -->
+    <div class="ui-widget widget-flash FixedBottom">
+        <div class="ui-state-highlight"> 
+            <p>
+               <span>You followed</span>
+            </p>
+        </div>
+    </div>
+
+
+    {% include 'shared/share_popup.html' %}
+
+    {% include 'shared/supporters_panel.html' with {'total_count': profile_info.num_supporters, 'type': "talent"} %}
+
+    {% include 'shared/fixed_buttons.html' with {button1_type: 'support'} %}
+
+    {% include '/shared/body_footer_js.html' %}
+
+
+<script type="text/javascript">
+
+	// global vars set by php, needed in showRoleProposals
+    var revision = "{{ rev }}";
+	var role_ids = "{{ header_vars.role_ids }}";
+	var profile_type = "{{ profile_type }}";
+    var profile_type_id = "{{ profile_type_id }}";
+	var profile_id = "{{ profile_id }}";
+	var profile_url_handle = "{{ profile_info.url_handle }}" /* why do we have this and profile_urlhandle ??? */
+    var full_summary = "{{ full_summary }}";
+    var profile_name = "{{ profile_info.name }}";
+    var profile_urlhandle = "{{ profile_info.url_handle }}"; /* why do we have this and profile_url_handle ??? */
+    var profile_mainpic = "{{ profile_info.main_pic_url }}";
+    var profile_shareimage = "{{ profile_info.share_image }}";
+
+    crew_identities = "{{ profile_info.crew_identities }}";
+    crew_ids = "{{ profile_info.crew_ids }}";
+    var crew_labels = "{{ profile_info.crew_labels }}";
+    var loggedin_user_id = "{{ session.id }}";
+
+    is_actor = "{{ profile_info.is_actor }}";
+    is_filmmaker = "{{ profile_info.is_filmmaker }}";
+    primary_identity = "{{ profile_info.primary_identity }}";
+    num_supporters = "{{ profile_info.num_supporters }}";
+    
+    moderator_id = "{{ profile_info.user_id }}";
+    
+    identities = "{{ profile_info.identity_names }}";
+    crew_identities = "{{ profile_info.crew_identities }}";
+ 
+    crew_ids = "{{ profile_info.crew_ids }}";
+    comments_count = "{{ comments_count }}";
+
+    anchor = "{{ anchor }}";
+
+
+	$(function() {
+        $(".summary").show();
+    
+		initProfile();  
+        Supporters.init();
+        if (window.like == "Y") showLikeMessage(profile_name);
+
+        init_ShowHideText(250).done(MobileProfilePage.prototype.scrollFromNotifications);
+	});
+
+</script> 
+{% include '/shared/statuses.html' %}
+
+<script type="text/javascript" src="/min/?f=js/profile_mobile.js,/js/talent_profile.js,js/CommentManager.js,js/ScrollManager.js,js/FollowManager.js,js/LikeDislikeManager.js,js/supporters_mobile.js,js/plugins/jquery.expander.min.js,js/ShareManager.js,js/Fans.js,/js/plugins/handlebars-v3.0.3.min.js"></script>
+
+<!-- handlebars template for inserting logged-in user -->
+<script id="fan-item-template" type="x-handlebars-template">​
+    
+    {% include '/shared/mobile_fans_column_item.html' with {'user_id': session.id, 'user_name': session.username, 'user_pic': session.pic, 'proposal_count': user_num_proposals, 'follow_state': "self"} %}
+    
+</script> 
+<script id="fan-row-item-template" type="x-handlebars-template">​
+    
+    {% include '/shared/mobile_fans_row_item.html' with {'user_id': session.id, 'user_name': session.username, 'user_pic': session.pic} %}
+    
+</script> 
+
+<!-- test comment -->
+{% include '/shared/body_footer.html' %}

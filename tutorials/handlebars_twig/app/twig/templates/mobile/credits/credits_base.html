@@ -1,0 +1,48 @@
+{% include '/shared/mobile_head.html' %}
+
+{% include '/shared/mobile_head_bottom.html' %}
+
+{% include '/shared/body_header.html' %}
+ 
+<!-- ENTER CONTENT HERE -->
+<div class="pure-g fullwidth_wrapper newsheader">
+    <div class="fullwidth_row">
+        <h1 class="narrow_light">Film & TV Credits</h1>
+    </div>
+</div>
+
+<div id="profilebody" class="userhome_body">
+    <!--comment back in -->
+{#{% if total_count > 0 %}  #}
+    {% include '/credits/credits_list.html' with {'list_items': list_items, 'set_num': 1} %}
+{#{% endif %}#}
+  
+<div class="ui-widget widget-flash FixedBottom">
+    <div class="ui-state-highlight"> 
+        <p>
+           <span></span>
+        </p>
+    </div>
+</div>
+
+<!-- END ENTER CONTENT -->
+{% include 'shared/share_popup.html' %}
+{% include '/shared/body_footer_js.html' %}
+
+<script type="text/javascript" src="/min/?f=js/plugins/jquery.expander.min.js,js/listpage_mobile.js,js/trunk8.min.js,js/ScrollManager.js,js/LikeDislikeManager.js,js/CommentManager.js,js/ShareManager.js,js/ActivityActionsBar.js,js/modal.js"></script> 
+
+<script type="text/javascript">
+    var total_count = "{{ total_count }}";
+    var limit = "{{ limit }}";
+    var post_script = "{{ post_script }}";
+
+    $(function() {
+        List_Page.init();
+        ActivityActionsBar.init({like_count_class: '.credit_item_likes .likes_count', 
+                                dislike_count_class: '.credit_item_likes .dislikes_count',
+                                container_class: '.user_activity_item'});
+    });
+
+</script>
+
+{% include '/shared/body_footer.html' %}

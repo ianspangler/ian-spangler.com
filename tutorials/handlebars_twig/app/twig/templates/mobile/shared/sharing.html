@@ -1,0 +1,13 @@
+<!-- mobile sharing -->
+{% spaceless %}
+{% if constant('ENABLE_SHARING')|length < 1 %}
+	 
+	 <!-- mobile sharing disabled -->
+
+{% else %}
+	<a class="fb_icon" href="#" id="fb_icon"><i class="fa fa-facebook-square"></i></a>
+    <a class="twitter_icon" href="#" id="twitter_icon"><i class="fa fa-twitter"></i></a>
+    <a class="pinterest_icon" href="#" id="pinterest_icon"><i class="fa fa-pinterest"></i></a>
+{% endif %}
+{% endspaceless %}
+ 

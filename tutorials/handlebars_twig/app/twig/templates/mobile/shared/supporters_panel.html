@@ -1,0 +1,27 @@
+{% spaceless %}
+<nav id="supporters_panel">
+    <div class="mm-nolist">
+        <div class="pure-u-1 narrow_light menu-title">
+	        <h4 class="fan_count narrow_light">
+	        	<span class="digit" val="{{ total_count }}">{{ number_format( total_count, 0 ) }}</span>
+		         <span class="narrow_light fans_txt">
+		         	{% if type == "proposal" or type == "title" or type == "talent" %}
+		         		Supporter{% if total_count != 1 %}s{% endif %}
+		         	{% elseif type == "credit" %}
+		         		Fan{% if total_count != 1 %}s{% endif %}
+		         	{% endif %}
+		         </span>
+	        </h4>
+        </div>
+        <div class="fans">
+    		
+         	{% include '/shared/fans.html' with {'fans': supporters_fans, 'set_num': 1, 'total_count': total_count,  'section_limit': 50, 'item_type': type} %}
+        
+         
+        </div>
+
+        <div class="pure-u-24-24 none noprops italic loadingsupporters"> loading supporters... </div> 
+    
+    </div>
+</nav>
+{% endspaceless %}

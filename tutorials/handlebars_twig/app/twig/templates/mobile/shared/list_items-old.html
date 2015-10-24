@@ -1,0 +1,49 @@
+<!-- list items html -->
+{% spaceless %}
+ 
+{% if list_items|length < 1 %}
+'<div class="no_results">No matching results found.</div>';
+{% endif %}
+
+{% for item in list_items %}
+
+{% if item.main_pic|length > 0 %}
+		{% set pic_url = constant('CLOUDFRONT') ~ constant('TITLE_PICS_DIR') ~ item.title_id ~ "/LTN_" ~ item.main_pic %}
+{% else %}
+	{% if section == 3 %}
+		{% set pic_url = "/images/reel_silhouette_LTN.png" %}
+	{% else %}
+		{% set pic_url = "/images/title_silhouette_light_new_wb.jpg" %}
+	{% endif %}
+{% endif %}
+
+	<div class="pure-g purepad story_listing list_item" page="{{ item.setnum }}">
+        <a href="/stories/{{ item.url_handle }}" title="{{ item.name }} - {{ item.status_label }}"><img src="{{ pic_url }}" alt="{{ item.name }}"></a>
+        <div class="pure-u-1-24 story_listing_num">
+            {% if item.count < 100 %}
+            <div class="narrow_book">{{ number_format(item.count) }}</div>
+            {% endif%}        
+        </div>
+        <div class="pure-u-12-24 story_listing_text">
+            <div class="narrow_book">
+                <a href="/stories/{{ item.url_handle }}" title="{{ item.name }} - {{ item.status_label }}">
+                	<h2 class="heading upper">
+                		
+						{% set words_arr = item.name|split(' ') %}
+						{% set lastword = words_arr|last %}
+						{% set firstwords = '' %}
+						{% for i in words_arr|slice(start, length-1) %}
+							{% set firstwords = firstwords ~ ' ' ~ i %}
+						{% endfor %}
+                		{{ firstwords }} <span class="{{ get_title_status(item.status_num).class }}">{{ lastword }} </span>
+                	</h2></a>
+
+            </div>
+            <p>{{ item.format_str }}</p>
+            <div class="sprite_high like_btn_sm"></div><p class="supporters narrow_book">{{ number_format(item.num_supporters) }}</p>
+ 
+        </div>
+    </div>
+
+{% endfor %}
+{% endspaceless %}

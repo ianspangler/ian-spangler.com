@@ -1,0 +1,50 @@
+<!-- related -->
+{% spaceless %}
+	<h3 class="narrow_light">{% if page == "profile" %}
+	{% if profile_info.section == 3 %} 
+		Also in Development 
+	{% else %} 
+		Stories You May Like 
+	{% endif %} 
+	{% elseif page == "proposal" %}
+	{{ related_items[0].rel_title }}{% endif  %}</h3>
+
+	<div class="images">
+							
+{% for row in related_items %}
+	{% if page == "profile" %}
+	{# FOR TITLES #}	
+	<div class="row" id="{{ row.row_id }}">
+		{% set title_pic = constant('CLOUDFRONT') ~ constant('TITLE_PICS_DIR') ~ row.title_id ~'/SM_'~ row.title_pic %} 
+		<a class="rel_holder" href="/talent/{{ row.url_handle }}" link="/stories/{{ row.url_handle }}" {{ row.id_str }} title="{{ row.title_name }}"><img src="{{ title_pic }}" alt="{{ row.title_name }}" /><div class="container"></div></a>
+    </div>
+
+	{% elseif page == "proposal" %}
+	 {# FOR CASTING #}
+			{% if row.inchar_pic|length > 0  %}
+				{% set inchar_pic = constant('CLOUDFRONT') ~ constant('TALENT_PICS_DIR') ~ row._id ~ '/SM_' ~ row.inchar_pic %}
+				{% set inchar_pic_str = '<img class="inchar" src="{{ inchar_pic }}" />' %}
+			{% else %}
+				{% set inchar_pic = '' %}
+				{% set inchar_pic_str = '' %}
+			{% endif %}
+			
+			{% set _pic = constant('CLOUDFRONT') ~ constant('TALENT_PICS_DIR') ~ row._id ~ '/SM_' ~ row.main_pic %}
+			
+			{% if row.label_type == "talentName" %}
+				{% set rollover_label = row._name %}
+			{% elseif row.label_type == "talentNameAsRoleName" %}
+				{% set rollover_label = row._name ~ " as " ~ row.r_name %} 
+			{% elseif row.label_type == "talentNameForTitleName" %} 
+				{% set rollover_label = row._name ~ " for " ~ row.t_name  %} 
+			{% endif %}			 
+	<a title="{{ rollover_label }}" class="related_holder" link="/talent/{{ row.url_handle }}#{{ row.proposal_type }}_proposals-{{ row._id }}" {% if row.row_id == "0" %} id="first" {% else %} {% endif %}><img class="default" src="{{ _pic }}" alt="{{ rollover_label }}" />{{ inchar_pic_str }}</a>
+	{% else  %}
+		page={{ page }}
+	{% endif%}
+	
+{% endfor %}
+
+</div>
+<div class="bg"></div>							 
+{% endspaceless %}

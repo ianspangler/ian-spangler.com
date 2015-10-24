@@ -1,0 +1,62 @@
+{% spaceless %}
+		
+			 
+		{% if profile_info.source_name|length > 0 %}
+			<a class="jacket_link" href="/stories/{{ profile_info.url_handle }}">
+			{{ profile_info.source_name }}</a> 
+
+
+			{% if profile_info.format_name|length > 0 %} 
+				 <span class="darker">({{ profile_info.format_name }})</span>
+				{% set source_pic = constant('CLOUDFRONT') ~ constant('TITLE_PICS_DIR') ~ profile_info.t_id ~ '/LG_' ~ profile_info.title_pic %}
+			{% endif %}
+
+		{% elseif profile_info.category_id == '20' %}
+
+			{% set identity = 'biographical role' %}
+			{% if profile_info.identity|length > 0  %} 
+				{% set identity_append = '  <span class="darker">('~ profile_info.identity ~')</span>' %} 
+			{% elseif profile_infoidentity_name|length > 0 %}
+				{% set identity_append = '  <span class="darker">(' ~ profile_info.identity_name ~ ')</span>' %}
+			{% endif %}
+			{# $profile_info['identity'] = $identity . $identity_append; #}
+
+		{% elseif profile_info.category_id == '21' %}
+		
+			{% set identity = 'mythological character' %}
+			{% if profile_info.identity|length > 0 %}
+				{% set identity_append = ' ('~  profile_info.identity ~ ')' %} 
+			{% elseif profile_infoidentity_name|length > 0 %}
+				{% set identity_append = ' ('~ profile_info.identity_name  ~ ')' %} 
+			{% endif %}
+			{# $profile_info['identity'] = $identity . $identity_append; #}
+
+		{% elseif profile_info.category_id == '28' %}
+			{% set identity = 'character' %}
+				{% if profile_info.identity|length > 0 %}
+					{% set identity_append = ' ('~ profile_info.identity  ~ ')' %}
+					{# $profile_info['identity'] = $identity . $identity_append; #}
+				{% endif %}
+			
+		{% else %}
+			{# set profile_info.identity = "character" #}
+
+		{% endif %}
+			 
+
+
+
+
+
+			{% if profile_info.creator|length > 0 %}
+				
+				{% if profile_info.author|length > 0 %}				 			
+						<a class="jacket_link" href="/stories?keyword={{ profile_info.author }}">{{ profile_info.author }}</a>
+				{% else %}
+					{% if profile_info.publisher|length > 0 %}
+						<a class="jacket_link" href="/stories?keyword={{ profile_info.publisher }}">{{ profile_info.publisher }}</a>
+					{% endif %}	
+				{% endif %}
+			{% endif %}
+
+{% endspaceless %}

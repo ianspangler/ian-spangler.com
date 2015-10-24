@@ -1,0 +1,25 @@
+{% spaceless %}   
+
+
+    {% for item in list_items %}
+       
+        {% include '/shared/user/notifications_base_item.html' with {'item': item} %}
+       
+    {% endfor %}
+
+
+     
+    {% if (set_num * section_limit) < total_count %}
+
+        <div class="pure-g story_border loading-bar notifications-loading">
+            <div class="pure-u-1 loading_box activity_loading noflex">
+                <a href="#">Loading more...</a>
+            </div>
+        </div>
+    {% endif %}
+    
+{% endspaceless %}
+
+
+
+

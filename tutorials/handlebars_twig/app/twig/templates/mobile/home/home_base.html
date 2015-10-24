@@ -1,0 +1,53 @@
+{% include '/shared/mobile_head.html' %}
+	
+{% include '/shared/metadata/home_metadata.html' %}
+
+{% include '/shared/mobile_head_bottom.html' %}
+
+<body class="home_page_mobile" id="home">
+
+	<div class="pure-g noflex mainbody">  
+    {% include '/shared/mobile_header.html' %}
+
+
+		<div class="pure-g purepad homemarg smoothtext">
+			<h1 class="narrow_book">The World's Platform for Movie Ideas and Dream Casting</h1>
+			<p>Share your visions for future movies and TV shows.</p>
+
+
+			<h2 class="narrow_book"><a href="/featured-stories">FEATURED STORIES <i class="fa fa-chevron-right"></i></a></h2>
+		
+	 	</div>
+	
+	 	<div class="whitespace">
+	 	</div>
+	 	<div class="whitespacesmall">
+	 	</div>
+
+	 	<div class="pure-g fixed_buttons homefooter FixedBottom">
+		    <div class="pure-u-1 footcontent">
+		        {% if session.id|length > 0 %}
+		            <div class="welcome_bar narrow_book"><a href="users/{{session.id}}"><img src="{{ session.pic_dark }}"> &nbsp; Welcome, {{ session.user_fn }}</a></div>
+		        {% else %}
+		            <a href="/login">
+		                <div class="button">
+		                    <h2 class="narrow_book"><span class="icon"></span>LOG IN</h2>
+		                </div>
+		            </a>
+		        {% endif%}  
+		    </div>
+		</div>
+	 	
+
+ 	</div>
+
+ 	<!--<script type="text/javascript">
+		var device_is_mobile = "{{ device_is_mobile }}";
+	</script>-->
+
+ 	{# {% include '/shared/global_includes_js.html' %} #}
+
+
+	
+{% include '/shared/body_footer_js.html' %}
+{% include '/shared/body_footer.html' %}

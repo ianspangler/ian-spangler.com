@@ -1,0 +1,54 @@
+{% include '/shared/mobile_head.html' %}
+
+{% include '/shared/metadata/titles_metadata.html' %}
+
+{% include '/shared/mobile_head_bottom.html' %}
+
+{% include '/shared/body_header.html' %}         
+
+<div class="listwrapper">
+
+    <div class="pure-g fullwidth_wrapper storyheader">
+        <div class="fullwidth_row"> 
+            <span class="narrow_book">{{ list_count_display }}</span><span class="narrow_light story_lighter">&nbsp;{% include '/shared/list_page_header_text.html' %}</span>
+        </div>
+    </div>
+
+    {% include '/shared/list_items.html' %} 
+    {% set button_label = "PROPOSE A STORY" %}
+    {% include '/shared/long_fixed_button.html' with { "button_text": button_label } %}
+    
+</div>
+
+           
+{% include '/shared/body_footer_js.html' %}
+
+<script type="text/javascript">
+
+    page = "{{ page }}";
+    category_id = "{{ category_id }}";
+    category_name = "{{ category_names }}";
+    category_fullname = "{{ category_fullname }}";
+    sortby = "{{ sortby }}";
+    sort_direction = "{{ sort_direction }}";
+    genre_id = "{{ genre_id }}";
+    genre_name = "{{ genre_names }}";
+    status_id = "{{ status_id }}";
+    status_name = "{{ status_names }}";
+    format_id = "{{ format_id }}";
+    format_name = "{{ format_names }}";
+    keyword = "{{ keyword }}";
+    total_count = "{{ total_category_count }}";
+    list_count = "{{ list_count }}";
+    current_filter = "{{ current_filter }}"; 
+    scrolled_page = "{{ scrolled_page }}";
+
+    {% include '/shared/user_info_js.html' %}
+
+    var currSetNum = 0; 
+
+</script>
+
+<script type="text/javascript" src="/min/?f=js/trunk8.min.js,js/listpage.js,js/list_mobile.js"></script>
+
+{% include '/shared/body_footer.html' %}

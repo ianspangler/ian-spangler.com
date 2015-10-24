@@ -1,0 +1,8 @@
+ <p class="featured_by">by 
+{% if anonymous == 'Y' %}
+	Anonymous
+{% else %} 
+	<a href="/users/{{user_id}}" class="usernameClick"><strong>{{name}}</strong></a>
+{% endif %}
+</p> &nbsp;<span>{{time_elapsed}} ago</span>
+   		

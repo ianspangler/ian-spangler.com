@@ -1,0 +1,39 @@
+<div class="fixed_buttons support noflex FixedBottom">
+
+    <div id="buttonrow" class="buttons_row">
+        {% if button1_type == "follow" %}
+            
+            <div id="buttonone" class="follow_button button{% if follow_state == 'followed' %} activated{% endif %}" data-followed_user_name="{{user_name}}" data-followed_user_id="{{profile_id}}">
+                <h2 class="follow_text narrow_book">{% if follow_state != 'followed' %}FOLLOW{% else %}FOLLOWED{% endif %}</h2>
+            </div>
+        {% elseif button1_type == "support" %}
+             {% if session.id|length > 0 %}
+                <div id="buttonone" class="button active{% if profile_info.liked == 'Y' %} activated{% endif %}" show-tooltip="Y" data-liked="{{ profile_info.liked }}">
+                    <h2 class="narrow_book button_text"><span class="sprite icon"></span><span class="lbl">{% if profile_info.liked != 'Y' %}SUPPORT{% else %}SUPPORTED{% endif %}</span></h2>
+                </div>
+            {% else %}
+                <div id="buttonone" class="button" show-tooltip="Y" data-liked="{{ profile_info.liked }}">
+                    <h2 class="narrow_book button_text"><span class="sprite icon"></span>SUPPORT</h2>
+                </div>
+            {% endif %}
+        {% endif %}
+        {% if button2_type == "message" %}
+
+            <div id="buttontwo" class="sharebutton silverbg message {% if user_is_blocked == 1 %}disabled{% endif %}"> 
+            {% if session.id != "" %}
+                <a href="{% if user_is_blocked == 1 %}#{% else %}/chat/start/{{profile_id}}{% endif %}">
+            {% else %}
+                <a href="/login?messaged=Y&messaged_user_id={{profile_id}}">
+            {% endif %}
+                <h2 class="narrow_book">MESSAGE</h2>
+                </a>
+            </div>
+        {% else %}
+             <div id="buttontwo" class="sharebutton silverbg">
+                <h2 class="narrow_book">SHARE</h2>
+            </div>
+        {% endif %}
+    </div>
+
+        
+</div>

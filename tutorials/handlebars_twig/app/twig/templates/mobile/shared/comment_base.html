@@ -1,0 +1,22 @@
+
+{% if comments_status != "closed" %} 
+
+	{% if session.id|length > 0 %} 
+		<div class="comment_action writecomment">
+			<img src="{{ session.pic }}" />
+			<div class="container">
+				
+				<textarea placeholder="Write a comment..." maxlength="5000"></textarea>
+			</div>
+			<span class="message">Press Return or Enter to submit.</span>
+		</div>
+	{% else %}
+		<div class="comment_action login_to_comment">
+			<div class="box">
+				<p class="login narrow_book"><a class="login-link">Login</a> or <a class="signup-link">Sign Up</a> to Write a Comment</p>
+			</div>
+		</div>
+	{% endif %}
+{% endif %}
+
+{% include '/shared/deactivated_comment_box.html' %}

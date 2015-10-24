@@ -1,0 +1,272 @@
+{% include '/shared/mobile_head.html' %}
+
+{% include '/shared/metadata/title_metadata.html' %}
+
+{% include '/shared/mobile_head_bottom.html' %}
+
+{% include '/shared/body_header.html' %}
+
+{% import "/shared/words_array.html" as word_array %}
+
+    {% set status_str = "" %} 
+    {% if profile_info.status_id != 10 and profile_info.status_id != '' and profile_info.status_id != 0 %} {# check that status is not "Unknown/Other" #}
+       {% set status_str = "status-mark " ~ get_title_status(profile_info.status_id).class %}
+    {% endif %}
+
+    <div class="profile_wrap">
+
+    <div class="pure-u-1 container">
+        <div class="pure-g purepad-tp">
+
+            <div class="pure-u-1 image_box profile_box"> 
+
+                <div class="profile_box_image"  style="background: url('{{ profile_details.source_pic_lg }}'); background-size: 100%;" title="{{ profile_info.name }}"></div>
+                {% if featured != "" %}
+                    <span class="featured_ribbon"></span>
+                {% endif %}
+                <div class="inner_shadow">
+                    {% if (prev_id != "") %}
+                    {% include '/shared/left_arrow.html' %}
+                    {% endif %}
+                    {% if (next_id != "") %}
+                    {% include '/shared/right_arrow.html' %}
+                    {% endif %}
+                </div>
+		
+            </div>
+
+            <div class="pure-u-24-24 title">
+                <h1 title="{{profile_info.status_name}}" class="narrow_light"> 
+                    {{word_array.get_words_array(profile_info.name, status_str)}}
+                </h1>
+            </div>
+
+            <div class="pure-u-24-24 caption caption_height_fix">
+                <ul class="narrow_light upper subline">
+                    {% include '/title/profile_identity.html' %}
+                </ul>
+                {% include '/shared/amazon_buylink.html' with {'button_text':'BUY'} %}
+            </div>
+        </div>
+
+    </div>
+
+    <div class="pure-g purepad white_area">
+        <div class="pure-u-9-24">
+            <ul class="social_text">
+
+                <li class="narrow_book support_icon">&nbsp;&nbsp;
+					<span class="supporter_count">
+						<span class="sprite like_btn story_like{% if profile_info.liked == 'Y' %} activated{% endif %}" data-user_id="{{ session.id }}" show-tooltip="Y" data-liked="{{ profile_info.liked }}"></span><span class="digit" val="{{ profile_info.num_supporters }}">{{ number_format( profile_info.num_supporters, 0 ) }}</span>
+ 						<span class="lbl fans_txt narrow_light">Supporter{% if profile_info.num_supporters != 1 %}s{% endif %}</span>
+					</span>
+                   
+                </li> 
+            
+            </ul>
+            
+        </div>        
+
+        <div class="pure-u-15-24 story_supporters">
+            <div class="pure-u-1">
+
+                <span class="supporters_row_pics">
+               
+                    {% include '/shared/supporters_row.html' with {"num_fans":7} %}
+                                  
+                </span>
+                {% if profile_info.num_supporters > 0 %}
+                <h2 class="narrow_book supporters_more"><a href="#supporters_panel"><i class="fa fa-chevron-right"></i></a></h2>
+                {% endif %}
+            </div>
+        </div>
+             
+    </div>
+
+    <div class="soc_border">
+    </div>
+
+    <div class="pure-g purepad smoothtext">
+
+        <div class="pure-u-24-24 storyheading">
+            <h2 class="narrow_book">STORY</h2>
+        </div>
+ 
+        <div class="pure-u-24-24{% if profile_info.plot_summary|length > 0 %} story_summary{% endif %}"><p class="summary">
+            {% if profile_info.plot_summary|length < 1 %}
+                <span class="none">No summary has been added for this story.</span>
+                </p>
+                
+            {% else %}
+                <span class="summary_pad">{{ replaceSpecialCharacters(profile_info.plot_summary)|raw|nl2br }}</span>
+                </p>
+                
+
+                <div class="pure-g add_endorsement smoothtext"> 
+                    <form>
+                        <div class="pure-u-24-24">
+                            
+                            <div class="pure-u-11-24 add_endorsement_name" id="add_e">
+                                   <p>Write An Endorsement</p>
+                            </div>
+                        
+                        </div>
+                    </form>
+                </div>  
+            {% endif %}
+        </div>  
+
+    </div>
+
+
+    <div class="pure-g purepad smoothtext">
+        <div class="pure-u-24-24 heading castingheader">
+
+            <h2 class="narrow_book">CASTING PROPOSALS <span class="num narrow_light">({{ number_format(overview.num_casting_proposals) }})</span></h2> 
+		</div> 
+    </div>
+
+
+
+    <div class="role_list_container">
+    	{% include '/shared/role_list.html' with {"list":overview.role_list, "row_class":"role_row", "add_label":"ACTOR" }%}	
+    </div> 
+
+    <div class="pure-g purepad add_character smoothtext"> 
+        <form class="pure-u-24-24">
+            <div class="pure-u-24-24 borders">
+                
+                <div class="pure-u-11-24 add_char_name" id="add_c">
+                       <p><i class="fa fa-plus"></i> Character</p>
+                </div>
+                
+                <div class="pure-u-24-24 add_char_field">
+                    <input type="text" placeholder="Character Name" class="pure-u-24-24 add_chars namefield" id="role_name" maxlength="80"><input type="submit" class="add_char_button" value="&#xf054">
+                    
+                     <div class="field_disabled"></div>
+                </div>
+            </div>
+        </form>
+
+    </div>  
+  
+
+    <div class="pure-g purepad smoothtext"> 
+        <div class="pure-u-24-24 heading">
+            <h2 class="narrow_book">FILMMAKER PROPOSALS <span class="num narrow_light">({{ number_format(overview.num_crew_proposals) }})</span></h2> 
+		</div> 
+    </div>
+	
+    <div class="crew_list_container">
+    	{% include '/shared/role_list.html' with {"list": overview.crew_list, "row_class":"crew_row", "add_label":"OTHER" } %}	
+    </div>
+
+
+    <div class="pure-g purepad smoothtext endorse_header endorsements_title_header">
+        <div class="pure-u-24-24 heading">
+            <h2 class="narrow_book">ENDORSEMENTS <span class="num narrow_light">({{ number_format(comments_count) }})</span></h2> 
+        </div> 
+    </div>
+
+    {% if session.id|length > 0 %}
+         <div class="scroll_endorse endorsement_box">
+            {% include 'mobile/shared/comment_box.html' with {"show_user_pic": true, "comment_prompt": "Why should a movie or TV show be produced?", "button_kw": "CLEAR"} %}
+        </div>
+    {% else %}
+        <div class="pure-g purepad scroll_endorse">
+            <div class="pure-u-1 login_to_endorse">
+                    <h2 class="narrow_book endorse_prompt"><a href="/login?form=comment">LOGIN</a> TO WRITE AN ENDORSEMENT</h2>
+            </div>
+        </div>
+    {% endif %}     
+    <div class="pure-g smoothtext user_comments endorsement_margin"></div>
+
+    <div class="pure-u-24-24 whitespace_footer"></div>
+
+    <div class="ui-widget widget-flash-tooltip">
+        <div class="ui-state-highlight"> 
+            <p>
+               <span>{{profile_info.status_name}}</span>
+            </p>
+        </div>
+        <div class='status-arrow'></div>
+    </div>
+    
+ 
+    <div class="ui-widget widget-flash FixedBottom">
+        <div class="ui-state-highlight"> 
+            <p>
+               <span>You followed</span>
+            </p>
+        </div>
+    </div>
+   
+
+    {% include 'shared/share_popup.html' %}
+
+    {% include 'shared/supporters_panel.html' with {'total_count': profile_info.num_supporters, 'type': "title"} %}
+ 
+
+    {% include 'shared/fixed_buttons.html' with {button1_type: 'support'} %}
+
+    </div>
+{% include '/shared/body_footer_js.html' %}
+
+<script type="text/javascript">
+
+	// global vars set by php, needed in showRoleProposals
+    var revision = "{{ rev }}";
+	var role_ids = "{{ header_vars.role_ids }}";
+	var profile_type = "{{ profile_type }}";
+    var profile_type_id = "{{ profile_type_id }}";
+	var profile_id = "{{ profile_id }}";
+	var profile_url_handle = "{{ profile_info.url_handle }}";
+    var full_summary = "{{ full_summary }}";
+    var profile_name = "{{ profile_info.name }}";
+    var profile_urlhandle = "{{ profile_info.url_handle }}";
+    var profile_mainpic = "{{ profile_info.main_pic_url }}";
+    var profile_shareimage = "{{ profile_info.share_image }}";
+    var num_supporters = "{{ profile_info.num_supporters }}";
+    var comments_count = "{{comments_count}}";
+    var num_casting_proposals = "{{ overview.num_casting_proposals }}";
+    var title_status = "{{ get_title_status(profile_info.status_id).class }}";
+
+
+	$(function() {
+
+        $(".summary").show();
+
+		showRoleProposals(); 
+        Supporters.init();
+
+         // shorten overview summary
+        init_ShowHideText(250).done(MobileProfilePage.prototype.scrollFromNotifications);
+
+        if (window.like == "Y") showLikeMessage(profile_name);
+        
+        if ($(".title h1").attr("title").length > 0 ){
+            showPageStatus();
+            $(window).scroll( $.throttle( 1000, function(){showPageStatus()} ) )
+        }
+	});
+
+</script>
+
+
+<script type="text/javascript" src="/min/?f=js/profile.js,js/profile_mobile.js,js/ScrollManager.js,js/CommentManager.js,js/FollowManager.js,js/LikeDislikeManager.js,js/supporters_mobile.js,js/newrole-mini-form_profile-page.js,js/plugins/jquery.expander.min.js,js/ShareManager.js,js/Fans.js,/js/plugins/handlebars-v3.0.3.min.js"></script>
+
+<!-- handlebars template for inserting logged-in user -->
+<script id="fan-item-template" type="x-handlebars-template">​
+    
+    {% include '/shared/mobile_fans_column_item.html' with {'user_id': session.id, 'user_name': session.username, 'user_pic': session.pic, 'proposal_count': user_num_proposals, 'follow_state': "self"} %}
+    
+</script> 
+
+<script id="fan-row-item-template" type="x-handlebars-template">​
+
+    {% include '/shared/mobile_fans_row_item.html' with {'user_id': session.id, 'user_name': session.username, 'user_pic': session.pic} %}
+    
+</script> 
+
+
+{% include '/shared/body_footer.html' %}
