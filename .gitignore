@@ -13,3 +13,5 @@ wp-content/*
 wp-config.php
 tests/*
 tutorials/*
+.htaccess
+/.htaccess
