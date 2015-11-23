@@ -9,3 +9,7 @@ Search-Replace-DB/srdb-tests/db.sql
 Search-Replace-DB/srdb-tests/SrdbTest.php
 Search-Replace-DB/srdb.class.php
 Search-Replace-DB/srdb.cli.php
+wp-content/*
+wp-config.php
+tests/*
+tutorials/*
