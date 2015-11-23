@@ -322,6 +322,8 @@ function launchPopup(width,height) {
 }
 
 
+
+
 //old tooltip code
 /*jQuery('.project.small a').tooltip(
 {
