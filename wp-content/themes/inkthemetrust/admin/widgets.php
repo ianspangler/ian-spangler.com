@@ -108,15 +108,16 @@ class TTrust_About extends WP_Widget {
 		$text = apply_filters( 'widget_text', empty( $instance['text'] ) ? '' : $instance['text'], $instance );
 		///echo $args['before_widget'];
 
+
 		echo $before_widget;
 		if ( ! empty( $image ) ) {
 			echo $before_img . $image . $after_img;
 		}
 		if ( ! empty( $title ) ) {
-			echo $before_title . $title . $after_title;
+			//echo $before_title . $title . $after_title;
 			//echo $before_subtitle . $subtitle . $after_subtitle;
 		} ?>
-			<div class="textwidget"><?php echo !empty( $instance['filter'] ) ? wpautop( $text ) : $text; ?></div>
+			<!--<div class="textwidget">--><?php echo !empty( $instance['filter'] ) ? wpautop( $text ) : $text; ?><!--</div>-->
 		<?php
 		echo $after_widget;
 	}
@@ -202,7 +203,7 @@ class TTrust_Recent_Posts extends WP_Widget {
 ?>				
 			<?php echo $before_widget; ?>
 			<?php echo $before_img . $image . $after_img; ?>
-			<?php echo $before_title . $title . $after_title; ?>
+			<!--<?php echo $before_title . $title . $after_title; ?>-->
 			<!--<?php echo $before_subtitle . $subtitle . $after_subtitle; ?>-->			
 		
 			<ul class="widgetList">
@@ -313,7 +314,7 @@ class TTrust_Twitter extends WP_Widget {
         ?>
 			<?php echo $before_widget; ?>
 				<?php echo $before_img . $image . $after_img; ?>
-				<?php echo $before_title . $title . $after_title; ?>
+				<!--<?php echo $before_title . $title . $after_title; ?>-->
 				<!--<?php echo $before_subtitle . $subtitle . $after_subtitle; ?>-->
 								
 				<div id="twitterBox" class="clearfix"></div>
@@ -424,7 +425,7 @@ class TTrust_Flickr extends WP_Widget {
         ?>
 			<?php echo $before_widget; ?>
 
-				<?php echo $before_title . $title . $after_title; ?>
+				<!--<?php echo $before_title . $title . $after_title; ?>-->
 				<!--<?php echo $before_subtitle . $subtitle . $after_subtitle; ?>-->
 				
     			<div id="flickrBox" class="clearfix"></div>
