@@ -2832,6 +2832,15 @@ p.login_line {
 		padding: 0 15px !important;
 	}
 
+	h3 {
+		padding: 5px 15px !important;
+	}
+
+	ul {
+		padding: 0 15px !important;
+		padding-right: 30px !important;
+	}
+
 	.post.box .meta {
 		margin: 0 15px;
 	}
