@@ -65,7 +65,7 @@
 		<div id="logo">
 			<?php if($ttrust_logo) : ?>				
 				<h1 class="logo"><a href="<?php bloginfo('url'); ?>"><img src="<?php echo $ttrust_logo; ?>" alt="<?php bloginfo('name'); ?>" /></a></h1>
-				<?php if(!wp_is_mobile()): ?><h2 class="logo_subline"><a href="<?php bloginfo('url'); ?>"><img src="/wp-content/uploads/2015/11/logo_subline.png" alt="<?php bloginfo('name'); ?>" /></a></h2><?php endif ?>
+				<?php if(!wp_is_mobile()): ?><h2 class="logo_subline"><a href="<?php bloginfo('url'); ?>"><img src="http://www.ian-spangler.com/portfolio/wp-content/uploads/2015/11/logo_subline.png" alt="<?php bloginfo('name'); ?>" /></a></h2><?php endif ?>
 			<?php else : ?>				
 				<h1><a href="<?php bloginfo('url'); ?>"><?php bloginfo('name'); ?></a></h1>				
 			<?php endif; ?>	
