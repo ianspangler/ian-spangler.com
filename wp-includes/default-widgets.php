@@ -522,7 +522,7 @@ class WP_Widget_Text extends WP_Widget {
 			echo $args['before_img'] . $image . $args['after_img'];
 		}
 		if ( ! empty( $title ) ) {
-			echo $args['before_title'] . $title . $args['after_title'];
+			//echo $args['before_title'] . $title . $args['after_title'];
 		} ?>
 			<div class="textwidget"><?php echo !empty( $instance['filter'] ) ? wpautop( $text ) : $text; ?></div>
 		<?php

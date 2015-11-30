@@ -55,7 +55,7 @@ function projectFilterInit() {
 		filterProjects(selector);
 
 		if ( !jQuery(this).hasClass('selected') ) {
-			console.log("CLICKED");
+			///console.log("CLICKED");
 			jQuery(this).parents('#filterNav').find('.selected').removeClass('selected');
 			jQuery(this).addClass('selected');
 		}
@@ -166,7 +166,8 @@ function animateIn() {
 	if(!isMobile()) { //desktop
 
 		//animate in main sidebar
-		//jQuery("#header").delay(200).fadeIn(500);
+		jQuery("#header .inside").delay(200).fadeIn(500);
+
 		
 		//animate my logo
 		jQuery('#logo #i_left').delay(600).animate({height:0, top:'183px'}, 200, "easeInSine");
@@ -177,20 +178,24 @@ function animateIn() {
 		jQuery('#logo #s_top').delay(1100).animate({width:0, left:'183px'}, 100);
 		jQuery('#logo #i_right').delay(1260).animate({height:0, top:'183px'}, 300, "easeOutSine");
 
+		jQuery('#logo #subline').delay(1600).fadeOut(1000);
+
 		//animate in main nav and filter nav
 		jQuery('#mainNav').delay(1600).fadeIn(1000);
 		//jQuery('ul#filterNav').delay(1800).fadeIn(1000);
-		jQuery('.filter_wrap').delay(1800).animate({opacity: 1}, 800);
-		jQuery('.projectPage').delay(1800).animate({opacity: 1}, 800);
+		jQuery('.filter_wrap').delay(2600).animate({opacity: 1}, 800);
+		jQuery('.projectPage').delay(2600).animate({opacity: 1}, 800);
 
-		var projects_delay = 1800;
+		var projects_delay = 2600;
 
 	}
 	else { //mobile
 
 		//animate in main sidebar and filter nav
-		jQuery("#header").delay(200).animate({opacity: 1}, 450, "easeOutSine");
+		///jQuery("#header").delay(200).animate({opacity: 1}, 450, "easeOutSine");
+		jQuery("#header .inside").delay(200).fadeIn(450, "easeOutSine");
 		jQuery('.filter_wrap').delay(800).animate({opacity: 1}, 450, "easeOutSine");
+		jQuery('.projectPage').delay(1600).animate({opacity: 1}, 800);
 		//jQuery('.filter_wrap').fadeIn(500);
 
 		var projects_delay = 1000;
@@ -209,10 +214,10 @@ function animateIn() {
 		jQuery(this).css('width', '50%');
 
 		if (jQuery(this).is(':visible')) {
-			jQuery(this).delay(projects_delay).animate({width: '100%', marginTop: 0, marginLeft: 0, opacity: 1}, 350, "easeOutSine", 
+			jQuery(this).delay(projects_delay).animate({width: '100%', marginTop: 0, marginLeft: 0, opacity: 1}, 400, "easeOutSine", 
 					function() { jQuery(this).parent().parent().css('pointer-events', "auto"); });
 
-			projects_delay += 90;
+			projects_delay += 100;
 		}
 	});
 
@@ -311,6 +316,35 @@ jQuery(window).load(function(){
 		sidebarAbsolute();
 		relocateElements();
 	});		
+
+
+	jQuery('.contact a').tooltip(
+	{
+		content: function() {
+	
+			var html = '<div class="pointer-container"><div class="pointer"></div></div>'
+			html += '<div class="content">';
+			html += jQuery(this).attr('title');
+			html += '</div>';
+			return html;
+
+		},
+		show: { duration: 150, delay: 20 },
+
+		tooltipClass: "contact_tooltip",
+
+		position: {my: "center bottom-12", at: "center bottom-12", collision: "flipfit",
+					using: function( position, feedback ) {
+
+		            jQuery(this).css( position );
+		            jQuery('.pointer-container')
+		                .addClass( feedback.vertical )
+		                .addClass( feedback.horizontal );
+		                ///.appendTo( this );
+		        }
+		}
+	});
+
 });
 
 
