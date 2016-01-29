@@ -4,7 +4,7 @@
 		<div class="inside">
 			<div class="contact">
 				
-				<a href="mailto:ian@ian-spangler.com" title="Email"><i class="fa fa-envelope"></i></a>
+				<a href="#" title="Email" class="email_link"><i class="fa fa-envelope"></i></a>
 				<a href="http://linkedin.com/in/ianspangler" target="_blank" title="LinkedIn"><i class="fa fa-linkedin"></i></a>
 				<a href="http://twitter.com/ianspangler" target="_blank" title="Twitter"><i class="fa fa-twitter"></i></a>
 
@@ -14,5 +14,10 @@
 </div><!-- end main -->
 </div><!-- end container -->
 <?php wp_footer(); ?>
+<script type="text/javascript">
+	var username = "ian";
+	var hostname = "ian-spangler.com";
+	$('.email_link').attr('href', "mailto: " + username + "@" + hostname);
+</script>
 </body>
 </html>
