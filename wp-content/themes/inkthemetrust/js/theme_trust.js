@@ -358,7 +358,7 @@ function launchPopup(width,height) {
 // SET EMAIL LINK
 var username = "ian";
 var hostname = "ian-spangler.com";
-$('.email_link').attr('href', "mailto: " + username + "@" + hostname);
+jQuery('.email_link').attr('href', "mailto: " + username + "@" + hostname);
 
 
 
