@@ -14,10 +14,6 @@
 </div><!-- end main -->
 </div><!-- end container -->
 <?php wp_footer(); ?>
-<script type="text/javascript">
-	var username = "ian";
-	var hostname = "ian-spangler.com";
-	$('.email_link').attr('href', "mailto: " + username + "@" + hostname);
-</script>
+
 </body>
 </html>
