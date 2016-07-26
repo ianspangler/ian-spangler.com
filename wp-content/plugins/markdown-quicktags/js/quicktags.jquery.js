@@ -1525,6 +1525,7 @@ function edToolbar() {
     .script(mdqtdir+'taboverride.js')
     .script(mdqtdir+'jquery.tipsy.js')
     .script(mdqtdir+'textchange.jquery.js').wait(function() {
+      jQuery('#ed_toolbar').remove();
       jQuery('#wp-content-editor-container').prepend(jQuery('<div id="ed_toolbar" style="display:none"/>').append(jQuery('<div id="ed_button_container" />')));
       jQuery.getJSON(ajaxurl,{action:'mdqt_options'},function(json){
         jQuery('#content').mdqt_quicktags(json);

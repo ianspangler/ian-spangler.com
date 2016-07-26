@@ -3,7 +3,7 @@
 Plugin Name: Markdown QuickTags
 Plugin URI: http://brettterpstra.com/code/markdown-quicktags
 Description: Replaces the WordPress QuickTags with Markdown-compatible ones
-Version: 0.9.5
+Version: 0.9.6
 Author: Brett Terpstra
 Author URI: http://brettterpstra.com
 License: GPLv2
@@ -42,7 +42,7 @@ class MarkdownQuickTags {
     $plugin_dir = plugin_dir_url( __FILE__ );
     $this->siteurl = $this->trailingslashit(get_option('siteurl'));
     $this->js_path =  $plugin_dir . "/js/";
-    $this->css_path =  $plugin_dir . " /css/";
+    $this->css_path =  $plugin_dir . "/css/";
     $this->usercss = get_bloginfo('stylesheet_directory').'/mdqtstyle.css';
 
     add_action( 'admin_print_scripts', array(&$this, 'js_libs' ));
@@ -79,7 +79,7 @@ class MarkdownQuickTags {
   }
 
   function mdqt_admin_init() {
-    wp_register_style( 'mdqt_style', $this->css_path . 'mdqt_style.css', false, '0.8.1' );
+    wp_register_style( 'mdqt_style', $this->css_path . 'mdqt_style.css', false, '0.9.6' );
     // wp_register_style( 'peppergrinder', $this->css_path . 'peppergrinder.css');
     if (file_exists($this->usercss)) {
       wp_register_style( 'usercss', $this->usercss );
