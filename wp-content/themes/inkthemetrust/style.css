@@ -461,10 +461,10 @@ a.action {
 }
 
 #main {
-    margin-left: 275px;
-    margin-right: 30px;
-    margin-bottom: 30px;
-	padding: 30px 0 0px 0;
+    margin-left: 250px;
+    margin-right: 0px;
+    margin-bottom: 0px;
+	padding: 0;
     width: auto;
 }
 
@@ -1240,99 +1240,93 @@ a.button, #footer a.button {
 	position: relative;
 	float: left;
 	/*margin: 0 !important;*/
-	max-width: 300px;
+	/*max-width: 300px;*/
+	min-height: 300px;
 	padding: 0px;
 	/*margin-left: 15px;
 	margin-bottom: 50px;*/
 	/*padding-bottom: 0;*/
+	border-bottom: 1px solid #666;
 	cursor: pointer;
 	zoom: 1;
 	visibility: hidden;
 	height: auto;
-	/*background-color: #2f2f2f;*/
+	background-color: #2f2f2f;
 	/*box-shadow: 1px 1px 3px rgba(0,0,0,0.2);*/
-	position: relative;
+	
 	pointer-events: none; /*turn on in javascript after fade-in */
 }
 
 #content .project.small a {
-	margin: 6px;
+	/*margin: 6px;*/
 	display: block;
-	position: relative;
+	position: absolute;
+	width: 100%;
+	height: 100%;
 }
 
 #content .project.small img{
-	width: 100%;
+	/*width: 100%;*/
 	height: auto;
-	/*opacity: 0.95;
-	-moz-opacity: 0.95;
-	-webkit-opacity: 0.95;*/
+	vertical-align: top;
+	opacity: 0;
+}
+
+#content .project.small button {
+	margin-top: 18px;
+	background: none;
+	border: 1px solid rgba(255,255,255,0.5);
+	border-radius: 3px;
 	-webkit-border-radius: 3px;
 	-moz-border-radius: 3px;
-	border-radius: 3px;
-
-	opacity: 0;
-
-	border-top: 1px solid rgba(255, 255, 255, .15);
-	border-left: 1px solid rgba(0, 0, 0, .15);
-	border-bottom: 1px solid rgba(0, 0, 0, .25);
-	border-right: 1px solid rgba(255, 255, 255, .1);
-	
+	text-transform: uppercase;
+	font-size: 16px;
+	font-weight: bold;
+	padding: 10px;
+	width: 250px;
+	cursor: pointer;
+	color: rgba(255,255,255,0.7);
 }
 
 #content .project.small .description {
-    position: absolute;
-	display: none;
-    bottom: 0px;
+    position: relative;
 	color: #fff;
-	padding: 10px 20px !important;
+	padding: 30px !important;
 	z-index: 10;
 }
 
-#content .project.small .overlay {
+#content .project.small .gr-overlay {
     position: absolute;
-	display: none;
-    background-color: #111 !important;
 	width: 100%;
-	height: 99%;
-	top: 0;
+	height: 50%;
+   /* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#000000+1,000000+100&0+0,0.2+100 */
+background: -moz-linear-gradient(top,  rgba(0,0,0,0) 0%, rgba(0,0,0,0) 1%, rgba(0,0,0,0.2) 100%); /* FF3.6-15 */
+background: -webkit-linear-gradient(top,  rgba(0,0,0,0) 0%,rgba(0,0,0,0) 1%,rgba(0,0,0,0.2) 100%); /* Chrome10-25,Safari5.1-6 */
+background: linear-gradient(to bottom,  rgba(0,0,0,0) 0%,rgba(0,0,0,0) 1%,rgba(0,0,0,0.2) 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#00000000', endColorstr='#33000000',GradientType=0 ); /* IE6-9 */
+	bottom: 0;
 	left: 0;
 	z-index: 9;
-	-webkit-border-radius: 3px;
-	-moz-border-radius: 3px;
-	border-radius: 3px;
-
-	border-top: 1px solid rgba(255, 255, 255, .15);
-	border-left: 1px solid rgba(0, 0, 0, .15);
-	border-bottom: 1px solid rgba(0, 0, 0, .25);
-	border-right: 1px solid rgba(255, 255, 255, .1);
-
+	pointer-events: none;
 }
 
 #content .project.small .title {
 	display: inline-block;
-	margin: 0 12px 0 0;
 	padding-bottom: 8px;
 	/*font-weight: bold;*/
-	font-size: 1.2em;
-	line-height: 22px;
+	max-width: 300px;
+	font-size: 30px;
+	line-height: 40px;
+	margin-top: 20px;
 	font-family: 'Fjalla One', arial, sans-serif;
-	color: #61f9fb;
 }
 
-#content .project.small .divider {
-	height: 1px;
-	display: none;
-	width: 30px;
-	border-top: 1px dotted #999;
-	margin-bottom: 7px;
-}
 
 #content .project.small .description p{
-	line-height: 1.4em;
-	color: #DDD;
-	font-size: .8em;
-	margin: 0px 0 10px 0;
+	line-height: 15px;
+	color: rgba(255,255,255,0.5);
+	font-size: 14px;
+	margin-top: 10px;
 }
 
 .projectNav {
@@ -1416,10 +1410,10 @@ a.link {
 /*Project Filter Navigation------------------*/
 
 #content #filterNav {
-	margin: 10px 0;
-	margin-top: 25px;
-	padding: 0px 0px !important;
-	background: rgba(0,0,0,.2) !important;
+	margin: 0;
+	margin-left: 16px;
+	padding: 0 !important;
+	background: #222;
 	overflow-x: hidden;
 	white-space: nowrap;
 	text-overflow: ellipsis;
@@ -1431,14 +1425,6 @@ a.link {
 	opacity: 0.6;*/
 	/*border-top: 1px solid #999;*/
 
-	-webkit-border-radius: 3px;
-	-moz-border-radius: 3px;
-	border-radius: 3px;
-
-	border-top: 1px solid rgba(255, 255, 255, .15);
-	border-left: 1px solid rgba(0, 0, 0, .15);
-	border-bottom: 1px solid rgba(0, 0, 0, .25);
-	border-right: 1px solid rgba(255, 255, 255, .1);
 }
 
 #s2id_filterNav, select#filterNav {
@@ -1470,29 +1456,20 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#03222222', e
 
 #content #filterNav li {
 	background: none;
-	width: 14%;
 	/*margin: 0 10px 0 0;*/
 	margin: 3px 0 !important;
-	display: block;
+	display: inline-block;
 	float: left;
 	padding: 0 !important;
-	text-align: center;
 	font-size: 1em;
 	/*text-overflow: ellipsis;*/
-	/*border-right: 1px solid #333;*/
 }
 
-#filterNav li:first-child a {
-	border-left: 0 !important;
-}
 
-#filterNav li:last-child a {
-	border-right: 0 !important;
-}
 
 #filterNav .selected, #filterNav li a:active {
 	/*background: rgba(0,0,0, .35);*/
-	color: #61f9fb !important;
+	color: #ddd !important;
 }
 
 #filterNav li a:hover {
@@ -1502,25 +1479,29 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#03222222', e
 }
 
 #filterNav li a {
-	width: 100%;
 	font-size: 0.8em;
+	text-transform: uppercase;
 	font-family: 'Roboto', arial, sans-serif;
 	display: block;
-	color: #ccc !important;
+	color: #999 !important;
 	/*text-transform: lowercase;*/
 	text-decoration: none;
 	position: relative;
 	cursor: pointer;
-	/*padding: 6px 6px !important;*/
-	padding-top: 11px !important;
-	padding-bottom: 11px !important;
-	border-right: 1px solid rgba(0,0,0,0.2);
-	border-left: 1px solid rgba(255,255,255,0.15);
+	padding-left: 12px;
+	padding-right: 12px;
+	margin-top: 11px !important;
+	margin-bottom: 11px !important;
+	/*border-right: 1px solid rgba(0,0,0,0.2);
+	border-left: 1px solid rgba(255,255,255,0.15);*/
 	
 	line-height: 1em;
+	border-left: 2px solid #444;
 }
 
-
+#filterNav li:first-child a {
+	border: none;
+}
 
 
 

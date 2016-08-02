@@ -6,7 +6,7 @@
 var gridContainer = jQuery('.thumbs.masonry');
 var colW;
 var gridGutter = 0;
-var thumbWidth = 275;
+//var thumbWidth = 1000;
 var widgetsHidden = false;
 
 
@@ -124,17 +124,15 @@ function projectThumbInit() {
 		//rollover thumbs
 		jQuery(".project.small a").hover(
 			function() {
-				jQuery(this).find('.overlay').stop().fadeTo("fast", 0.8);
-				//jQuery('.overlay').not(this).stop().fadeTo(0.25, 0.85);
-				//jQuery(this).find('.overlay').stop().fadeOut();
-				//jQuery(this).find('.overlay').stop().fadeTo("fast", .7);
-				jQuery(this).find('.description').stop().fadeTo("fast", 1);
-				jQuery(this).find('img:last').attr('title','');	
+				//jQuery(this).find('.overlay').stop().fadeTo("fast", 0.8);
+				
+				/*jQuery(this).find('.description').stop().fadeTo("fast", 1);
+				jQuery(this).find('img:last').attr('title','');	*/
 			},
 			function() {
-				///jQuery('.overlay').not(this).stop().fadeOut();
-				jQuery(this).find('.overlay').stop().fadeTo("fast", 0);	
-				jQuery(this).find('.description').stop().fadeTo("fast", 0);	
+				
+				//jQuery(this).find('.overlay').stop().fadeTo("fast", 0);	
+				//jQuery(this).find('.description').stop().fadeTo("fast", 0);	
 			});	
 	}
 
@@ -258,12 +256,19 @@ function relocateElements()
 
 function setColumns()
 {	
-	var columns;
+	/*var columns;
 	columns = Math.ceil(gridContainer.width()/thumbWidth);
 	colW = Math.floor(gridContainer.width() / columns);
 	jQuery('.thumbs.masonry .project.small').each(function(id){
 		jQuery(this).css('width',colW-gridGutter+'px');
+	});*/
+
+	var columns = 1;
+	colW = Math.floor(gridContainer.width() / columns);
+	jQuery('.thumbs.masonry .project.small').each(function(id){
+		jQuery(this).css('width',colW-gridGutter+'px');
 	});
+
 }
 
 function gridResize() {	
