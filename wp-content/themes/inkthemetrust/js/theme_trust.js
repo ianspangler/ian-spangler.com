@@ -15,6 +15,7 @@ var widgetsHidden = false;
 ///////////////////////////////
 
 function isMobile(){
+	
     return (
         (navigator.userAgent.match(/Android/i)) ||
 		(navigator.userAgent.match(/webOS/i)) ||

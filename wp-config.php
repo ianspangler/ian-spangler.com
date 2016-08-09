@@ -1,4 +1,7 @@
 <?php
+/** Enable W3 Total Cache */
+define('WP_CACHE', true); // Added by W3 Total Cache
+
 /**
  * The base configurations of the WordPress.
  *
@@ -22,7 +25,7 @@ define('DB_NAME', 'ianspang_portfolio_data');
 define('DB_USER', 'root');
 
 /** MySQL database password */
-define('DB_PASSWORD', 'HoustoKemp#20');
+define('DB_PASSWORD', 'bermudatriangle1512');
 
 /** MySQL hostname */
 define('DB_HOST', 'localhost');
