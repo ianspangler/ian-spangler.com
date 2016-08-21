@@ -8,7 +8,7 @@
 				<?php if(!empty($post->post_excerpt)) { ?>		     
 					<?php the_excerpt(); ?>
 				<?php } ?>
-				<button>Launch</button>
+				<button>View Project</button>
 			</div>
 		</div>
 

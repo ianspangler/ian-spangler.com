@@ -123,15 +123,16 @@ function projectThumbInit() {
 	if (!isMobile()) {
 
 		//rollover thumbs
-		jQuery(".project.small a").hover(
+		jQuery(".project.small").hover(
 			function() {
+				//jQuery(this).find('button').css('border', '1px solid rgba(255,255,255,0.9)');
 				//jQuery(this).find('.overlay').stop().fadeTo("fast", 0.8);
 				
 				/*jQuery(this).find('.description').stop().fadeTo("fast", 1);
 				jQuery(this).find('img:last').attr('title','');	*/
 			},
 			function() {
-				
+				//jQuery(this).find('button').css('border', '1px solid rgba(255,255,255,0.5)');
 				//jQuery(this).find('.overlay').stop().fadeTo("fast", 0);	
 				//jQuery(this).find('.description').stop().fadeTo("fast", 0);	
 			});	

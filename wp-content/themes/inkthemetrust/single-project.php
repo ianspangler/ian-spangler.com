@@ -5,11 +5,11 @@
 				<h1><?php the_title(); ?></h1>
 				<div class="projectNav clearfix">
 					<div class="previous <?php if(!get_previous_post()){ echo 'inactive'; }?>">
-						<?php next_post_link('%link', '&larr; previous'); ?>
+						<?php next_post_link('%link', '<i class="fa fa-angle-left" aria-hidden="true"></i> back'); ?>
 					</div>
 
 					<div class="next <?php if(!get_next_post()){ echo 'inactive'; }?>">							
-						<?php previous_post_link('%link', 'next  &rarr;'); ?> 
+						<?php previous_post_link('%link', 'next <i class="fa fa-angle-right" aria-hidden="true"></i>'); ?> 
 					</div>	
 
 					<div class="previous_mobile <?php if(!get_previous_post()){ echo 'inactive'; }?>">
