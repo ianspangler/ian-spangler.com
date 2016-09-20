@@ -117,7 +117,7 @@ function projectThumbInit() {
 		}
 	});	
 
-	jQuery(".project.small").css("visibility", "visible");	
+	//jQuery(".project.small").css("visibility", "visible");	
 	jQuery("#floatingCirclesG").fadeOut("slow");
 
 	if (!isMobile()) {
@@ -157,7 +157,8 @@ function showAll() {
 	jQuery('.filter_wrap').show();
 	jQuery('#sidebar').show();*/
 	jQuery('.project.small').css('pointer-events', "auto");
-	jQuery('.project.small img').css('opacity', 1);
+	jQuery('.project.small').css('opacity', 1);
+	jQuery('.logo_subline').show();
 
 }
 
@@ -168,7 +169,6 @@ function animateIn() {
 		//animate in main sidebar
 		jQuery("#header .inside").delay(200).fadeIn(500);
 
-		
 		//animate my logo
 		jQuery('#logo #i_left').delay(600).animate({height:0, top:'183px'}, 200, "easeInSine");
 		jQuery('#logo #s_bottom').delay(780).animate({width:0, left:'168px'}, 100);
@@ -178,7 +178,7 @@ function animateIn() {
 		jQuery('#logo #s_top').delay(1100).animate({width:0, left:'183px'}, 100);
 		jQuery('#logo #i_right').delay(1260).animate({height:0, top:'183px'}, 300, "easeOutSine");
 
-		jQuery('#logo #subline').delay(1600).fadeOut(1000);
+		jQuery('.logo_subline').delay(1600).fadeIn(600);
 
 		//animate in main nav and filter nav
 		jQuery('#mainNav').delay(1600).fadeIn(1000);
@@ -208,16 +208,18 @@ function animateIn() {
 
 
 	//animate in project thumbs 
-	jQuery(".project.small img").each(function() {
-		jQuery(this).css('margin-top', (jQuery(this).height()/4)+'px');
-		jQuery(this).css('margin-left', (jQuery(this).width()/4)+'px');
-		jQuery(this).css('width', '50%');
+	jQuery(".project.small").each(function() {
+
+		//jQuery(this).css('margin-top', (jQuery(this).height()/4)+'px');
+		//jQuery(this).css('margin-left', (jQuery(this).width()/4)+'px');
+		//jQuery(this).css('width', '50%');
 
 		if (jQuery(this).is(':visible')) {
-			jQuery(this).delay(projects_delay).animate({width: '100%', marginTop: 0, marginLeft: 0, opacity: 1}, 400, "easeOutSine", 
-					function() { jQuery(this).parent().parent().css('pointer-events', "auto"); });
 
-			projects_delay += 100;
+			jQuery(this).delay(projects_delay).animate({opacity: 1}, 400, "easeOutSine", 
+					function() {  });
+
+			projects_delay += 250;
 		}
 	});
 

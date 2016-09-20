@@ -1981,10 +1981,12 @@ function next_post_link( $format = '%link &raquo;', $link = '%title', $in_same_t
  * @return string The link URL of the previous or next post in relation to the current post.
  */
 function get_adjacent_post_link( $format, $link, $in_same_term = false, $excluded_terms = '', $previous = true, $taxonomy = 'category' ) {
+
 	if ( $previous && is_attachment() )
 		$post = get_post( get_post()->post_parent );
 	else
 		$post = get_adjacent_post( $in_same_term, $excluded_terms, $previous, $taxonomy );
+
 
 	if ( ! $post ) {
 		$output = '';
@@ -2007,6 +2009,7 @@ function get_adjacent_post_link( $format, $link, $in_same_term = false, $exclude
 
 		$output = str_replace( '%link', $inlink, $format );
 	}
+
 
 	$adjacent = $previous ? 'previous' : 'next';
 
@@ -2274,6 +2277,7 @@ function get_previous_posts_link( $label = null ) {
 		$label = __( '&laquo; Previous Page' );
 
 	if ( !is_single() && $paged > 1 ) {
+		
 		/**
 		 * Filter the anchor tag attributes for the previous posts page link.
 		 *
@@ -2390,6 +2394,7 @@ function get_the_post_navigation( $args = array() ) {
 		$args['taxonomy']
 	);
 
+
 	$next = get_next_post_link(
 		'<div class="nav-next">%link</div>',
 		$args['next_text'],
@@ -2398,10 +2403,12 @@ function get_the_post_navigation( $args = array() ) {
 		$args['taxonomy']
 	);
 
+
+
 	// Only add markup if there's somewhere to navigate to.
-	if ( $previous || $next ) {
+	//if ( $previous || $next ) {
 		$navigation = _navigation_markup( $previous . $next, 'post-navigation', $args['screen_reader_text'] );
-	}
+	//}
 
 	return $navigation;
 }

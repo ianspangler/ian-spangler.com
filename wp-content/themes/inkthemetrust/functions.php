@@ -525,7 +525,7 @@ function ttrust_slideshow( $atts, $content = null ) {
 	$content = preg_replace("/<\/a>/", "", $content);
 	$content = str_replace('<img', '<li><img', $content);
 	$content = str_replace('/>', '/></li>', $content);
-	return '<div class="flexslider"><ul class="slides">' . $content . '</ul></div>';
+	return '<div class="flexslider"><ul class="slides" style="background-color: '.get_featured_image_color().'">' . $content . '</ul></div>';
 }
 add_shortcode('slideshow', 'ttrust_slideshow');
 
@@ -999,6 +999,7 @@ function trim_indices(&$item1, $key) {
 	$parts = explode(": ", $item1->name);
 	$item1->name = $parts[1];
 }
+
 
 
 ?>

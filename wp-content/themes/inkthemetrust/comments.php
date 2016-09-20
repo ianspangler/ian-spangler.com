@@ -62,7 +62,7 @@
 
 	<?php if ( is_user_logged_in() ) : ?>
 
-	<p class="login_line"><?php printf(__('Logged in as %s', 'themetrust'), '<a href="'.get_option('siteurl').'/wp-admin/profile.php">'.$user_identity.'</a>'); ?> <a class="logout_link" href="<?php echo wp_logout_url(); ?>" title="<?php _e('Log out of this account', 'themetrust') ?>" ><?php _e('Log out &raquo;', 'themetrust'); ?></a></p>
+	<p class="login_line"><?php printf(__('Logged in as %s', 'themetrust'), '<a href="'.get_option('siteurl').'/wp-admin/profile.php">'.$user_identity.'</a>'); ?> &nbsp; | &nbsp;<a class="logout_link" href="<?php echo wp_logout_url(); ?>" title="<?php _e('Log out of this account', 'themetrust') ?>" ><?php _e('Log out &raquo;', 'themetrust'); ?></a></p>
 
 	<?php else : ?>
 
@@ -80,7 +80,7 @@
 	<p><textarea name="comment" id="comment" cols="55" rows="6" tabindex="4"></textarea></p>
 	
 	<p>
-	<input name="submit" type="submit" class="button" id="submit" tabindex="5" value="<?php echo esc_attr(__('Submit Comment', 'themetrust')); ?>" /> <?php cancel_comment_reply_link(__('Cancel Reply', 'themetrust')); ?>
+	<input name="submit" type="submit" class="button" style="background: none !important" id="submit" tabindex="5" value="<?php echo esc_attr(__('Submit Comment', 'themetrust')); ?>" /> <?php cancel_comment_reply_link(__('Cancel Reply', 'themetrust')); ?>
 	<?php comment_id_fields(); ?>
 	</p>	
 	

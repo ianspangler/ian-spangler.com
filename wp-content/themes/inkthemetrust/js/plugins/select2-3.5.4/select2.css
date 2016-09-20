@@ -5,8 +5,6 @@ Version: 3.4.5 Timestamp: Mon Nov  4 08:22:42 PST 2013
     /*margin: 0;*/
     display: block;
     position: relative;
-    margin: 10px;
-    margin-bottom: 5px;
     zoom: 1;
     *display: inline;
     vertical-align: middle;
@@ -30,8 +28,8 @@ Version: 3.4.5 Timestamp: Mon Nov  4 08:22:42 PST 2013
 
 .select2-container .select2-choice {
     display: block;
-    height: 40px;
-    padding: 0 0 0 8px;
+    height: 44px;
+    padding: 0;
     overflow: hidden;
     position: relative;
 
@@ -40,8 +38,6 @@ Version: 3.4.5 Timestamp: Mon Nov  4 08:22:42 PST 2013
     line-height: 26px;
     color: #ddd;
     text-decoration: none;
-
-    border-radius: 3px;
 
     background-clip: padding-box;
 
@@ -53,10 +49,10 @@ Version: 3.4.5 Timestamp: Mon Nov  4 08:22:42 PST 2013
 
     background: rgba(0,0,0,.25);
 
-    border-top: 1px solid rgba(255, 255, 255, .15);
+   /* border-top: 1px solid rgba(255, 255, 255, .15);
     border-left: 1px solid rgba(0, 0, 0, .15);
     border-bottom: 1px solid rgba(0, 0, 0, .25);
-    border-right: 1px solid rgba(255, 255, 255, .1);
+    border-right: 1px solid rgba(255, 255, 255, .1); */
 
     /*background-color: #fff;
     background-image: -webkit-gradient(linear, left bottom, left top, color-stop(0, #eee), color-stop(0.5, #fff));
@@ -156,12 +152,10 @@ Version: 3.4.5 Timestamp: Mon Nov  4 08:22:42 PST 2013
     /*border: 1px solid #aaa;*/
     border-top: 0;
 
-    border-radius: 3px;
-
-    border-top: 1px solid rgba(255, 255, 255, .15);
+    /*border-top: 1px solid rgba(255, 255, 255, .15);
     border-left: 1px solid rgba(0, 0, 0, .15);
     border-bottom: 1px solid rgba(0, 0, 0, .25);
-    border-right: 1px solid rgba(255, 255, 255, .1);
+    border-right: 1px solid rgba(255, 255, 255, .1);*/
 
     /*-webkit-box-shadow: 0 4px 5px rgba(0, 0, 0, .15);
             box-shadow: 0 4px 5px rgba(0, 0, 0, .15);*/
@@ -202,6 +196,7 @@ Version: 3.4.5 Timestamp: Mon Nov  4 08:22:42 PST 2013
     height: 80%;
     position: absolute;
     top: 9px;
+    margin: 0 5px;
 
     /*border-left: 1px solid #DDD;*/
     border-radius: 0 0 0 0;
@@ -331,8 +326,6 @@ Version: 3.4.5 Timestamp: Mon Nov  4 08:22:42 PST 2013
 /* results */
 .select2-results {
     max-height: 300px;
-    padding: 0 0 0 4px;
-    margin: 4px 4px 4px 0;
     font-size: 1.3em;
     position: relative;
     overflow-x: hidden;
@@ -355,7 +348,7 @@ Version: 3.4.5 Timestamp: Mon Nov  4 08:22:42 PST 2013
 
 .select2-result {
 
-    border-bottom: 1px solid rgba(255,255,255,0.1);
+    border-bottom: 1px solid rgba(255,255,255,0.3);
     padding: 5px;
 }
 

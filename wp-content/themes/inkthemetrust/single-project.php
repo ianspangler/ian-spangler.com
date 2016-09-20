@@ -4,21 +4,36 @@
 			<div id="pageHead">
 				<h1><?php the_title(); ?></h1>
 				<div class="projectNav clearfix">
-					<div class="previous <?php if(!get_previous_post()){ echo 'inactive'; }?>">
-						<?php next_post_link('%link', '<i class="fa fa-angle-left" aria-hidden="true"></i> back'); ?>
+					<div class="previous <?php if(!get_next_post()){ echo 'inactive'; }?>">
+						<?php 
+
+							$link_html = '<i class="fa fa-angle-left" aria-hidden="true"></i> <span>back</span>';
+
+							if (!get_next_post()) {
+								echo '<a href="#">'.$link_html.'</a>';
+							}
+							else {
+								next_post_link('%link', $link_html); 
+							}
+						?>
 					</div>
 
-					<div class="next <?php if(!get_next_post()){ echo 'inactive'; }?>">							
-						<?php previous_post_link('%link', 'next <i class="fa fa-angle-right" aria-hidden="true"></i>'); ?> 
+					<div class="next <?php if(!get_previous_post()){ echo 'inactive'; }?>">							
+						<?php 
+
+							$link_html = '<span>next</span> <i class="fa fa-angle-right" aria-hidden="true"></i>';
+
+							if (!get_previous_post()) {
+								echo '<a href="#">'.$link_html.'</a>';
+							}
+							else {
+								previous_post_link('%link', $link_html);
+							} 
+
+						?>
 					</div>	
 
-					<div class="previous_mobile <?php if(!get_previous_post()){ echo 'inactive'; }?>">
-						<?php next_post_link('%link', '&larr;'); ?>
-					</div>	
-
-					<div class="next_mobile <?php if(!get_next_post()){ echo 'inactive'; }?>">							
-						<?php previous_post_link('%link', '&rarr;'); ?> 
-					</div>				
+							
 				</div> <!-- end navigation -->		
 			</div>
 			<div <?php post_class("box"); ?>>
@@ -40,7 +55,8 @@
 
 			
 				</div>	
-			</div>								    	
+			</div>	
+			<!--<div class="gr-overlay post-gr-overlay"></div>		-->					    	
 		</div>
 	
 
