@@ -523,9 +523,9 @@ function ttrust_slideshow( $atts, $content = null ) {
     $content = str_replace('<br />', '', $content);
 	$content = preg_replace("/<a\b[^>]*>/", "", $content);
 	$content = preg_replace("/<\/a>/", "", $content);
-	$content = str_replace('<img', '<li><img', $content);
+	$content = str_replace('<img', '<li style="background-color: '.get_featured_image_color().'"><img', $content);
 	$content = str_replace('/>', '/></li>', $content);
-	return '<div class="flexslider"><ul class="slides" style="background-color: '.get_featured_image_color().'">' . $content . '</ul></div>';
+	return '<div class="flexslider"><ul class="slides">' . $content . '</ul></div>';
 }
 add_shortcode('slideshow', 'ttrust_slideshow');
 
