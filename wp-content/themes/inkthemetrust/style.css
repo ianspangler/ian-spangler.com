@@ -358,7 +358,7 @@ a img {
 h1, h2, h3, h4, h5, h6 {
 	/*margin: 0 0 15px 0;*/
 	font-weight: normal;
-	color: #ddd;
+	color: rgba(255,255,255,0.9);
 }
 
 blockquote, address {
@@ -864,21 +864,20 @@ h1 a:hover {
 	/*display: none;*/
 	opacity: 0;
 	position: relative;
-	min-height: 200px;
-	max-height: 290px;
+	/*min-height: 200px;
+	max-height: 290px;*/
 	padding: 0;
 	cursor: pointer;
 	zoom: 1;
 	/*visibility: hidden;*/
 	overflow: hidden;
-	background-color: #2f2f2f;
-	background-image: url(images/grid-pattern.png);
+	/*background-color: #2f2f2f;
+	background-image: url(images/grid-pattern.png);*/
 	/*pointer-events: none;*/ /*turn on in javascript after fade-in */
 
 }
 
 .project.small button {
-	margin-top: 35px;
 	background: none;
 	border-radius: 5px;
 	-webkit-border-radius: 5px;
@@ -887,11 +886,13 @@ h1 a:hover {
 	font-size: 16px;
 	font-weight: bold;
 	padding: 14px;
-	width: 86%;
+	margin: 15% auto;
 	cursor: pointer;
-	color: rgba(255,255,255,0.8);
-
-	border: 3px solid rgba(255,255,255,0.4);
+	display: block;
+	width: 200px;
+	color: rgba(255,255,255,0.9);
+	opacity: 0;
+	border: 2px solid rgba(255,255,255,0.4);
 
 	-webkit-transition: border-color 0.3s linear, color 0.3s linear, background-color 0.3s linear; /* Saf3.2+, Chrome */
     -moz-transition: border-color 0.3s linear, color 0.3s linear, background-color 0.3s linear; /* FF3.7+ */
@@ -902,11 +903,16 @@ h1 a:hover {
 .project.small:hover button {
 	border-color: rgba(255,255,255,1);
 	color: rgba(255,255,255,1);
-	background-color: rgba(255,255,255,0.05);
+	background-color: rgba(0,0,0,0.2);
+	opacity: 1;
+}
+
+.project.small:hover .overlay {
+	opacity: 0.6;
 }
 
 .project.small:hover .gr-overlay {
-	opacity: 0;
+	opacity: 0.75;
 }
 
 .project.small a {
@@ -919,29 +925,46 @@ h1 a:hover {
 
 
 .project.small img{
-	width: 65%;
+	width: 100%;
 	height: auto;
 	vertical-align: top;
-	float: right;
 }
 
 
 .project.small .text {
-    position: relative;
-	color: #fff;
-	float: left;
-	width: 35%;
+    position: absolute;
+	color: rgba(255,255,255,0.9);
+	z-index: 200;
+	width: 100%;
 }
 
 .project.small .description {
-    padding: 30px 8px 30px 30px;
+	position: relative;
+    /*padding: 30px 8px 30px 30px;*/
 }
+
+
+.project.small .overlay {
+	position: absolute;
+	width: 100%;
+	height: 100%;
+	opacity: 0;
+	bottom: 0;
+	left: 0;
+	z-index: 100;
+
+	-webkit-transition: opacity 0.3s linear; /* Saf3.2+, Chrome */
+    -moz-transition: opacity 0.3s linear; /* FF3.7+ */
+    -o-transition: opacity 0.3s linear; /* Opera 10.5 */
+    transition: opacity 0.3s linear;
+}
+
 
 .gr-overlay {
     position: absolute;
 	width: 100%;
-	height: 40%;
-	opacity: 0.5;
+	height: 100%;
+	opacity: 0;
    	/* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#000000+1,000000+100&0+0,0.2+100 */
 	background: -moz-linear-gradient(top,  rgba(0,0,0,0) 0%, rgba(0,0,0,0) 1%, rgba(0,0,0,0.9) 100%); /* FF3.6-15 */
 	background: -webkit-linear-gradient(top,  rgba(0,0,0,0) 0%,rgba(0,0,0,0) 1%,rgba(0,0,0,0.9) 100%); /* Chrome10-25,Safari5.1-6 */
@@ -959,12 +982,10 @@ h1 a:hover {
 }
 
 .project.small .title {
-	display: inline-block;
-	padding-bottom: 8px;
-	max-width: 300px;
-	font-size: 32px;
-	line-height: 43px;
-	margin-top: 5%;
+	text-align: center;
+	font-size: 1.7vw;
+	line-height: 32px;
+	padding-top: 5%;
 	font-family: 'Fjalla One', arial, sans-serif;
 }
 
@@ -982,8 +1003,9 @@ h1 a:hover {
 #content #filterNav {
 	margin: 0;
 	padding: 0;
-	padding-left: 16px;
-	background: rgba(0,0,0,0.35);
+	padding-left: 20px;
+	padding-right: 20px;
+	background: rgba(0,0,0,0.5);
 	overflow-x: hidden;
 	white-space: nowrap;
 	text-overflow: ellipsis;
@@ -1020,14 +1042,14 @@ h1 a:hover {
 
 #content #filterNav li {
 	background: none;
-	margin: 3px 0;
+	margin: 0;
 	display: inline-block;
 	padding: 0;
 	font-size: 1em;
 }
 
 #filterNav li a {
-	font-size: 0.8em;
+	font-size: 12px;
 	text-transform: uppercase;
 	display: block;
 	color: #888;
@@ -1326,7 +1348,7 @@ a.launch_link:hover {
 #main #content {
 	min-height: 700px;
 	padding: 0;
-	padding-bottom: 30px;
+	/*padding-bottom: 30px;*/
 }
 
 /*
@@ -2542,30 +2564,26 @@ p.login_line {
 		font-size: 0.8em !important;
 	}
 
-	#content .project.small {
-		max-height: 400px;
-	}
 
-	#content .project.small img {
+	/*#content .project.small img {
 		
 		width: 100%;
 		height: auto;
 		vertical-align: top;
-		/*float: none;*/
 		display: block;
-	}
+	}*/
 
+	/*
 	#content .project.small .text {
-		/*float: none;*/
 		width: 100%;
-
 	}
+	*/
 
-	#content .project.small button {
+	/*#content .project.small button {
 		display: none;
-	}
+	}*/
 
-	#content .project.small .description {
+	/*#content .project.small .description {
 	    padding: 0 !important;
 	    text-align: center;
 	}
@@ -2576,7 +2594,7 @@ p.login_line {
 
 	#content .project.small p {
 	    display: none;
-	}
+	}*/
 
 }
 
@@ -2668,9 +2686,12 @@ p.login_line {
 	}
 
 
+
 	.project.small .title {
-		line-height: 36px !important;
-		font-size: 30px;
+		font-size: 5vw !important;
+		/*line-height: 32px !important;
+		font-size: 18px;*/
+		padding-top: 3% !important;
 	}
 
 	/*.blog #content {
@@ -3060,7 +3081,7 @@ p.login_line {
 	}*/
 
 	#main #content {
-		padding-bottom: 30px !important;
+		/*padding-bottom: 30px !important;*/
 	}
 
 	#logo {

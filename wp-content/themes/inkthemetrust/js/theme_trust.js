@@ -267,7 +267,12 @@ function setColumns()
 		jQuery(this).css('width',colW-gridGutter+'px');
 	});*/
 
-	var columns = 1;
+	var columns = 2;
+
+	if(isMobile()) { //mobile
+		columns = 1;
+	}
+
 	colW = Math.floor(gridContainer.width() / columns);
 	jQuery('.thumbs.masonry .project.small').each(function(id){
 		jQuery(this).css('width',colW-gridGutter+'px');
