@@ -36,10 +36,14 @@
 							
 				</div> <!-- end navigation -->		
 			</div>
+			
+			<?php echo get_slideshow(); ?>
+
 			<div <?php post_class("box"); ?>>
 				<div class="inside">			
 				<?php while (have_posts()) : the_post(); ?>								    
-					<div class="clearfix">   						
+					<div class="clearfix"> 
+
 						<?php the_content(); ?>					
 						<?php $project_url = get_post_meta($post->ID, "_ttrust_url_value", true); ?>
 						<?php $project_url_label = get_post_meta($post->ID, "_ttrust_url_label_value", true); ?>
@@ -47,8 +51,7 @@
 						<?php if ($project_url) : ?>
 							<p><a class="action link" href="<?php echo $project_url; ?>"><?php echo $project_url_label; ?></a></p>
 						<?php endif; ?>
-						<ul class="skillList clearfix"><?php ttrust_get_terms_list(); ?></ul>	
-														
+						<ul class="skillList clearfix"><?php ttrust_get_terms_list(); ?></ul>								
 					</div>
 					<?php comments_template('', true); ?>	
 				<?php endwhile; ?>	

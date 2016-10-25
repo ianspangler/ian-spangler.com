@@ -93,4 +93,4 @@
 	</div>	
 </div>
 
-<div id="main" class="clearfix" style="background-color: <?php echo get_featured_image_color(); ?>">
+<div id="main" class="clearfix">

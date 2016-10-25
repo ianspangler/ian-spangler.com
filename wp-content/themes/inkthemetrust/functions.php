@@ -375,10 +375,25 @@ function get_single_custom_background() {
 function get_featured_image_color() {	
 	global $wp_query;
 	global $post;
+
 	$post_type = get_post_type($post->ID);
 	$bg_color = get_post_meta($post->ID, "_ttrust_featured_background_color_value", true);
 	
 	return $bg_color;	
+}
+
+function get_slideshow() {	
+
+	global $wp_query;
+	global $post;
+
+	$post_type = get_post_type($post->ID);
+	$slideshow = get_post_meta($post->ID, "_ttrust_slideshow_description_value", true);
+
+	$slideshow = apply_filters( 'the_content', $slideshow );
+	$slideshow = str_replace( ']]>', ']]&gt;', $slideshow );
+	
+	return $slideshow;	
 }
 
 function has_single_custom_background() {	
@@ -794,8 +809,17 @@ $color_options = array(
     	"description" => __('Select the color for the featured image background.','themetrust'))
 );
 
+$slideshow_options = array(
+	"description" => array(
+		"type" => "textarea",
+		"name" => $prefix."slideshow_description",
+		"std" => "",
+		"title" => __('Images','themetrust'),
+		"description" => __('Enter slideshow images.','themetrust'))	
+);
 
-$meta_box_groups = array($project_details, $page_options, $portfolio_options, $background_options, $color_options);
+
+$meta_box_groups = array($slideshow_options, $project_details, $page_options, $portfolio_options, $background_options, $color_options);
 
 function new_meta_box($post, $metabox) {	
 	
@@ -846,16 +870,22 @@ function new_meta_box($post, $metabox) {
 } // end meta boxes
 
 function create_meta_box() {	
-	global $project_details, $page_options, $portfolio_options, $background_options, $color_options;	
+	global $slideshow_options, $project_details, $page_options, $portfolio_options, $background_options, $color_options;	
 	
 	if ( function_exists('add_meta_box') ) {
-		add_meta_box( 'new-meta-boxes-details', __('Project Options','themetrust'), 'new_meta_box', 'project', 'normal', 'high', array('inputs'=>$project_details) );				
+	
+		add_meta_box( 'new-meta-boxes-slideshow-options', __('Slideshow Options','themetrust'), 'new_meta_box', 'project', 'normal', 'high', array('inputs'=>$slideshow_options) );
+
+		add_meta_box( 'new-meta-boxes-details', __('Project Options','themetrust'), 'new_meta_box', 'project', 'normal', 'high', array('inputs'=>$project_details) );
+
+
 		add_meta_box( 'new-meta-boxes-page-options', __('Page Options','themetrust'), 'new_meta_box', 'page', 'side', 'low', array('inputs'=>$page_options) );	
 		add_meta_box( 'new-meta-boxes-portfolio-options', __('Portfolio Options','themetrust'), 'new_meta_box', 'page', 'side', 'low', array('inputs'=>$portfolio_options) );		
 		add_meta_box( 'new-meta-boxes-background-options', __('Background Options','themetrust'), 'new_meta_box', 'page', 'side', 'low', array('inputs'=>$background_options) );
 		/*add_meta_box( 'new-meta-boxes-background-options', __('Background Options','themetrust'), 'new_meta_box', 'post', 'side', 'low', array('inputs'=>$background_options) );
 		add_meta_box( 'new-meta-boxes-background-options', __('Background Options','themetrust'), 'new_meta_box', 'project', 'side', 'low', array('inputs'=>$background_options) );*/
 		add_meta_box( 'new-meta-boxes-color-options', __('Color Options','themetrust'), 'new_meta_box', 'project', 'side', 'low', array('inputs'=>$color_options) );
+
 	}
 }
 

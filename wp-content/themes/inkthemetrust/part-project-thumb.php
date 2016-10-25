@@ -12,8 +12,10 @@
 			<button>View Project</button>
 		</div>
 
-		<div class="overlay"></div>
+		<a href="<?php the_permalink(); ?>" rel="bookmark" >
+			<div class="overlay"></div>
+		</a>
 		<?php the_post_thumbnail("ttrust_portfolio", array('class' => 'thumb', 'alt' => ''.get_the_title().'', 'title' => ''.get_the_title().'')); ?>
 	
-		<a href="<?php the_permalink(); ?>" rel="bookmark" ></a>																					
+																						
 </div>
