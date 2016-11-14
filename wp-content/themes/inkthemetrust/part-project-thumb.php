@@ -5,9 +5,7 @@
 		<div class="text">
 			<div class="description">
 				<h2 class="title"><?php the_title(); ?></h2>			
-				<!--<?php if(!empty($post->post_excerpt)) { ?>		     
-					<?php the_excerpt(); ?>
-				<?php } ?>-->
+				
 			</div>
 			<button>View Project</button>
 		</div>

@@ -50,7 +50,7 @@
 
 	else : // if not, use all the skills ?>
 		<div class="filter_wrap<?php if ($_SESSION['intro'] == 'Y'): ?> faded_out<?php endif; ?>">
-			<div class="fade"></div>
+			<div class="line"></div>
 			<?php
 				
 				$skills = get_terms('skill');

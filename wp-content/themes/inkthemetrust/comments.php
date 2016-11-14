@@ -66,18 +66,27 @@
 
 	<?php else : ?>
 
-	<p><input type="text" name="author" id="author" value="<?php echo esc_attr($comment_author); ?>" size="32" tabindex="1" <?php if ($req) echo "aria-required='true'"; ?> />
-	<label for="author"><?php _e('Name', 'themetrust'); ?> <?php if ($req) _e('(required)', 'themetrust'); ?></label></p>
+	<p>
+		<label for="author"><?php _e('Name', 'themetrust'); ?> <?php if ($req) _e('(required)', 'themetrust'); ?></label>
+		<input type="text" name="author" id="author" value="<?php echo esc_attr($comment_author); ?>" size="32" tabindex="1" <?php if ($req) echo "aria-required='true'"; ?> />
+	</p>
 
-	<p><input type="text" name="email" id="email" value="<?php echo esc_attr($comment_author_email); ?>" size="32" tabindex="2" <?php if ($req) echo "aria-required='true'"; ?> />
-	<label for="email"><?php _e('Email', 'themetrust'); ?> <?php if ($req) _e('(required)', 'themetrust'); ?></label></p>
+	<p>
+		<label for="email"><?php _e('Email', 'themetrust'); ?> <?php if ($req) _e('(required)', 'themetrust'); ?></label>
+		<input type="text" name="email" id="email" value="<?php echo esc_attr($comment_author_email); ?>" size="32" tabindex="2" <?php if ($req) echo "aria-required='true'"; ?> />
+	</p>
 
-	<p><input type="text" name="url" id="url" value="<?php echo esc_attr($comment_author_url); ?>" size="32" tabindex="3" />
-	<label for="url"><?php _e('Website', 'themetrust'); ?> </label></p>
+	<p>
+		<label for="url"><?php _e('Website', 'themetrust'); ?> </label>
+		<input type="text" name="url" id="url" value="<?php echo esc_attr($comment_author_url); ?>" size="32" tabindex="3" />
+	</p>
 
 	<?php endif; ?>
 
-	<p><textarea name="comment" id="comment" cols="55" rows="6" tabindex="4"></textarea></p>
+	<p>
+		<label for="url"><?php _e('Comment', 'themetrust'); ?> </label>
+		<textarea name="comment" id="comment" cols="55" rows="6" tabindex="4"></textarea>
+	</p>
 	
 	<p>
 	<input name="submit" type="submit" class="button" style="background: none !important" id="submit" tabindex="5" value="<?php echo esc_attr(__('Submit Comment', 'themetrust')); ?>" /> <?php cancel_comment_reply_link(__('Cancel Reply', 'themetrust')); ?>

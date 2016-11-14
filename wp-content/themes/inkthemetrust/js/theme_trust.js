@@ -26,6 +26,11 @@ function isMobile(){
     );
 }
 
+/*function screenWidth() {
+	return (window.innerWidth > 0) ? window.innerWidth : screen.width;
+}*/
+
+
 ///////////////////////////////
 // Project Filtering 
 ///////////////////////////////
@@ -269,7 +274,7 @@ function setColumns()
 
 	var columns = 2;
 
-	if(isMobile()) { //mobile
+	if(gridContainer.width() < 600) { //mobile
 		columns = 1;
 	}
 

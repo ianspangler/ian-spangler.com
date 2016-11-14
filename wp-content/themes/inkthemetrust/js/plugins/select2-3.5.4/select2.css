@@ -85,7 +85,8 @@ Version: 3.4.5 Timestamp: Mon Nov  4 08:22:42 PST 2013
 	font-size: 1em;
 	margin-top: 0.5em;
     white-space: nowrap;
-    font-family: 'FJalla One', Helvetica, sans-serif;
+    font-weight: bold;
+    font-family: 'Roboto Condensed', 'FJalla One', Helvetica, sans-serif;
     text-transform: uppercase;
     text-align: center;
     text-overflow: ellipsis;
@@ -145,9 +146,10 @@ Version: 3.4.5 Timestamp: Mon Nov  4 08:22:42 PST 2013
     text-transform: uppercase;
     text-align: center;
     font-size: 0.8em;
-    font-family: 'FJalla One', Helvetica, sans-serif;
-    background-color: rgba(0,0,0,.75) !important;
-    color: #ddd;
+    font-weight: bold;
+    font-family: 'Roboto Condensed', 'FJalla One', Helvetica, sans-serif;
+    background-color: rgba(0,0,0,.8) !important;
+    color: rgba(255,255,255,0.5);
    
     /*border: 1px solid #aaa;*/
     border-top: 0;
@@ -195,7 +197,7 @@ Version: 3.4.5 Timestamp: Mon Nov  4 08:22:42 PST 2013
     width: 24px;
     height: 80%;
     position: absolute;
-    top: 9px;
+    top: 6px;
     margin: 0 5px;
 
     /*border-left: 1px solid #DDD;*/
@@ -212,17 +214,17 @@ Version: 3.4.5 Timestamp: Mon Nov  4 08:22:42 PST 2013
 }
 
 .select2-container .select2-choice .select2-arrow.arrow_right {
-    right: 2px;
+    right: 8px;
 }
 .select2-container .select2-choice .select2-arrow.arrow_left {
-    left: 2px;
+    left: 0px;
 }
 
 .select2-container .select2-choice .select2-arrow b {
     display: block;
     width: 100%;
     height: 100%;
-    background: url('select2.png') no-repeat 3px 1px;
+    background: url('select2.png') no-repeat 3px 0px;
 }
 
 .select2-search {
@@ -320,7 +322,7 @@ Version: 3.4.5 Timestamp: Mon Nov  4 08:22:42 PST 2013
     filter: none;
 }
 .select2-dropdown-open .select2-choice .select2-arrow b {
-    background-position: -15px 1px;
+    /*background-position: -15px 1px;*/
 }
 
 /* results */
@@ -348,8 +350,8 @@ Version: 3.4.5 Timestamp: Mon Nov  4 08:22:42 PST 2013
 
 .select2-result {
 
-    border-bottom: 1px solid rgba(255,255,255,0.3);
-    padding: 5px;
+    border-top: 1px solid rgba(255,255,255,0.2);
+    padding: 6px;
 }
 
 .select2-results li {
@@ -386,7 +388,7 @@ Version: 3.4.5 Timestamp: Mon Nov  4 08:22:42 PST 2013
 
 .select2-results .select2-highlighted {
     background: none;
-    color: #61f9fb;
+    color: rgba(255,255,255,0.9);
 }
 
 .select2-hidden-accessible {
@@ -653,7 +655,7 @@ disabled look for disabled choices in the results dropdown
   .select2-search input, .select2-search-choice-close, .select2-container .select2-choice abbr, .select2-container .select2-choice .select2-arrow b {
       background-image: url('select2x2.png') !important;
       background-repeat: no-repeat !important;
-      background-size: 60px 40px !important;
+      background-size: 90px 50px !important;
   }
   .select2-search input {
       background-position: 100% -21px !important;

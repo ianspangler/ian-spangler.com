@@ -2,12 +2,14 @@
 		
 		<div id="content" class="projectPage clearfix<?php if ($_SESSION['intro'] == 'Y'): ?> faded_out<?php endif; ?>">			
 			<div id="pageHead">
-				<h1><?php the_title(); ?></h1>
+				<div class="title"><h1><?php the_title(); ?></h1></div>
+				<div class="line"></div>
+
 				<div class="projectNav clearfix">
 					<div class="previous <?php if(!get_next_post()){ echo 'inactive'; }?>">
 						<?php 
 
-							$link_html = '<i class="fa fa-angle-left" aria-hidden="true"></i> <span>back</span>';
+							$link_html = '<i class="fa fa-angle-left" aria-hidden="true"></i> <span>prev</span>';
 
 							if (!get_next_post()) {
 								echo '<a href="#">'.$link_html.'</a>';
