@@ -189,9 +189,9 @@ function animateIn() {
 		jQuery('#mainNav').delay(1600).fadeIn(1000);
 		//jQuery('ul#filterNav').delay(1800).fadeIn(1000);
 		jQuery('.filter_wrap').delay(2600).animate({opacity: 1}, 800);
-		jQuery('.projectPage').delay(2600).animate({opacity: 1}, 800);
+		jQuery('#content').delay(2600).animate({opacity: 1}, 800);
 
-		var projects_delay = 2600;
+		var projects_delay = 2800;
 
 	}
 	else { //mobile
@@ -200,7 +200,7 @@ function animateIn() {
 		///jQuery("#header").delay(200).animate({opacity: 1}, 450, "easeOutSine");
 		jQuery("#header .inside").delay(200).fadeIn(450, "easeOutSine");
 		jQuery('.filter_wrap').delay(800).animate({opacity: 1}, 450, "easeOutSine");
-		jQuery('.projectPage').delay(1600).animate({opacity: 1}, 800);
+		jQuery('#content').delay(1600).animate({opacity: 1}, 800);
 		//jQuery('.filter_wrap').fadeIn(500);
 
 		var projects_delay = 1000;
@@ -221,10 +221,9 @@ function animateIn() {
 
 		if (jQuery(this).is(':visible')) {
 
-			jQuery(this).delay(projects_delay).animate({opacity: 1}, 400, "easeOutSine", 
-					function() {  });
+			jQuery(this).delay(projects_delay).animate({opacity: 1}, 300, "easeOutQuad");
 
-			projects_delay += 250;
+			projects_delay += 450;
 		}
 	});
 

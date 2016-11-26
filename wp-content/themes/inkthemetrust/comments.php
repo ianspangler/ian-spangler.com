@@ -84,8 +84,11 @@
 	<?php endif; ?>
 
 	<p>
-		<label for="url"><?php _e('Comment', 'themetrust'); ?> </label>
+		<?php if ( !is_user_logged_in() ) : ?>
+			<label for="url"><?php _e('Comment', 'themetrust'); ?> </label>
+		<?php endif; ?>
 		<textarea name="comment" id="comment" cols="55" rows="6" tabindex="4"></textarea>
+
 	</p>
 	
 	<p>

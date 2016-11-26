@@ -3,7 +3,7 @@ Template Name: Portfolio
 */ ?>
 
 <?php get_header(); ?>
-			<div id="content" class="fullProjects clearfix full">						
+			<div id="content" class="fullProjects clearfix full<?php if ($_SESSION['intro'] == 'Y'): ?> faded_out<?php endif; ?>">						
 				<?php get_template_part( 'part-projects'); ?>
 				<?php while (have_posts()) : the_post(); ?>									
 					

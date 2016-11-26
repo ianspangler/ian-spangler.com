@@ -5,7 +5,7 @@ Template Name: Blog
 ?>
 <?php get_header(); ?>
 
-<div id="content">	
+<div id="content" class="<?php if ($_SESSION['intro'] == 'Y'): ?>faded_out<?php endif; ?>">	
 	<div id="pageHead">
 		<?php $blog_page_id = of_get_option('ttrust_blog_page'); ?>
 		<?php $blog_page = get_page($blog_page_id); ?>

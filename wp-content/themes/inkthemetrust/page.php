@@ -1,6 +1,6 @@
 <?php get_header(); ?>		
 
-	<div id="content">
+	<div id="content" class="<?php if ($_SESSION['intro'] == 'Y'): ?>faded_out<?php endif; ?>">
 
 		<div id="pageHead">
 			

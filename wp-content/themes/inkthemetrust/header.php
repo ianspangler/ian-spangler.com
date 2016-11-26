@@ -46,7 +46,7 @@
 <body <?php body_class(); ?> >
 
 <div id="slideNav" class="panel">
-	<a href="javascript:jQuery.pageslide.close()" class="closeBtn"></a>								
+	<a href="javascript:jQuery.pageslide.close()" class="closeBtn">&times;</a>					
 	
 		<?php wp_nav_menu( array('menu_class' => '', 'theme_location' => 'main', 'fallback_cb' => 'default_nav' )); ?>
 	

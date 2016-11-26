@@ -1,12 +1,12 @@
 <?php get_header(); ?>	
 						 
-		<div id="content">			
+		<div id="content <?php if ($_SESSION['intro'] == 'Y'): ?> faded_out<?php endif; ?>">			
 			
 			<div id="pageHead">
 				<?php global $post; if(is_archive() && have_posts()) :
 
 					if (is_category()) : ?>
-						<h1>category: <em><?php single_cat_title(); ?></em></h1>				
+						<h1>Category: <?php single_cat_title(); ?></h1>				
 						<?php if(strlen(category_description()) > 0) echo category_description(); ?>
 					<?php elseif( is_tag() ) : ?>
 						<h1><?php single_tag_title(); ?></h1>

@@ -1,6 +1,6 @@
 <?php get_header(); ?>
 
-<div id="content">
+<div id="content" class="<?php if ($_SESSION['intro'] == 'Y'): ?>faded_out<?php endif; ?>">
 	<?php if(!is_front_page()) : ?>
 	<div id="pageHead">
 		<?php $blog_page_id = of_get_option('ttrust_blog_page'); ?>

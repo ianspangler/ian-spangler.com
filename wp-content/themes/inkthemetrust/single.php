@@ -1,14 +1,17 @@
 <?php get_header(); ?>	
 				 
-	<div id="content" class="clearfix">
+	<div id="content" class="clearfix<?php if ($_SESSION['intro'] == 'Y'): ?> faded_out<?php endif; ?>">
 		<div id="pageHead">
 			<?php $blog_page_id = of_get_option('ttrust_blog_page'); ?>
 			<?php $blog_page = get_page($blog_page_id); ?>
-			<h1>BLOG</h1>
-			<?php $page_description = get_post_meta($blog_page_id, "_ttrust_page_description_value", true); ?>
-			<?php if ($page_description) : ?>
-				<p><?php echo $page_description; ?></p>
-			<?php endif; ?>
+			<div class="title">
+				<h1>BLOG</h1>
+				<?php $page_description = get_post_meta($blog_page_id, "_ttrust_page_description_value", true); ?>
+				<?php if ($page_description) : ?>
+					<p><?php echo $page_description; ?></p>
+				<?php endif; ?>
+				<div class="line"></div>
+			</div>
 		</div>
 		<?php while (have_posts()) : the_post(); ?>
 			    
