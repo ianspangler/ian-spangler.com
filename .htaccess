@@ -36,5 +36,4 @@ RewriteRule . /index.php [L]
 #RewriteCond %{REQUEST_URI} !\.(jpe?g?|png|gif|css|js) [NC]
 #RewriteRule .* /maintenance.html [R=302,L]
 #</IfModule>
-
 # END WordPress

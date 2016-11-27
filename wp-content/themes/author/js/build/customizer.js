@@ -1,6 +1,9 @@
 jQuery(document).ready(function($){
 
-    /* Comment Display */
+    var panel = $('html', window.parent.document);
+    var avatarSection = panel.find('#accordion-section-ct_author_avatar');
+
+    /***** Comment Display *****/
 
     // add multiple select styling
     $('#comment-display-control').multipleSelect({
@@ -38,31 +41,28 @@ jQuery(document).ready(function($){
 
     $('.ms-drop.bottom').find('li').bind('click', ctHideNoneText);
 
-    /* Avatar Options */
+    /***** Avatar Options *****/
 
-    var panel = $('html', window.parent.document);
-    var avatarSection = panel.find('#accordion-section-ct_author_avatar');
+    hideAvatarUpload();
 
     function hideAvatarUpload() {
+
         var imageOption = avatarSection.find('input[value="upload"]');
 
         if( ! imageOption.prop('checked') ) {
-            avatarSection.find('#customize-control-avatar').hide();
+            avatarSection.find('#customize-control-avatar').addClass('hide');
         }
-        $(avatarSection).on('click', 'input', displayAvatarUpload);
+        avatarSection.on('click', 'input', displayAvatarUpload);
     }
-    hideAvatarUpload();
 
     function displayAvatarUpload() {
 
         if( $(this).val() === 'upload' ) {
-            avatarSection.find('#customize-control-avatar').show();
+            avatarSection.find('#customize-control-avatar').removeClass('hide');
         } else {
-            avatarSection.find('#customize-control-avatar').hide();
+            avatarSection.find('#customize-control-avatar').addClass('hide');
         }
     }
-
-
 });
 /**
  * @author zhixin wen <wenzhixin2010@gmail.com>

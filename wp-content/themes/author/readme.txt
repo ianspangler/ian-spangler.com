@@ -1,9 +1,55 @@
+Thanks for downloading Author!
+
 -------------------------------------------------------
-    Thank you for downloading Author!
+    Support
 -------------------------------------------------------
-If you need help getting setup, you can find
-documentation here:
+
+You can find tutorials and other support resources for Author in the Author Support Center:
 https://www.competethemes.com/documentation/author-support-center/
+
+Additional support resources:
+
+Support forum: http://wordpress.org/support/theme/author
+Changelog: https://www.competethemes.com/author-changelog/
+Author on Github: https://github.com/BenSibley/author
+
+-------------------------------------------------------
+    Features
+-------------------------------------------------------
+
+Author includes the following features:
+
+    * Custom logo
+    * Site Avatar
+    * Social media icons
+    * Comment display controls
+    * Custom excerpt length
+    * Show full posts on Blog
+    * Custom CSS
+
+Author also has a premium plugin upgrade called Author Pro that includes the following features:
+
+    * Custom colors
+    * Background images
+    * Background textures
+    * Featured Videos
+    * Flexible header image
+    * Google fonts
+    * More widget areas
+    * Post/Page Background Images
+    * Display controls
+    * Custom footer text
+
+Author Pro: https://www.competethemes.com/author-pro/
+
+-------------------------------------------------------
+    Additional Info:
+-------------------------------------------------------
+
+    * All menus in Author can have 1-3 tiers
+    * Featured Images on Posts and Pages have a 2x1 ratio at all screen sizes
+    * Author is child theme compatible. Download a starter child theme here:
+        https://www.competethemes.com/help/child-theme-author/
 
 
 -------------------------------------------------------
@@ -18,7 +64,6 @@ License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
 Author also uses:
 
-* Hybrid Core by Justin Tadlock, http://themehybrid.com/hybrid-core, licensed under the GPL license.
 * Fitvids, by Chris Coyier & Dave Ruper, https://github.com/davatron5000/FitVids.js/, licensed under the WTFPL license.
 * Google Fonts, http://google.com/fonts, licensed under open source licenses, see: https://developers.google.com/fonts/faq#Any_Page_OK.
 * Font Awesome by Dave Gandy, licensed under open source licenses, see: http://fortawesome.github.io/Font-Awesome/license/.
