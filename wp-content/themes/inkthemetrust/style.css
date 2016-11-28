@@ -538,9 +538,6 @@ h1 a:hover {
 	width: auto;
 }
 
-.logo_subline {
-	display: none;
-}
 
 
 .logo_subline a {
@@ -609,6 +606,8 @@ h1 a:hover {
 #logo #subline {
 	left: 37px;
 	top: 186px;
+	width: 175px;
+	height: 24px;
 }
 
 

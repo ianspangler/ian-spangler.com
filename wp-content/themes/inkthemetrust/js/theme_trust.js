@@ -163,7 +163,7 @@ function showAll() {
 	jQuery('#sidebar').show();*/
 	jQuery('.project.small').css('pointer-events', "auto");
 	jQuery('.project.small').css('opacity', 1);
-	jQuery('.logo_subline').show();
+	//jQuery('.logo_subline').show();
 
 }
 
@@ -183,7 +183,7 @@ function animateIn() {
 		jQuery('#logo #s_top').delay(1100).animate({width:0, left:'183px'}, 100);
 		jQuery('#logo #i_right').delay(1260).animate({height:0, top:'183px'}, 300, "easeOutSine");
 
-		jQuery('.logo_subline').delay(1600).fadeIn(600);
+		jQuery('#logo #subline').delay(1600).fadeOut(600);
 
 		//animate in main nav and filter nav
 		jQuery('#mainNav').delay(1600).fadeIn(1000);
