@@ -16,3 +16,8 @@ tutorials/*
 .htaccess
 /.htaccess
 /.DS_Store
+/videos/.DS_Store
+/wp-admin/.DS_Store
+/wp-admin/css/.DS_Store
+/wp-includes/js/.DS_Store
+/wp-includes/.DS_Store
