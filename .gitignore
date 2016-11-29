@@ -16,3 +16,13 @@ tutorials/*
 .htaccess
 /.htaccess
 /phpinfo.php
+/videos/.DS_Store
+/wp-admin/css/.DS_Store
+/videos/html5/.DS_Store
+/wp-includes/Requests/.DS_Store
+/wp-includes/js/.DS_Store
+/.DS_Store
+/wp-includes/SimplePie/.DS_Store
+/videos/html5/eh5v.files/.DS_Store
+/wp-includes/Text/.DS_Store
+/wp-includes/images/.DS_Store
