@@ -1,42 +1,40 @@
 <?php
 
-/*
- * Prefix: ct_author = Compete Themes Author
- */
+require_once( trailingslashit( get_template_directory() ) . 'theme-options.php' );
+foreach ( glob( trailingslashit( get_template_directory() ) . 'inc/*' ) as $filename ) {
+	include $filename;
+}
 
-// Load the core theme framework.
-require_once( trailingslashit( get_template_directory() ) . 'library/hybrid.php' );
-new Hybrid();
+if ( ! function_exists( ( 'ct_author_set_content_width' ) ) ) {
+	function ct_author_set_content_width() {
+		if ( ! isset( $content_width ) ) {
+			$content_width = 622;
+		}
+	}
+}
+add_action( 'after_setup_theme', 'ct_author_set_content_width', 0 );
 
-// theme setup
-if( !function_exists('ct_author_theme_setup' ) ) {
+if ( ! function_exists( 'ct_author_theme_setup' ) ) {
 	function ct_author_theme_setup() {
 
-		/* Get action/filter hook prefix. */
-		$prefix = hybrid_get_prefix();
-
-		// add Hybrid core functionality
-		add_theme_support( 'hybrid-core-template-hierarchy' );
-		add_theme_support( 'loop-pagination' );
-		add_theme_support( 'cleaner-gallery' );
-
-		// add functionality from WordPress core
 		add_theme_support( 'post-thumbnails' );
 		add_theme_support( 'automatic-feed-links' );
 		add_theme_support( 'title-tag' );
+		add_theme_support( 'html5', array(
+			'search-form',
+			'comment-form',
+			'comment-list',
+			'gallery',
+			'caption'
+		) );
+		add_theme_support( 'infinite-scroll', array(
+			'container' => 'loop-container',
+			'footer'    => 'overflow-container',
+			'render'    => 'ct_author_infinite_scroll_render'
+		) );
 
-		// load theme options page
-		require_once( trailingslashit( get_template_directory() ) . 'theme-options.php' );
-
-		// add inc folder files
-		foreach ( glob( trailingslashit( get_template_directory() ) . 'inc/*' ) as $filename ) {
-			include $filename;
-		}
-
-		// load text domain
 		load_theme_textdomain( 'author', get_template_directory() . '/languages' );
 
-		// register Primary menu
 		register_nav_menus( array(
 			'primary' => __( 'Primary', 'author' )
 		) );
@@ -44,43 +42,24 @@ if( !function_exists('ct_author_theme_setup' ) ) {
 }
 add_action( 'after_setup_theme', 'ct_author_theme_setup', 10 );
 
-// remove filters adding partial micro-data due to validation issues
-function ct_author_remove_hybrid_filters() {
-    remove_filter( 'the_author_posts_link', 'hybrid_the_author_posts_link', 5 );
-    remove_filter( 'get_comment_author_link', 'hybrid_get_comment_author_link', 5 );
-    remove_filter( 'get_comment_author_url_link', 'hybrid_get_comment_author_url_link', 5 );
-    remove_filter( 'comment_reply_link', 'hybrid_comment_reply_link_filter', 5 );
-    remove_filter( 'get_avatar', 'hybrid_get_avatar', 5 );
-    remove_filter( 'post_thumbnail_html', 'hybrid_post_thumbnail_html', 5 );
-    remove_filter( 'comments_popup_link_attributes', 'hybrid_comments_popup_link_attributes', 5 );
-}
-add_action('after_setup_theme', 'ct_author_remove_hybrid_filters');
+if ( ! function_exists( ( 'ct_author_register_widget_areas' ) ) ) {
+	function ct_author_register_widget_areas() {
 
-// turn off cleaner gallery if Jetpack gallery functions being used
-function ct_author_remove_cleaner_gallery() {
-
-	if( class_exists( 'Jetpack' ) && ( Jetpack::is_module_active( 'carousel' ) || Jetpack::is_module_active( 'tiled-gallery' ) ) ) {
-		remove_theme_support( 'cleaner-gallery' );
+		// after post content
+		register_sidebar( array(
+			'name'          => esc_html__( 'Primary Sidebar', 'author' ),
+			'id'            => 'primary',
+			'description'   => esc_html__( 'Widgets in this area will be shown in the sidebar', 'author' ),
+			'before_widget' => '<section id="%1$s" class="widget %2$s">',
+			'after_widget'  => '</section>',
+			'before_title'  => '<h2 class="widget-title">',
+			'after_title'   => '</h2>'
+		) );
 	}
 }
-add_action( 'after_setup_theme', 'ct_author_remove_cleaner_gallery', 11 );
+add_action( 'widgets_init', 'ct_author_register_widget_areas' );
 
-// register widget areas
-function ct_author_register_widget_areas(){
-
-    /* register after post content widget area */
-    hybrid_register_sidebar( array(
-        'name'         => __( 'Primary Sidebar', 'author' ),
-        'id'           => 'primary',
-        'description'  => __( 'Widgets in this area will be shown in the sidebar', 'author' ),
-        'before_title'  => '<h2 class="widget-title">',
-        'after_title'   => '</h2>'
-    ) );
-}
-add_action('widgets_init','ct_author_register_widget_areas');
-
-/* added to customize the comments. Same as default except -> added use of gravatar images for comment authors */
-if( !function_exists('ct_author_customize_comments' ) ) {
+if ( ! function_exists( 'ct_author_customize_comments' ) ) {
 	function ct_author_customize_comments( $comment, $args, $depth ) {
 		$GLOBALS['comment'] = $comment;
 		$comment_type       = $comment->comment_type;
@@ -93,7 +72,7 @@ if( !function_exists('ct_author_customize_comments' ) ) {
 				if ( $comment_type !== 'pingback' ) {
 					// if site admin and avatar uploaded
 					if ( $comment->comment_author_email === get_option( 'admin_email' ) && get_theme_mod( 'avatar_method' ) == 'upload' ) {
-						echo '<img alt="' . get_comment_author() . '" class="avatar avatar-48 photo" src="' . ct_author_output_avatar() . '" height="48" width="48" />';
+						echo '<img alt="' . get_comment_author() . '" class="avatar avatar-48 photo" src="' . esc_url( ct_author_output_avatar() ) . '" height="48" width="48" />';
 					} else {
 						echo get_avatar( get_comment_author_email(), 48, '', get_comment_author() );
 					}
@@ -112,478 +91,570 @@ if( !function_exists('ct_author_customize_comments' ) ) {
 			// if not a pingback
 			if ( $comment_type !== 'pingback' ) { ?>
 				<div class="comment-footer">
-					<span class="comment-date"><?php comment_date( 'n/j/Y' ); ?></span>
+					<span class="comment-date"><?php comment_date(); ?></span>
 					<?php comment_reply_link( array_merge( $args, array(
 						'reply_text' => __( 'Reply', 'author' ),
 						'depth'      => $depth,
 						'max_depth'  => $args['max_depth']
 					) ) ); ?>
-					<?php edit_comment_link( 'edit' ); ?>
+					<?php edit_comment_link( __( 'Edit', 'author' ) ); ?>
 				</div>
 			<?php } ?>
 		</article>
-	<?php
+		<?php
 	}
 }
 
-// adjustments to default comment form inputs
-if( ! function_exists( 'ct_author_update_fields' ) ) {
-    function ct_author_update_fields( $fields ) {
+if ( ! function_exists( 'ct_author_update_fields' ) ) {
+	function ct_author_update_fields( $fields ) {
 
-        // get commenter object
-        $commenter = wp_get_current_commenter();
+		$commenter = wp_get_current_commenter();
+		$req       = get_option( 'require_name_email' );
+		$label     = $req ? '*' : ' ' . __( '(optional)', 'author' );
+		$aria_req  = $req ? "aria-required='true'" : '';
 
-        // are name and email required?
-        $req = get_option( 'require_name_email' );
-
-        // required or optional label to be added
-        if ( $req == 1 ) {
-            $label = '*';
-        } else {
-            $label = ' ' . __("optional", "author");
-        }
-
-        // adds aria required tag if required
-        $aria_req = ( $req ? " aria-required='true'" : '' );
-
-        $fields['author'] =
-            '<p class="comment-form-author">
-	            <label>' . __( "Name", "author" ) . $label . '</label>
+		$fields['author'] =
+			'<p class="comment-form-author">
+	            <label for="author">' . __( "Name", "author" ) . $label . '</label>
 	            <input id="author" name="author" type="text" value="' . esc_attr( $commenter['comment_author'] ) .
-            '" size="30" ' . $aria_req . ' />
+			'" size="30" ' . $aria_req . ' />
 	        </p>';
 
-        $fields['email'] =
-            '<p class="comment-form-email">
-	            <label>' . __( "Email", "author" ) . $label . '</label>
+		$fields['email'] =
+			'<p class="comment-form-email">
+	            <label for="email">' . __( "Email", "author" ) . $label . '</label>
 	            <input id="email" name="email" type="email" value="' . esc_attr( $commenter['comment_author_email'] ) .
-            '" size="30" ' . $aria_req . ' />
+			'" size="30" ' . $aria_req . ' />
 	        </p>';
 
-        $fields['url'] =
-            '<p class="comment-form-url">
-	            <label>' . __( "Website", "author" ) . '</label>
+		$fields['url'] =
+			'<p class="comment-form-url">
+	            <label for="url">' . __( "Website", "author" ) . '</label>
 	            <input id="url" name="url" type="url" value="' . esc_attr( $commenter['comment_author_url'] ) .
-            '" size="30" />
+			'" size="30" />
 	            </p>';
 
-        return $fields;
-    }
+		return $fields;
+	}
 }
-add_filter('comment_form_default_fields','ct_author_update_fields');
+add_filter( 'comment_form_default_fields', 'ct_author_update_fields' );
 
-if( ! function_exists( 'ct_author_update_comment_field' ) ) {
-    function ct_author_update_comment_field( $comment_field ) {
+if ( ! function_exists( 'ct_author_update_comment_field' ) ) {
+	function ct_author_update_comment_field( $comment_field ) {
 
-        $comment_field =
-            '<p class="comment-form-comment">
-	            <label>' . __( "Comment", "author" ) . '</label>
+		$comment_field =
+			'<p class="comment-form-comment">
+	            <label for="comment">' . __( "Comment", "author" ) . '</label>
 	            <textarea required id="comment" name="comment" cols="45" rows="8" aria-required="true"></textarea>
 	        </p>';
 
-        return $comment_field;
-    }
+		return $comment_field;
+	}
 }
-add_filter('comment_form_field_comment','ct_author_update_comment_field');
+add_filter( 'comment_form_field_comment', 'ct_author_update_comment_field' );
 
-// remove allowed tags text after comment form
-if( !function_exists('ct_author_remove_comments_notes_after' ) ) {
+if ( ! function_exists( 'ct_author_remove_comments_notes_after' ) ) {
 	function ct_author_remove_comments_notes_after( $defaults ) {
-
 		$defaults['comment_notes_after'] = '';
-
 		return $defaults;
 	}
 }
-add_action('comment_form_defaults', 'ct_author_remove_comments_notes_after');
+add_action( 'comment_form_defaults', 'ct_author_remove_comments_notes_after' );
 
-// excerpt handling
-if( ! function_exists( 'ct_author_excerpt' ) ) {
-    function ct_author_excerpt() {
+if ( ! function_exists( 'ct_author_excerpt' ) ) {
+	function ct_author_excerpt() {
 
-        // make post variable available
-        global $post;
-
-        // make 'read more' setting available
-        global $more;
-
-        // check for the more tag
-        $ismore = strpos( $post->post_content, '<!--more-->' );
-
-        // get the show full post setting
-        $show_full_post = get_theme_mod( 'full_post' );
-
-        // if show full post is on, show full post unless on search page
-        if ( ( $show_full_post == 'yes' ) && ! is_search() ) {
-
-            // set read more value for all posts to 'off'
-            $more = - 1;
-
-            // output the full content
-            the_content();
-        }
-
-        // use the read more link if present
-        elseif ( $ismore ) {
-            the_content( __( 'Continue reading', 'author' ) . " <span class='screen-reader-text'>" . get_the_title() . "</span>" );
-        } // otherwise the excerpt is automatic, so output it
-        else {
-            the_excerpt();
-        }
-    }
-}
-
-// filter the link on excerpts
-if( !function_exists('ct_author_excerpt_read_more_link' ) ) {
-	function ct_author_excerpt_read_more_link( $output ) {
 		global $post;
+		$show_full_post = get_theme_mod( 'full_post' );
+		$read_more_text = get_theme_mod( 'read_more_text' );
+		$ismore         = strpos( $post->post_content, '<!--more-->' );
 
-		return $output . "<p><a class='more-link' href='" . get_permalink() . "'>" . __( 'Continue reading', 'author' ) . " <span class='screen-reader-text'>" . get_the_title() . "</span></a></p>";
+		if ( ( $show_full_post == 'yes' ) && ! is_search() ) {
+			if ( $ismore ) {
+				// Has to be written this way because i18n text CANNOT be stored in a variable
+				if ( ! empty( $read_more_text ) ) {
+					the_content( esc_html( $read_more_text ) . " <span class='screen-reader-text'>" . esc_html( get_the_title() ) . "</span>" );
+				} else {
+					the_content( __( 'Continue reading', 'author' ) . " <span class='screen-reader-text'>" . esc_html( get_the_title() ) . "</span>" );
+				}
+			} else {
+				the_content();
+			}
+		} elseif ( $ismore ) {
+			if ( ! empty( $read_more_text ) ) {
+				the_content( esc_html( $read_more_text ) . " <span class='screen-reader-text'>" . esc_html( get_the_title() ) . "</span>" );
+			} else {
+				the_content( __( 'Continue reading', 'author' ) . " <span class='screen-reader-text'>" . esc_html( get_the_title() ) . "</span>" );
+			}
+		} else {
+			the_excerpt();
+		}
 	}
 }
-add_filter('the_excerpt', 'ct_author_excerpt_read_more_link');
 
-// change the length of the excerpts
-function ct_author_custom_excerpt_length( $length ) {
+if ( ! function_exists( 'ct_author_excerpt_read_more_link' ) ) {
+	function ct_author_excerpt_read_more_link( $output ) {
 
-    $new_excerpt_length = get_theme_mod('excerpt_length');
+		global $post;
+		$read_more_text = get_theme_mod( 'read_more_text' );
 
-    // if there is a new length set and it's not 15, change it
-    if( ! empty( $new_excerpt_length ) && $new_excerpt_length != 25 ){
-        return $new_excerpt_length;
-    } else {
-        return 25;
-    }
+		if ( ! empty( $read_more_text ) ) {
+			return $output . "<p><a class='more-link' href='" . esc_url( get_permalink() ) . "'>" . esc_html( $read_more_text ) . " <span class='screen-reader-text'>" . esc_html( get_the_title() ) . "</span></a></p>";
+		} else {
+			return $output . "<p><a class='more-link' href='" . esc_url( get_permalink() ) . "'>" . __( 'Continue reading', 'author' ) . " <span class='screen-reader-text'>" . esc_html( get_the_title() ) . "</span></a></p>";
+		}
+	}
+}
+add_filter( 'the_excerpt', 'ct_author_excerpt_read_more_link' );
+
+if ( ! function_exists( ( 'ct_author_custom_excerpt_length' ) ) ) {
+	function ct_author_custom_excerpt_length( $length ) {
+
+		$new_excerpt_length = get_theme_mod( 'excerpt_length' );
+
+		if ( ! empty( $new_excerpt_length ) && $new_excerpt_length != 25 ) {
+			return $new_excerpt_length;
+		} elseif ( $new_excerpt_length === 0 ) {
+			return 0;
+		} else {
+			return 25;
+		}
+	}
 }
 add_filter( 'excerpt_length', 'ct_author_custom_excerpt_length', 99 );
 
-// switch [...] to ellipsis on automatic excerpt
-if( !function_exists('ct_author_new_excerpt_more' ) ) {
+if ( ! function_exists( 'ct_author_new_excerpt_more' ) ) {
 	function ct_author_new_excerpt_more( $more ) {
-		return '&#8230;';
+
+		$new_excerpt_length = get_theme_mod( 'excerpt_length' );
+		$excerpt_more       = ( $new_excerpt_length === 0 ) ? '' : '&#8230;';
+
+		return $excerpt_more;
 	}
 }
-add_filter('excerpt_more', 'ct_author_new_excerpt_more');
+add_filter( 'excerpt_more', 'ct_author_new_excerpt_more' );
 
-// turns of the automatic scrolling to the read more link
-if( !function_exists('ct_author_remove_more_link_scroll' ) ) {
+if ( ! function_exists( 'ct_author_remove_more_link_scroll' ) ) {
 	function ct_author_remove_more_link_scroll( $link ) {
 		$link = preg_replace( '|#more-[0-9]+|', '', $link );
-
 		return $link;
 	}
 }
 add_filter( 'the_content_more_link', 'ct_author_remove_more_link_scroll' );
 
-// for displaying featured images
-if( !function_exists('ct_author_featured_image' ) ) {
+if ( ! function_exists( 'ct_author_featured_image' ) ) {
 	function ct_author_featured_image() {
 
-		// get post object
 		global $post;
-
-		// default to no featured image
-		$has_image = false;
-
-		// establish featured image var
 		$featured_image = '';
 
-		// if post has an image
 		if ( has_post_thumbnail( $post->ID ) ) {
 
-			// get the featured image ID
-			$image_id = get_post_thumbnail_id( $post->ID );
-
-			// get the image's alt text
-			$image_alt_text = get_post_meta($image_id, '_wp_attachment_image_alt', true);
-
-			// get the full-size version of the image
-			$image = wp_get_attachment_image_src( get_post_thumbnail_id( $post->ID ), 'single-post-thumbnail' );
-
-			// set $image = the url
-			$image = $image[0];
-
-			// if alt text is empty, nothing else equal to title string
-			$title = empty($image_alt_text) ? '' : "title='$image_alt_text'";
-
-			// set to true
-			$has_image = true;
-		}
-		if ( $has_image == true ) {
-
-			// on posts/pages display the featured image
 			if ( is_singular() ) {
-				$featured_image = "<div class='featured-image' style=\"background-image: url('" . $image . "')\" $title></div>";
-			} // on blog/archives display with a link
-			else {
-				$featured_image = "
-                <div class='featured-image' style=\"background-image: url('" . $image . "')\" $title>
-                    <a href='" . get_permalink() . "'>" . get_the_title() . "</a>
-                </div>
-                ";
+				$featured_image = '<div class="featured-image">' . get_the_post_thumbnail( $post->ID, 'full' ) . '</div>';
+			} else {
+				$featured_image = '<div class="featured-image"><a href="' . esc_url( get_permalink() ) . '">' . esc_html( get_the_title() ) . get_the_post_thumbnail( $post->ID, 'full' ) . '</a></div>';
 			}
 		}
 
-		// allow videos to be added
 		$featured_image = apply_filters( 'ct_author_featured_image', $featured_image );
 
-		if( $featured_image ) {
+		if ( $featured_image ) {
 			echo $featured_image;
 		}
 	}
 }
 
-// fix for bug with Disqus saying comments are closed
-if ( function_exists( 'dsq_options' ) ) {
-    remove_filter( 'comments_template', 'dsq_comments_template' );
-    add_filter( 'comments_template', 'dsq_comments_template', 99 ); // You can use any priority higher than '10'
+if ( ! function_exists( 'ct_author_social_array' ) ) {
+	function ct_author_social_array() {
+
+		$social_sites = array(
+			'twitter'       => 'author_twitter_profile',
+			'facebook'      => 'author_facebook_profile',
+			'google-plus'   => 'author_googleplus_profile',
+			'pinterest'     => 'author_pinterest_profile',
+			'linkedin'      => 'author_linkedin_profile',
+			'youtube'       => 'author_youtube_profile',
+			'vimeo'         => 'author_vimeo_profile',
+			'tumblr'        => 'author_tumblr_profile',
+			'instagram'     => 'author_instagram_profile',
+			'flickr'        => 'author_flickr_profile',
+			'dribbble'      => 'author_dribbble_profile',
+			'rss'           => 'author_rss_profile',
+			'reddit'        => 'author_reddit_profile',
+			'soundcloud'    => 'author_soundcloud_profile',
+			'spotify'       => 'author_spotify_profile',
+			'vine'          => 'author_vine_profile',
+			'yahoo'         => 'author_yahoo_profile',
+			'behance'       => 'author_behance_profile',
+			'codepen'       => 'author_codepen_profile',
+			'delicious'     => 'author_delicious_profile',
+			'stumbleupon'   => 'author_stumbleupon_profile',
+			'deviantart'    => 'author_deviantart_profile',
+			'digg'          => 'author_digg_profile',
+			'github'        => 'author_github_profile',
+			'hacker-news'   => 'author_hacker-news_profile',
+			'foursquare'    => 'author_foursquare_profile',
+			'slack'         => 'author_slack_profile',
+			'slideshare'    => 'author_slideshare_profile',
+			'skype'         => 'author_skype_profile',
+			'whatsapp'      => 'author_whatsapp_profile',
+			'qq'            => 'author_qq_profile',
+			'wechat'        => 'author_wechat_profile',
+			'xing'          => 'author_xing_profile',
+			'500px'         => 'author_500px_profile',
+			'paypal'        => 'author_paypal_profile',
+			'steam'         => 'author_steam_profile',
+			'vk'            => 'author_vk_profile',
+			'weibo'         => 'author_weibo_profile',
+			'tencent-weibo' => 'author_tencent_weibo_profile',
+			'email'         => 'author_email_profile',
+			'email-form'    => 'author_email_form_profile'
+		);
+
+		return apply_filters( 'ct_author_social_array_filter', $social_sites );
+	}
 }
 
-// associative array of social media sites
-function ct_author_social_array(){
+if ( ! function_exists( 'ct_author_social_icons_output' ) ) {
+	function ct_author_social_icons_output() {
 
-	$social_sites = array(
-		'twitter' => 'author_twitter_profile',
-		'facebook' => 'author_facebook_profile',
-		'google-plus' => 'author_googleplus_profile',
-		'pinterest' => 'author_pinterest_profile',
-		'linkedin' => 'author_linkedin_profile',
-		'youtube' => 'author_youtube_profile',
-		'vimeo' => 'author_vimeo_profile',
-		'tumblr' => 'author_tumblr_profile',
-		'instagram' => 'author_instagram_profile',
-		'flickr' => 'author_flickr_profile',
-		'dribbble' => 'author_dribbble_profile',
-		'rss' => 'author_rss_profile',
-		'reddit' => 'author_reddit_profile',
-		'soundcloud' => 'author_soundcloud_profile',
-		'spotify' => 'author_spotify_profile',
-		'vine' => 'author_vine_profile',
-		'yahoo' => 'author_yahoo_profile',
-		'behance' => 'author_behance_profile',
-		'codepen' => 'author_codepen_profile',
-		'delicious' => 'author_delicious_profile',
-		'stumbleupon' => 'author_stumbleupon_profile',
-		'deviantart' => 'author_deviantart_profile',
-		'digg' => 'author_digg_profile',
-		'git' => 'author_git_profile',
-		'hacker-news' => 'author_hacker-news_profile',
-		'steam' => 'author_steam_profile',
-		'vk' => 'author_vk_profile',
-		'weibo' => 'author_weibo_profile',
-		'tencent-weibo' => 'author_tencent_weibo_profile',
-		'email' => 'author_email_profile'
-	);
-	return $social_sites;
-}
+		$social_sites = ct_author_social_array();
+		$square_icons = array(
+			'linkedin',
+			'twitter',
+			'vimeo',
+			'youtube',
+			'pinterest',
+			'rss',
+			'reddit',
+			'tumblr',
+			'steam',
+			'xing',
+			'github',
+			'google-plus',
+			'behance',
+			'facebook'
+		);
 
-// used in ct_author_social_icons_output to return urls
-function ct_author_get_social_url($source, $site){
+		foreach ( $social_sites as $social_site => $profile ) {
 
-    if( $source == 'header' ) {
-        return get_theme_mod($site);
-    } elseif( $source == 'author' ) {
-        return get_the_author_meta($site);
-    }
-}
+			if ( strlen( get_theme_mod( $social_site ) ) > 0 ) {
+				$active_sites[ $social_site ] = $social_site;
+			}
+		}
 
-// output social icons
-if( ! function_exists('ct_author_social_icons_output') ) {
-    function ct_author_social_icons_output($source) {
+		if ( ! empty( $active_sites ) ) {
 
-        // get social sites array
-        $social_sites = ct_author_social_array();
+			echo "<div class='social-media-icons'><ul>";
 
-        // store the site name and url
-        foreach ( $social_sites as $social_site => $profile ) {
+				foreach ( $active_sites as $key => $active_site ) {
 
-            if( $source == 'header') {
+					// get the square or plain class
+					if ( in_array( $active_site, $square_icons ) ) {
+						$class = 'fa fa-' . $active_site . '-square';
+					} else {
+						$class = 'fa fa-' . $active_site;
+					}
+					if ( $active_site == 'email-form' ) {
+						$class = 'fa fa-envelope-o';
+					}
 
-                if ( strlen( get_theme_mod( $social_site ) ) > 0 ) {
-                    $active_sites[$social_site] = $social_site;
-                }
-            }
-            elseif( $source == 'author' ) {
-
-                if ( strlen( get_the_author_meta( $profile ) ) > 0 ) {
-                    $active_sites[$profile] = $social_site;
-                }
-            }
-        }
-
-        // for each active social site, add it as a list item
-        if ( ! empty( $active_sites ) ) {
-
-            echo "<div class='social-media-icons'><ul>";
-
-            foreach ( $active_sites as $key => $active_site ) {
-
-                if ( $active_site == 'email' ) {
-                    ?>
-                    <li>
-                        <a class="email" target="_blank" href="mailto:<?php echo antispambot( is_email( ct_author_get_social_url( $source, $key ) ) ); ?>">
-                            <i class="fa fa-envelope" title="<?php _e('email icon', 'author'); ?>"></i>
-                        </a>
-                    </li>
-                <?php } elseif ( $active_site == "flickr" || $active_site == "dribbble" || $active_site == "instagram" || $active_site == "soundcloud" || $active_site == "spotify" || $active_site == "vine" || $active_site == "yahoo" || $active_site == "codepen" || $active_site == "delicious" || $active_site == "stumbleupon" || $active_site == "deviantart" || $active_site == "digg" || $active_site == "hacker-news" || $active_site == "vk" || $active_site == 'weibo' || $active_site == 'tencent-weibo' ) { ?>
-                    <li>
-                        <a class="<?php echo $active_site; ?>" target="_blank" href="<?php echo esc_url( ct_author_get_social_url( $source, $key ) ); ?>">
-                            <i class="fa fa-<?php echo esc_attr( $active_site ); ?>" title="<?php printf( __('%s icon', 'author'), $active_site ); ?>"></i>
-                        </a>
-                    </li>
-                <?php } else { ?>
-                    <li>
-                        <a class="<?php echo $active_site; ?>" target="_blank" href="<?php echo esc_url( ct_author_get_social_url( $source, $key ) ); ?>">
-                            <i class="fa fa-<?php echo esc_attr( $active_site ); ?>-square" title="<?php printf( __('%s icon', 'author'), $active_site ); ?>"></i>
-                        </a>
-                    </li>
-                <?php
-                }
-            }
-            echo "</div></ul>";
-        }
-    }
+					if ( $active_site == 'email' ) { ?>
+						<li>
+							<a class="email" target="_blank"
+							   href="mailto:<?php echo antispambot( is_email( get_theme_mod( $active_site ) ) ); ?>">
+								<i class="fa fa-envelope" title="<?php esc_attr_e( 'email', 'author' ); ?>"></i>
+								<span class="screen-reader-text"><?php esc_html_e('email', 'author'); ?></span>
+							</a>
+						</li>
+					<?php } elseif ( $active_site == 'skype' ) { ?>
+						<li>
+							<a class="<?php echo esc_attr( $active_site ); ?>" target="_blank"
+							   href="<?php echo esc_url( get_theme_mod( $active_site ), array( 'http', 'https', 'skype' ) ); ?>">
+								<i class="<?php echo esc_attr( $class ); ?>"
+								   title="<?php echo esc_attr( $active_site ); ?>"></i>
+								<span class="screen-reader-text"><?php echo esc_html( $active_site );  ?></span>
+							</a>
+						</li>
+					<?php } else { ?>
+						<li>
+							<a class="<?php echo esc_attr( $active_site ); ?>" target="_blank"
+							   href="<?php echo esc_url( get_theme_mod( $active_site ) ); ?>">
+								<i class="<?php echo esc_attr( $class ); ?>"
+								   title="<?php echo esc_attr( $active_site ); ?>"></i>
+								<span class="screen-reader-text"><?php echo esc_html( $active_site );  ?></span>
+							</a>
+						</li>
+						<?php
+					}
+				}
+			echo "</ul></div>";
+		}
+	}
 }
 
 /*
  * WP will apply the ".menu-primary-items" class & id to the containing <div> instead of <ul>
  * making styling difficult and confusing. Using this wrapper to add a unique class to make styling easier.
  */
-function ct_author_wp_page_menu() {
-    wp_page_menu(array(
-            "menu_class" => "menu-unset",
-            "depth"      => -1
-        )
-    );
-}
-
-function ct_author_wp_backwards_compatibility() {
-
-	// not using this function, simply remove it so use of "has_image_size" doesn't break < 3.9
-	if( version_compare( get_bloginfo('version'), '3.9', '<') ) {
-		remove_filter( 'image_size_names_choose', 'hybrid_image_size_names_choose' );
+if ( ! function_exists( ( 'ct_author_wp_page_menu' ) ) ) {
+	function ct_author_wp_page_menu() {
+		wp_page_menu( array(
+				"menu_class" => "menu-unset",
+				"depth"      => - 1
+			)
+		);
 	}
 }
-add_action('init', 'ct_author_wp_backwards_compatibility');
 
 // used in header.php for primary avatar and comments
-function ct_author_output_avatar() {
+if ( ! function_exists( ( 'ct_author_output_avatar' ) ) ) {
+	function ct_author_output_avatar() {
 
-    // get method for displaying avatar
-    $avatar_method = get_theme_mod('avatar_method');
+		$avatar_method = get_theme_mod( 'avatar_method' );
+		$avatar        = '';
 
-    // if neither gravatar, nor upload used
-    $avatar = '';
+		if ( $avatar_method == 'gravatar' ) {
+			$avatar = get_avatar( get_option( 'admin_email' ) );
+			// use regex to grab source from <img /> markup
+			$avatar = ct_author_get_avatar_url( $avatar );
+		} elseif ( $avatar_method == 'upload' ) {
+			$avatar = get_theme_mod( 'avatar' );
+		}
 
-    // if using gravatar
-    if( $avatar_method == 'gravatar' ){
-        // get the avatar from the admin email
-        $avatar = get_avatar( get_option('admin_email'));
-        // use regex to grab source from <img /> markup
-        $avatar = ct_author_get_avatar_url($avatar);
-    }
-    // if using an upload
-    elseif( $avatar_method == 'upload') {
-        // get the uploaded image
-        $avatar = get_theme_mod('avatar');
-    }
-    return $avatar;
+		return $avatar;
+	}
 }
 
-function ct_author_get_avatar_url($get_avatar){
-    preg_match("/src='(.*?)'/i", $get_avatar, $matches);
-    return $matches[1];
+if ( ! function_exists( ( 'ct_author_get_avatar_url' ) ) ) {
+	function ct_author_get_avatar_url( $get_avatar ) {
+		// WP User Avatar switches the use of quotes
+		if ( class_exists( 'WP_User_Avatar' ) ) {
+			preg_match( '/src="([^"]*)"/i', $get_avatar, $matches );
+		} else {
+			preg_match( "/src='([^']*)'/i", $get_avatar, $matches );
+		}
+
+		return $matches[1];
+	}
 }
 
-function ct_author_nav_dropdown_buttons( $item_output, $item, $depth, $args ) {
+if ( ! function_exists( ( 'ct_author_nav_dropdown_buttons' ) ) ) {
+	function ct_author_nav_dropdown_buttons( $item_output, $item, $depth, $args ) {
 
-    if ( 'primary' == $args->theme_location) {
+		if ( $args->theme_location == 'primary' ) {
 
-        if( in_array('menu-item-has-children', $item->classes ) || in_array('page_item_has_children', $item->classes ) ) {
-            $item_output = str_replace( $args->link_after . '</a>', $args->link_after . '</a><button class="toggle-dropdown" aria-expanded="false"><span class="screen-reader-text">open child menu</span></button>', $item_output );
-        }
-    }
+			if ( in_array( 'menu-item-has-children', $item->classes ) || in_array( 'page_item_has_children', $item->classes ) ) {
+				$item_output = str_replace( $args->link_after . '</a>', $args->link_after . '</a><button class="toggle-dropdown" aria-expanded="false"><span class="screen-reader-text">open child menu</span></button>', $item_output );
+			}
+		}
 
-    return $item_output;
+		return $item_output;
+	}
 }
 add_filter( 'walker_nav_menu_start_el', 'ct_author_nav_dropdown_buttons', 10, 4 );
 
-// custom css output
-function ct_author_custom_css_output(){
+if ( ! function_exists( ( 'ct_author_custom_css_output' ) ) ) {
+	function ct_author_custom_css_output() {
 
-    $custom_css = get_theme_mod('custom_css');
+		$custom_css = get_theme_mod( 'custom_css' );
 
-    /* output custom css */
-    if( $custom_css ) {
-        wp_add_inline_style( 'ct-author-style', $custom_css );
-        wp_add_inline_style( 'ct-author-style-rtl', $custom_css );
-    }
+		if ( $custom_css ) {
+			$custom_css = ct_author_sanitize_css( $custom_css );
+			wp_add_inline_style( 'ct-author-style', $custom_css );
+			wp_add_inline_style( 'ct-author-style-rtl', $custom_css );
+		}
+	}
 }
-add_action('wp_enqueue_scripts', 'ct_author_custom_css_output', 20);
+add_action( 'wp_enqueue_scripts', 'ct_author_custom_css_output', 20 );
 
-function ct_author_body_class( $classes ) {
+if ( ! function_exists( ( 'ct_author_body_class' ) ) ) {
+	function ct_author_body_class( $classes ) {
 
-    /* get full post setting */
-    $full_post = get_theme_mod('full_post');
+		global $post;
 
-    /* if full post setting on */
-    if( $full_post == 'yes' ) {
-        $classes[] = 'full-post';
-    }
-    return $classes;
+		$full_post = get_theme_mod( 'full_post' );
+
+		if ( $full_post == 'yes' ) {
+			$classes[] = 'full-post';
+		}
+
+		if ( is_singular() ) {
+			$classes[] = 'singular';
+			if ( is_singular( 'page' ) ) {
+				$classes[] = 'singular-page';
+				$classes[] = 'singular-page-' . $post->ID;
+			} elseif ( is_singular( 'post' ) ) {
+				$classes[] = 'singular-post';
+				$classes[] = 'singular-post-' . $post->ID;
+			} elseif ( is_singular( 'attachment' ) ) {
+				$classes[] = 'singular-attachment';
+				$classes[] = 'singular-attachment-' . $post->ID;
+			}
+		}
+
+		return $classes;
+	}
 }
 add_filter( 'body_class', 'ct_author_body_class' );
 
-function ct_author_reset_customizer_options() {
+if ( ! function_exists( ( 'ct_author_post_class' ) ) ) {
+	function ct_author_post_class( $classes ) {
+		$classes[] = 'entry';
 
-    // validate name and value
-    if( empty( $_POST['author_reset_customizer'] ) || 'author_reset_customizer_settings' !== $_POST['author_reset_customizer'] )
-        return;
+		return $classes;
+	}
+}
+add_filter( 'post_class', 'ct_author_post_class' );
 
-    // validate nonce
-    if( ! wp_verify_nonce( $_POST['author_reset_customizer_nonce'], 'author_reset_customizer_nonce' ) )
-        return;
+if ( ! function_exists( ( 'ct_author_reset_customizer_options' ) ) ) {
+	function ct_author_reset_customizer_options() {
 
-    // validate user permissions
-    if( ! current_user_can( 'manage_options' ) )
-        return;
+		if ( empty( $_POST['author_reset_customizer'] ) || 'author_reset_customizer_settings' !== $_POST['author_reset_customizer'] ) {
+			return;
+		}
 
-    // delete customizer mods
-    remove_theme_mods();
+		if ( ! wp_verify_nonce( $_POST['author_reset_customizer_nonce'], 'author_reset_customizer_nonce' ) ) {
+			return;
+		}
 
-    $redirect = admin_url( 'themes.php?page=author-options' );
-    $redirect = add_query_arg( 'author_status', 'deleted', $redirect);
+		if ( ! current_user_can( 'edit_theme_options' ) ) {
+			return;
+		}
 
-    // safely redirect
-    wp_safe_redirect( $redirect ); exit;
+		$mods_array = array(
+			'avatar_method',
+			'avatar',
+			'logo_upload',
+			'full_post',
+			'excerpt_length',
+			'read_more_text',
+			'comments_display',
+			'custom_css'
+		);
+
+		$social_sites = ct_author_social_array();
+
+		// add social site settings to mods array
+		foreach ( $social_sites as $social_site => $value ) {
+			$mods_array[] = $social_site;
+		}
+
+		$mods_array = apply_filters( 'ct_author_mods_to_remove', $mods_array );
+
+		foreach ( $mods_array as $theme_mod ) {
+			remove_theme_mod( $theme_mod );
+		}
+
+		$redirect = admin_url( 'themes.php?page=author-options' );
+		$redirect = add_query_arg( 'author_status', 'deleted', $redirect );
+
+		// safely redirect
+		wp_safe_redirect( $redirect );
+		exit;
+	}
 }
 add_action( 'admin_init', 'ct_author_reset_customizer_options' );
 
-function ct_author_delete_settings_notice() {
+if ( ! function_exists( ( 'ct_author_delete_settings_notice' ) ) ) {
+	function ct_author_delete_settings_notice() {
 
-    if ( isset( $_GET['author_status'] ) ) {
-        ?>
-        <div class="updated">
-            <p><?php _e( 'Customizer settings deleted', 'author' ); ?>.</p>
-        </div>
-    <?php
-    }
+		if ( isset( $_GET['author_status'] ) ) {
+			?>
+			<div class="updated">
+				<p><?php _e( 'Customizer settings deleted', 'author' ); ?>.</p>
+			</div>
+			<?php
+		}
+	}
 }
 add_action( 'admin_notices', 'ct_author_delete_settings_notice' );
 
-if ( ! function_exists( '_wp_render_title_tag' ) ) :
-    function ct_author_add_title_tag() {
-        ?>
-        <title><?php wp_title(); ?></title>
-    <?php
-    }
-    add_action( 'wp_head', 'ct_author_add_title_tag' );
-endif;
+if ( ! function_exists( ( 'ct_author_sticky_post_marker' ) ) ) {
+	function ct_author_sticky_post_marker() {
 
-function ct_author_sticky_post_marker() {
-
-    if( is_sticky() && !is_archive() ) {
-        echo '<span class="sticky-status">' . __("Featured Post", "author") . '</span>';
-    }
+		if ( is_sticky() && ! is_archive() ) {
+			echo '<span class="sticky-status">' . __( "Featured Post", "author" ) . '</span>';
+		}
+	}
 }
 add_action( 'archive_post_before', 'ct_author_sticky_post_marker' );
+
+if ( ! function_exists( ( 'ct_author_add_meta_elements' ) ) ) {
+	function ct_author_add_meta_elements() {
+
+		$meta_elements = '';
+
+		$meta_elements .= sprintf( '<meta charset="%s" />' . "\n", esc_html( get_bloginfo( 'charset' ) ) );
+		$meta_elements .= '<meta name="viewport" content="width=device-width, initial-scale=1" />' . "\n";
+
+		$theme    = wp_get_theme( get_template() );
+		$template = sprintf( '<meta name="template" content="%s %s" />' . "\n", esc_attr( $theme->get( 'Name' ) ), esc_attr( $theme->get( 'Version' ) ) );
+		$meta_elements .= $template;
+
+		echo $meta_elements;
+	}
+}
+add_action( 'wp_head', 'ct_author_add_meta_elements', 1 );
+
+// Move the WordPress generator to a better priority.
+remove_action( 'wp_head', 'wp_generator' );
+add_action( 'wp_head', 'wp_generator', 1 );
+
+if ( ! function_exists( ( 'ct_author_infinite_scroll_render' ) ) ) {
+	function ct_author_infinite_scroll_render() {
+		while ( have_posts() ) {
+			the_post();
+			get_template_part( 'content', 'archive' );
+		}
+	}
+}
+
+if ( ! function_exists( 'ct_author_get_content_template' ) ) {
+	function ct_author_get_content_template() {
+
+		/* Blog */
+		if ( is_home() ) {
+			get_template_part( 'content', 'archive' );
+		} /* Post */
+		elseif ( is_singular( 'post' ) ) {
+			get_template_part( 'content' );
+		} /* Page */
+		elseif ( is_page() ) {
+			get_template_part( 'content', 'page' );
+		} /* Attachment */
+		elseif ( is_attachment() ) {
+			get_template_part( 'content', 'attachment' );
+		} /* Archive */
+		elseif ( is_archive() ) {
+			get_template_part( 'content', 'archive' );
+		} /* Custom Post Type */
+		else {
+			get_template_part( 'content' );
+		}
+	}
+}
+
+// allow skype URIs to be used
+if ( ! function_exists( ( 'ct_author_allow_skype_protocol' ) ) ) {
+	function ct_author_allow_skype_protocol( $protocols ) {
+		$protocols[] = 'skype';
+
+		return $protocols;
+	}
+}
+add_filter( 'kses_allowed_protocols' , 'ct_author_allow_skype_protocol' );
+
+// trigger theme switch on link click and send to Appearance menu
+function ct_author_welcome_redirect() {
+
+	$welcome_url = add_query_arg(
+		array(
+			'page' => 'author-options'
+		),
+		admin_url( 'themes.php' )
+	);
+	wp_redirect( esc_url( $welcome_url ) );
+}
+add_action( 'after_switch_theme', 'ct_author_welcome_redirect' );

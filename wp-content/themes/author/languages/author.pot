@@ -1,17 +1,17 @@
-# Copyright (C) 2015 Compete Themes
+# Copyright (C) 2016 Compete Themes
 # This file is distributed under the GNU General Public License v2 or later.
 msgid ""
 msgstr ""
-"Project-Id-Version: Author 1.07.1\n"
-"Report-Msgid-Bugs-To: http://wordpress.org/support/theme/style\n"
-"POT-Creation-Date: 2015-05-19 12:23:28+00:00\n"
+"Project-Id-Version: Author 1.23\n"
+"Report-Msgid-Bugs-To: https://wordpress.org/support/theme/style\n"
+"POT-Creation-Date: 2016-11-02 13:00:13+00:00\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"PO-Revision-Date: 2015-MO-DA HO:MI+ZONE\n"
+"PO-Revision-Date: 2016-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
-"X-Generator: grunt-wp-i18n 0.4.9\n"
+"X-Generator: grunt-wp-i18n 0.5.3\n"
 
 #: 404.php:5
 msgid "404: Page Not Found"
@@ -23,49 +23,37 @@ msgid ""
 "correct or try the search form below to find what you were looking for."
 msgstr ""
 
-#: comments.php:26 comments.php:45 comments.php:66
+#: comments.php:21 comments.php:41 comments.php:63
 msgid "Be First to Comment"
 msgstr ""
 
-#: comments.php:26 comments.php:45 comments.php:66
+#: comments.php:21 comments.php:41 comments.php:63
 msgid "One Comment"
 msgstr ""
 
-#: comments.php:26 comments.php:45 comments.php:66
+#: comments.php:21 comments.php:41 comments.php:63
 msgid "% Comments"
 msgstr ""
 
-#: comments.php:58
+#: comments.php:55
 msgid ""
 "Comments are closed, but <a href=\"%s\" title=\"Trackback URL for this "
 "post\">trackbacks</a> and pingbacks are open."
 msgstr ""
 
-#: comments.php:79 comments.php:85
+#: comments.php:77 comments.php:84
 msgid "Comments are closed."
 msgstr ""
 
-#: content/archive-header.php:7
-msgid "Category archive for:"
+#: content/archive-header.php:4 inc/customizer.php:310 inc/customizer.php:367
+msgid "Posts"
 msgstr ""
 
-#: content/archive-header.php:18
-msgid "Tag archive for:"
-msgstr ""
-
-#: content/archive-header.php:30
-msgid "Author archive for:"
-msgstr ""
-
-#: content/archive-header.php:41
-msgid "Date archive for:"
-msgstr ""
-
-#: content/post-categories.php:16
+#: content/post-categories.php:9
 msgid "Published in"
 msgstr ""
 
-#: content/post-categories.php:19
+#: content/post-categories.php:12
 msgid "View all posts in %s"
 msgstr ""
 
@@ -77,305 +65,291 @@ msgstr ""
 msgid "Next Image"
 msgstr ""
 
-#: content/post-nav.php:11
+#: content/post-nav.php:6
 msgid "Previous Post"
 msgstr ""
 
-#: content/post-nav.php:13
-msgid "The Previous Post"
-msgstr ""
-
-#: content/post-nav.php:20
+#: content/post-nav.php:9
 msgid "No Older Posts"
 msgstr ""
 
-#: content/post-nav.php:22 content/post-nav.php:44
+#: content/post-nav.php:15 content/post-nav.php:28
 msgid "Return to Blog"
 msgstr ""
 
-#: content/post-nav.php:33
+#: content/post-nav.php:19
 msgid "Next Post"
 msgstr ""
 
-#: content/post-nav.php:35
-msgid "The Next Post"
-msgstr ""
-
-#: content/post-nav.php:42
+#: content/post-nav.php:22
 msgid "No Newer Posts"
 msgstr ""
 
-#: content/post-tags.php:7
+#: content/post-tags.php:8
 msgid "View all posts tagged %s"
 msgstr ""
 
-#: content-page.php:10 content.php:17
+#: content-page.php:11 content.php:12
 msgid "Pages:"
 msgstr ""
 
-#: footer.php:10
+#: footer.php:8
 msgid "<a href=\"%s\">Author WordPress Theme</a> by Compete Themes"
 msgstr ""
 
-#: functions.php:41
+#: functions.php:39
 msgid "Primary"
 msgstr ""
 
-#: functions.php:73
+#: functions.php:50
 msgid "Primary Sidebar"
 msgstr ""
 
-#: functions.php:75
+#: functions.php:52
 msgid "Widgets in this area will be shown in the sidebar"
 msgstr ""
 
-#: functions.php:106
+#: functions.php:85
 msgid "Your comment is awaiting moderation."
 msgstr ""
 
-#: functions.php:117
+#: functions.php:96
 msgid "Reply"
 msgstr ""
 
-#: functions.php:143
-msgid "optional"
+#: functions.php:100
+msgid "Edit"
 msgstr ""
 
-#: functions.php:151
+#: functions.php:113
+msgid "(optional)"
+msgstr ""
+
+#: functions.php:118
 msgid "Name"
 msgstr ""
 
-#: functions.php:158
+#: functions.php:125
 msgid "Email"
 msgstr ""
 
-#: functions.php:165
+#: functions.php:132
 msgid "Website"
 msgstr ""
 
-#: functions.php:180
+#: functions.php:147
 msgid "Comment"
 msgstr ""
 
-#: functions.php:228 functions.php:241
+#: functions.php:178 functions.php:187 functions.php:204 inc/customizer.php:279
 msgid "Continue reading"
 msgstr ""
 
-#: functions.php:425
-msgid "email icon"
+#: functions.php:367 functions.php:368
+msgid "email"
 msgstr ""
 
-#: functions.php:431 functions.php:437
-msgid "%s icon"
-msgstr ""
-
-#: functions.php:567
+#: functions.php:566
 msgid "Customizer settings deleted"
 msgstr ""
 
-#: functions.php:586
+#: functions.php:578
 msgid "Featured Post"
 msgstr ""
 
-#: header.php:19
+#: header.php:11
 msgid "Skip to content"
 msgstr ""
 
-#: header.php:40 inc/scripts.php:13
+#: header.php:24
+msgid "avatar"
+msgstr ""
+
+#: header.php:35 inc/scripts.php:16
 msgid "open primary menu"
 msgstr ""
 
-#: inc/customizer.php:12
+#: inc/customizer.php:14
 msgid "Front Page"
 msgstr ""
 
-#: inc/customizer.php:14
-msgid "Menus"
-msgstr ""
-
-#: inc/customizer.php:95
+#: inc/customizer.php:53
 msgid ""
-"Activate <a target=\"_blank\" href=\"%s\">Author Pro</a> to change your "
-"colors."
+"<a target=\"_blank\" href=\"%s\">Author Pro</a> is the plugin that makes "
+"advanced customization simple - and fun too!"
 msgstr ""
 
-#: inc/customizer.php:102
+#: inc/customizer.php:55
+msgid "Custom Colors"
+msgstr ""
+
+#: inc/customizer.php:56
+msgid "Background Images"
+msgstr ""
+
+#: inc/customizer.php:57
+msgid "New Fonts"
+msgstr ""
+
+#: inc/customizer.php:58
+msgid "+ 9 more features"
+msgstr ""
+
+#: inc/customizer.php:60
 msgid ""
-"Activate <a target=\"_blank\" href=\"%s\">Author Pro</a> for advanced "
-"header image functionality."
+"View our gallery of screenshots and videos now to see if Author Pro is "
+"right for your site."
 msgstr ""
 
-#: inc/customizer.php:109
-msgid ""
-"Activate <a target=\"_blank\" href=\"%s\">Author Pro</a> for advanced "
-"background image and texture functionality."
+#: inc/customizer.php:61
+msgid "View Author Pro"
 msgstr ""
 
-#: inc/customizer.php:116
-msgid ""
-"Activate <a target=\"_blank\" href=\"%s\">Author Pro</a> to change your "
-"font."
+#: inc/customizer.php:71
+msgid "Author Pro"
 msgstr ""
 
-#: inc/customizer.php:123
-msgid ""
-"Activate <a target=\"_blank\" href=\"%s\">Author Pro</a> to get hide/show "
-"controls."
-msgstr ""
-
-#: inc/customizer.php:130
-msgid ""
-"Activate <a target=\"_blank\" href=\"%s\">Author Pro</a> to customize the "
-"footer text."
-msgstr ""
-
-#: inc/customizer.php:138
+#: inc/customizer.php:91
 msgid "Avatar"
 msgstr ""
 
-#: inc/customizer.php:151
+#: inc/customizer.php:101
 msgid "Avatar image source"
 msgstr ""
 
-#: inc/customizer.php:156 inc/customizer.php:541
+#: inc/customizer.php:105
+msgid "Gravatar uses the admin email address."
+msgstr ""
+
+#: inc/customizer.php:107 inc/customizer.php:381
 msgid "Gravatar"
 msgstr ""
 
-#: inc/customizer.php:157 inc/customizer.php:542
+#: inc/customizer.php:108 inc/customizer.php:382
 msgid "Upload an image"
 msgstr ""
 
-#: inc/customizer.php:158 inc/customizer.php:543
+#: inc/customizer.php:109 inc/customizer.php:383
 msgid "Do not display avatar"
 msgstr ""
 
-#: inc/customizer.php:170
+#: inc/customizer.php:119
 msgid "Upload your avatar"
 msgstr ""
 
-#: inc/customizer.php:180
+#: inc/customizer.php:129
 msgid "Logo"
 msgstr ""
 
-#: inc/customizer.php:183
+#: inc/customizer.php:131
 msgid "Use this instead of the avatar if you want a non-rounded logo image."
 msgstr ""
 
-#: inc/customizer.php:194
+#: inc/customizer.php:140
 msgid "Upload custom logo."
 msgstr ""
 
-#: inc/customizer.php:210
+#: inc/customizer.php:156
 msgid "Social Media Icons"
 msgstr ""
 
-#: inc/customizer.php:226
-msgid "address:"
+#: inc/customizer.php:158
+msgid "Add the URL for each of your social profiles."
 msgstr ""
 
-#: inc/customizer.php:240
-msgid "url:"
+#: inc/customizer.php:171
+msgid "Email Address"
 msgstr ""
 
-#: inc/customizer.php:254
+#: inc/customizer.php:220
+msgid ""
+"Accepts Skype link protocol (<a href=\"%s\" target=\"_blank\">learn "
+"more</a>)"
+msgstr ""
+
+#: inc/customizer.php:246
 msgid "Blog"
 msgstr ""
 
-#: inc/customizer.php:267
+#: inc/customizer.php:256
 msgid "Show full posts on blog?"
 msgstr ""
 
-#: inc/customizer.php:272 inc/customizer.php:558
+#: inc/customizer.php:261 inc/customizer.php:392
 msgid "Yes"
 msgstr ""
 
-#: inc/customizer.php:273 inc/customizer.php:559
+#: inc/customizer.php:262 inc/customizer.php:393
 msgid "No"
 msgstr ""
 
-#: inc/customizer.php:286
-msgid "Excerpt length"
+#: inc/customizer.php:272
+msgid "Excerpt word count"
 msgstr ""
 
-#: inc/customizer.php:297
+#: inc/customizer.php:284
+msgid "Read More link text"
+msgstr ""
+
+#: inc/customizer.php:294
 msgid "Comment Display"
 msgstr ""
 
-#: inc/customizer.php:311
+#: inc/customizer.php:305
 msgid "Show comments on:"
 msgstr ""
 
-#: inc/customizer.php:316 inc/customizer.php:519
-msgid "Posts"
-msgstr ""
-
-#: inc/customizer.php:317 inc/customizer.php:520
+#: inc/customizer.php:311 inc/customizer.php:368
 msgid "Pages"
 msgstr ""
 
-#: inc/customizer.php:318 inc/customizer.php:521
+#: inc/customizer.php:312 inc/customizer.php:369
 msgid "Attachments"
 msgstr ""
 
-#: inc/customizer.php:319 inc/customizer.php:522
+#: inc/customizer.php:313 inc/customizer.php:370
 msgid "Do not show"
 msgstr ""
 
-#: inc/customizer.php:328
+#: inc/customizer.php:322
 msgid "Custom CSS"
 msgstr ""
 
-#: inc/customizer.php:341
+#: inc/customizer.php:333
 msgid "Add Custom CSS Here:"
 msgstr ""
 
-#: inc/customizer.php:356
-msgid "Header Image"
-msgstr ""
-
-#: inc/customizer.php:378
-msgid "Colors"
-msgstr ""
-
-#: inc/customizer.php:400
-msgid "Background"
-msgstr ""
-
-#: inc/customizer.php:422
-msgid "Font"
-msgstr ""
-
-#: inc/customizer.php:444
-msgid "Display Controls"
-msgstr ""
-
-#: inc/customizer.php:466
-msgid "Footer Text"
-msgstr ""
-
-#: inc/customizer.php:494
+#: inc/customizer.php:349
 msgid "Show"
 msgstr ""
 
-#: inc/customizer.php:495
+#: inc/customizer.php:350
 msgid "Hide"
 msgstr ""
 
-#: inc/scripts.php:14
+#: inc/scripts.php:17
 msgid "close primary menu"
 msgstr ""
 
-#: inc/scripts.php:15
+#: inc/scripts.php:18
 msgid "open child menu"
 msgstr ""
 
-#: inc/scripts.php:16
+#: inc/scripts.php:19
 msgid "close child menu"
 msgstr ""
 
+#: index.php:19
+msgid "Previous"
+msgstr ""
+
+#: index.php:20
+msgid "Next"
+msgstr ""
+
 #: search.php:10
-msgid "%d search result for \"%s\""
-msgid_plural "%d search results for \"%s\""
+msgid "%1$d search result for \"%2$s\""
+msgid_plural "%1$d search results for \"%2$s\""
 msgstr[0] ""
 msgstr[1] ""
 
@@ -383,7 +357,7 @@ msgstr[1] ""
 msgid "No search results for \"%s\""
 msgstr ""
 
-#: search.php:38
+#: search.php:37
 msgid "Can't find what you're looking for?  Try refining your search:"
 msgstr ""
 
@@ -391,90 +365,104 @@ msgstr ""
 msgid "Search"
 msgstr ""
 
-#: searchform.php:4
+#: searchform.php:5
 msgid "Search for:"
 msgstr ""
 
-#: searchform.php:5
+#: searchform.php:6
 msgid "Go"
 msgstr ""
 
-#: theme-options.php:13
+#: theme-options.php:4 theme-options.php:20
 msgid "Author Dashboard"
 msgstr ""
 
-#: theme-options.php:16
-msgid "Customization"
+#: theme-options.php:23
+msgid "Thanks for Choosing Author!"
 msgstr ""
 
-#: theme-options.php:17
+#: theme-options.php:25
+msgid ""
+"If you need help getting started, there are detailed tutorials in the <a "
+"href=\"%s\">Author Support Center</a>."
+msgstr ""
+
+#: theme-options.php:26
+msgid "Otherwise, you can dive right in with the <a href=\"%s\">Customizer</a>."
+msgstr ""
+
+#: theme-options.php:30
+msgid "Customize"
+msgstr ""
+
+#: theme-options.php:31
 msgid ""
 "Click the \"Customize\" link in your menu, or use the button below to get "
 "started customizing Author"
 msgstr ""
 
-#: theme-options.php:19
+#: theme-options.php:34
 msgid "Use Customizer"
 msgstr ""
 
-#: theme-options.php:23
-msgid "Support"
+#: theme-options.php:38
+msgid "Get Help"
 msgstr ""
 
-#: theme-options.php:24
+#: theme-options.php:39
 msgid ""
 "You can find the knowledgebase, changelog, support forum, and more in the "
 "Author Support Center"
 msgstr ""
 
-#: theme-options.php:26
+#: theme-options.php:42
 msgid "Visit Support Center"
 msgstr ""
 
-#: theme-options.php:30
-msgid "Upgrade to Author Pro"
+#: theme-options.php:46
+msgid "Author Pro Plugin"
 msgstr ""
 
-#: theme-options.php:31
+#: theme-options.php:47
 msgid ""
-"Author Pro is the premium upgrade for Author. It has custom colors, new "
-"layouts, background images, and more"
+"Download the Author Pro plugin and unlock custom colors, featured videos, "
+"background images, and more"
 msgstr ""
 
-#: theme-options.php:33
+#: theme-options.php:50
 msgid "See Full Feature List"
 msgstr ""
 
-#: theme-options.php:37
+#: theme-options.php:54
 msgid "WordPress Resources"
 msgstr ""
 
-#: theme-options.php:38
+#: theme-options.php:55
 msgid ""
 "Save time and money searching for WordPress products by following our "
 "recommendations"
 msgstr ""
 
-#: theme-options.php:40
+#: theme-options.php:58
 msgid "View Resources"
 msgstr ""
 
-#: theme-options.php:44 theme-options.php:56
+#: theme-options.php:62 theme-options.php:64
+msgid "Leave a Review"
+msgstr ""
+
+#: theme-options.php:63
+msgid "Help others find Author by leaving a review on wordpress.org."
+msgstr ""
+
+#: theme-options.php:67 theme-options.php:75
 msgid "Reset Customizer Settings"
 msgstr ""
 
-#: theme-options.php:48
+#: theme-options.php:69
 msgid ""
-"<strong>Warning:</strong> Clicking this button will erase your current "
-"settings in the <a href=\"%s\">Customizer</a>"
-msgstr ""
-
-#. Theme Name of the plugin/theme
-msgid "Author"
-msgstr ""
-
-#. Theme URI of the plugin/theme
-msgid "https://www.competethemes.com/author/"
+"<strong>Warning:</strong> Clicking this button will erase the Author "
+"theme's current settings in the <a href='%s'>Customizer</a>."
 msgstr ""
 
 #. Description of the plugin/theme
@@ -490,15 +478,7 @@ msgid ""
 "here: https://www.competethemes.com/author-live-demo/"
 msgstr ""
 
-#. Author of the plugin/theme
-msgid "Compete Themes"
-msgstr ""
-
-#. Author URI of the plugin/theme
-msgid "https://www.competethemes.com"
-msgstr ""
-
-#: content-archive.php:14 content.php:12
+#: content/post-meta.php:6
 msgctxt "This blog post was published by some author on some date"
 msgid "Published by %1$s on %2$s"
 msgstr ""

@@ -1,46 +1,28 @@
 <?php
-/* Category header */
-if( is_category() ){ ?>
-	<div class='archive-header'>
-		<i class="fa fa-folder-open"></i>
-		<h2>
-			<?php _e('Category archive for:', 'author'); ?>
-			<?php single_cat_title(); ?>
-		</h2>
-	</div>
-<?php
+
+if ( is_home() ) {
+	echo '<h1 class="screen-reader-text">' . esc_html( get_bloginfo("name") ) . ' ' . __('Posts', 'author') . '</h1>';
 }
-/* Tag header */
-elseif( is_tag() ){ ?>
-	<div class='archive-header'>
-		<i class="fa fa-tag"></i>
-		<h2>
-			<?php _e('Tag archive for:', 'author'); ?>
-			<?php single_tag_title(); ?>
-		</h2>
-	</div>
-<?php
+
+if ( ! is_archive() ) {
+	return;
 }
-/* Author header */
-elseif( is_author() ){
-	$author = get_userdata(get_query_var('author')); ?>
-	<div class='archive-header'>
-		<i class="fa fa-user"></i>
-		<h2>
-			<?php _e('Author archive for:', 'author'); ?>
-			<?php echo $author->nickname; ?>
-		</h2>
-	</div>
-<?php
+
+$icon_class = 'folder-open';
+
+if ( is_tag() ) {
+	$icon_class = 'tag';
+} elseif ( is_author() ) {
+	$icon_class = 'user';
+} elseif ( is_date() ) {
+	$icon_class = 'calendar';
 }
-/* Date header */
-elseif( is_date() ){ ?>
-	<div class='archive-header'>
-		<i class="fa fa-calendar"></i>
-		<h2>
-			<?php _e('Date archive for:', 'author'); ?>
-			<?php single_month_title(' '); ?>
-		</h2>
-	</div>
-<?php
-}
+?>
+
+<div class='archive-header'>
+	<i class="fa fa-<?php echo $icon_class; ?>"></i>
+	<h1>
+		<?php the_archive_title(); ?>
+	</h1>
+	<?php the_archive_description(); ?>
+</div>

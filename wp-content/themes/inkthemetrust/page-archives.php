@@ -5,7 +5,7 @@ Template Name: Archives
 ?>
 
 <?php get_header(); ?>								 
-		<div id="content" >
+		<div id="content" class="<?php if ($_SESSION['intro'] == 'Y'): ?>faded_out<?php endif; ?>">
 			<div <?php post_class("clearfix box"); ?>>
 				<div id="pageHead">
 					<h1><?php the_title(); ?></h1>

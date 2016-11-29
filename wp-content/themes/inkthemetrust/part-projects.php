@@ -50,7 +50,7 @@
 
 	else : // if not, use all the skills ?>
 		<div class="filter_wrap<?php if ($_SESSION['intro'] == 'Y'): ?> faded_out<?php endif; ?>">
-			<div class="fade"></div>
+			<div class="line"></div>
 			<?php
 				
 				$skills = get_terms('skill');
@@ -89,7 +89,7 @@
 
 			$nav_width = 100/(count($skills)+1);
 			
-			if ($type == "nav") { $wrap_div = "ul"; $item_div = 'li style="width:'.$nav_width.'%"'; }
+			if ($type == "nav") { $wrap_div = "ul"; $item_div = 'li'; }
 			else if ($type == "select") { $wrap_div = "select"; $item_div = "option"; }
 
 			$menu = '<'.$wrap_div.' id="filterNav" class="clearfix">';

@@ -1,11 +1,12 @@
 <?php get_header(); ?>
 
-<div id="content">
+<div id="content" class="<?php if ($_SESSION['intro'] == 'Y'): ?>faded_out<?php endif; ?>">
 	<?php if(!is_front_page()) : ?>
 	<div id="pageHead">
 		<?php $blog_page_id = of_get_option('ttrust_blog_page'); ?>
 		<?php $blog_page = get_page($blog_page_id); ?>
-		<h1><?php echo $blog_page->post_title; ?></h1>
+		<div class="title"><h1>BLOG</h1></div>
+		<div class="line"></div>
 		<?php $page_description = get_post_meta($blog_page_id, "_ttrust_page_description_value", true); ?>
 		<?php if ($page_description) : ?>
 			<p><?php echo $page_description; ?></p>
@@ -16,7 +17,7 @@
 	<?php while (have_posts()) : the_post(); ?>
 		<?php $p_class = ($c==0) ? "box first" : "box"; ?>			    
 		<div <?php post_class($p_class); ?>>					
-			<div class="inside">															
+			<div class="inside post_excerpt">															
 				<h1><a href="<?php the_permalink() ?>" rel="bookmark" ><?php the_title(); ?></a></h1>
 				<div class="meta clearfix">
 					<?php $post_show_author = of_get_option('ttrust_post_show_author'); ?>

@@ -90,8 +90,9 @@ jQuery(document).ready(function($){
     var siteHeader = $('#site-header');
     var main = $('#main');
     var sidebarPrimary = $('#sidebar-primary');
-
-    // get the selector for the primary menu
+    var overflowContainer = $('#overflow-container');
+    var loopContainer = $('#loop-container');
+    var headerImage = $('#header-image');
     var menu = $('.menu-unset').length ? $('.menu-unset') : $('#menu-primary-items');
 
     // for scrolling function
@@ -99,43 +100,53 @@ jQuery(document).ready(function($){
     var top, bottom, short = false;
     var topOffset = 0;
     var resizeTimer;
+    var windowWidth   = window.innerWidth;
+    var windowHeight  = $(window).height();
+    var adminbarOffset = $('body').hasClass( 'admin-bar' ) ? $( '#wpadminbar' ).height() : 0;
+    var bodyHeight    = overflowContainer.height();
+    var sidebarHeight = sidebar.outerHeight();
 
     /* Call functions */
 
     positionSidebar();
-    setMainMinHeight();
+    objectFitAdjustment();
+
+    $('#toggle-navigation').on('click', openPrimaryMenu);
+    toggleDropdown.on('click', openDropdownMenu);
+    toggleDropdown.on('click', adjustSidebarHeight);
+
+    $(window).bind("load", function() {
+        setMainMinHeight();
+    });
 
     $(window).resize(function(){
         positionSidebar();
         closeMainSidebar();
         setMainMinHeight();
+        objectFitAdjustment();
     });
 
-    // add fitVids to videos in posts
-    $('.post-content').fitVids();
+    // Jetpack infinite scroll event that reloads posts.
+    $( document.body ).on( 'post-load', function () {
 
-    // display the primary menu at mobile widths
-    $('#toggle-navigation').on('click', openPrimaryMenu);
+        $.when(moveInfinitePosts()).then(function(){
+            objectFitAdjustment();
+        });
+    } );
 
-    // display the dropdown menus
-    toggleDropdown.on('click', openDropdownMenu);
-
-    // extend sidebar height when dropdown clicked
-    toggleDropdown.on('click', adjustSidebarHeight);
+    $('.post-content').fitVids({
+        customSelector: 'iframe[src*="dailymotion.com"], iframe[src*="slideshare.net"], iframe[src*="animoto.com"], iframe[src*="blip.tv"], iframe[src*="funnyordie.com"], iframe[src*="hulu.com"], iframe[src*="ted.com"], iframe[src*="wordpress.tv"]'
+    });
 
     function openPrimaryMenu() {
 
-        // if menu open
         if( sidebar.hasClass('open') ) {
 
-            // trigger event
             sidebar.trigger('close');
-
-            // remove styling class
             sidebar.removeClass('open');
 
             // update screen reader text and aria-expanded
-            $(this).children('span').text(objectL10n.openPrimaryMenu);
+            $(this).children('span').text(ct_author_objectL10n.openPrimaryMenu);
             $(this).attr('aria-expanded', 'false');
 
             // close all ULs by removing increased max-height
@@ -158,16 +169,15 @@ jQuery(document).ready(function($){
             $(window).unbind('scroll', autoCloseMenu);
 
         } else {
-            sidebar.addClass('open');
 
-            // trigger event
+            sidebar.addClass('open');
             sidebar.trigger('open');
 
             // update screen reader text and aria-expanded
-            $(this).children('span').text(objectL10n.closePrimaryMenu);
+            $(this).children('span').text(ct_author_objectL10n.closePrimaryMenu);
             $(this).attr('aria-expanded', 'true');
 
-            var windowWidth = $(window).width();
+            var windowWidth = window.innerWidth;
 
             // if at width when menu is absolutely positioned
             if( windowWidth > 549 && windowWidth < 950 ) {
@@ -178,13 +188,15 @@ jQuery(document).ready(function($){
                     socialIconsHeight = siteHeader.find('.social-media-icons').find('ul').outerHeight();
                 }
 
-                var menuHeight = menu.outerHeight();
-
-                var headerHeight = sidebar.outerHeight();
-
+                var menuHeight           = menu.outerHeight();
+                var headerHeight         = sidebar.outerHeight();
                 var sidebarPrimaryHeight = sidebarPrimary.height();
 
-                main.css('min-height', sidebarPrimaryHeight + headerHeight + socialIconsHeight + menuHeight + 'px' );
+                var minHeight = sidebarPrimaryHeight + headerHeight + socialIconsHeight + menuHeight;
+
+                if ( minHeight > window.innerHeight ) {
+                    main.css('min-height', minHeight + 'px' );
+                }
 
                 // close menu automatically if scrolled past
                 $(window).scroll(autoCloseMenu);
@@ -198,20 +210,24 @@ jQuery(document).ready(function($){
 
         if( menuItem.hasClass('open') ) {
             menuItem.removeClass('open');
-            $(this).children('span').text(objectL10n.openChildMenu);
+            $(this).children('span').text(ct_author_objectL10n.openChildMenu);
             $(this).attr('aria-expanded', 'false');
         } else {
             menuItem.addClass('open');
-            $(this).children('span').text(objectL10n.closeChildMenu);
+            $(this).children('span').text(ct_author_objectL10n.closeChildMenu);
             $(this).attr('aria-expanded', 'true');
             short = false; // return to false to be measured again (may not be shorter than window now)
         }
+        setMainMinHeight();
     }
+
+    // open the menu to display the current page if inside a dropdown menu
+    $( '.current-menu-ancestor').addClass('open');
 
     // absolutely position the sidebar
     function positionSidebar() {
 
-        var windowWidth = $(window).width();
+        var windowWidth = window.innerWidth;
 
         // if at width when menu is absolutely positioned
         if( windowWidth > 549 && windowWidth < 950 ) {
@@ -238,16 +254,13 @@ jQuery(document).ready(function($){
     // move sidebar when dropdown menu items opened
     function adjustSidebarHeight() {
 
-        // get the current window width
-        var windowWidth = $(window).width();
+        var windowWidth = window.innerWidth;
 
         // if at width when menu is absolutely positioned
         if( windowWidth > 549 && windowWidth < 950 ) {
 
             // get the submenu
-            var list = $(this).next();
-
-            // set the height variable
+            var list       = $(this).next();
             var listHeight = 0;
 
             // get the height of all the child li elements combined (because ul has max-height: 0)
@@ -286,40 +299,52 @@ jQuery(document).ready(function($){
     function closeMainSidebar() {
 
         // if no longer at width when menu is absolutely positioned
-        if( $(window).width() > 949 && sidebar.hasClass('open') ) {
+        if( window.innerWidth > 949 && sidebar.hasClass('open') ) {
             // run function to close sidebar and all menus
             openPrimaryMenu();
         }
     }
 
-    // keep light gray background all the way to footer
+    // increase main height when needed so fixed sidebar can be scrollable
     function setMainMinHeight() {
         // refresh
         main.css('min-height', '');
-        main.css('min-height', $('#overflow-container').height() + 'px');
+        // height is equal to overflow container's height
+        var height = overflowContainer.height();
+        // if header image, subtract its height b/c its in
+        // .overflow-container, but not in .main
+        if ( headerImage.length > 0 ) {
+            // header image technically uses padding-bottom not height, so use 'a' element
+            height = height - headerImage.children('a').height();
+        }
+        // add the new minimum height
+        if ( height > window.innerHeight ) {
+            main.css('min-height', height + 'px');
+        }
     }
 
     // Sidebar scrolling.
     function resize() {
 
-        if ( 950 > $(window).width() ) {
+        windowWidth   = window.innerWidth;
+        windowHeight  = $(window).height();
+        adminbarOffset = $('body').hasClass( 'admin-bar' ) ? $( '#wpadminbar' ).height() : 0;
+        bodyHeight    = overflowContainer.height();
+        sidebarHeight = sidebar.outerHeight();
+
+        if ( window.innerWidth < 950 ) {
             var top, bottom = false;
             sidebar.removeAttr( 'style' );
         }
     }
 
     function scroll() {
-        var body = $('#overflow-container');
-        var windowWidth   = $(window).width();
-        var windowHeight  = $(window).height();
-        var bodyHeight    = body.height();
-        var sidebarHeight = sidebar.outerHeight();
-        var windowPos = $(window).scrollTop();
-        var adminbarOffset = $('body').hasClass( 'admin-bar' ) ? $( '#wpadminbar' ).height() : 0;
 
         if ( 950 > windowWidth ) {
             return;
         }
+
+        var windowPos = $(window).scrollTop();
 
         // if the sidebar height + admin bar is greater than the window height
         if ( ( sidebarHeight + adminbarOffset > windowHeight ) && short != true ) {
@@ -329,7 +354,7 @@ jQuery(document).ready(function($){
                     top = false;
                     topOffset = ( sidebar.offset().top > 0 ) ? sidebar.offset().top - adminbarOffset : 0;
                     sidebar.attr( 'style', 'top: ' + topOffset + 'px;' );
-                } else if ( ! bottom && windowPos + windowHeight > sidebarHeight + sidebar.offset().top && sidebarHeight + adminbarOffset < bodyHeight ) {
+                } else if ( ! bottom && windowPos + windowHeight >= sidebarHeight + sidebar.offset().top && sidebarHeight + adminbarOffset <= bodyHeight ) {
                     bottom = true;
                     sidebar.attr( 'style', 'position: fixed; bottom: 0;' );
                 }
@@ -345,7 +370,7 @@ jQuery(document).ready(function($){
                     bottom = false;
                     topOffset = ( sidebar.offset().top > 0 ) ? sidebar.offset().top - adminbarOffset : 0;
                     sidebar.attr( 'style', 'top: ' + topOffset + 'px;' );
-                } else if ( ! top && windowPos > 0 && windowPos + adminbarOffset < sidebar.offset().top ) {
+                } else if ( ! top && windowPos >= 0 && windowPos + adminbarOffset <= sidebar.offset().top ) {
                     top = true;
                     sidebar.attr( 'style', 'position: fixed;' );
                 }
@@ -354,7 +379,9 @@ jQuery(document).ready(function($){
             else {
                 top = bottom = false;
             }
-        } else if ( ! top ) {
+        }
+        // sidebar is shorter than window
+        else {
             top = true;
             short = true;
             sidebar.attr( 'style', 'position: fixed;' );
@@ -377,10 +404,6 @@ jQuery(document).ready(function($){
     }
     resizeAndScroll();
 
-    for ( var i = 1; i < 6; i++ ) {
-        setTimeout( resizeAndScroll, 100 * i );
-    }
-
     function autoCloseMenu() {
 
         // get position of the bottom of the sidebar
@@ -395,9 +418,56 @@ jQuery(document).ready(function($){
         }
     }
 
-    // if sidebar height is less than window height, needs help to keep from flickering
-    function sidebarMinHeight() {
+    // mimic cover positioning without using cover
+    function objectFitAdjustment() {
 
+        // if the object-fit property is not supported
+        if( !('object-fit' in document.body.style) ) {
+
+            $('.featured-image').each(function () {
+
+                if ( !$(this).parent('.entry').hasClass('ratio-natural') ) {
+
+                    var image = $(this).children('img').add($(this).children('a').children('img'));
+
+                    // don't process images twice (relevant when using infinite scroll)
+                    if (image.hasClass('no-object-fit')) return;
+
+                    image.addClass('no-object-fit');
+
+                    // if the image is not wide enough to fill the space
+                    if (image.outerWidth() < $(this).outerWidth()) {
+
+                        image.css({
+                            'width': '100%',
+                            'min-width': '100%',
+                            'max-width': '100%',
+                            'height': 'auto',
+                            'min-height': '100%',
+                            'max-height': 'none'
+                        });
+                    }
+                    // if the image is not tall enough to fill the space
+                    if (image.outerHeight() < $(this).outerHeight()) {
+
+                        image.css({
+                            'height': '100%',
+                            'min-height': '100%',
+                            'max-height': '100%',
+                            'width': 'auto',
+                            'min-width': '100%',
+                            'max-width': 'none'
+                        });
+                    }
+                }
+            });
+        }
+    }
+
+    function moveInfinitePosts(){
+        // move any posts in infinite wrap to loop-container
+        $('.infinite-wrap').children('.entry').detach().appendTo( loopContainer );
+        $('.infinite-wrap, .infinite-loader').remove();
     }
 });
 

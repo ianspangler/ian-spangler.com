@@ -5,11 +5,12 @@ Template Name: Blog
 ?>
 <?php get_header(); ?>
 
-<div id="content">	
+<div id="content" class="<?php if ($_SESSION['intro'] == 'Y'): ?>faded_out<?php endif; ?>">	
 	<div id="pageHead">
 		<?php $blog_page_id = of_get_option('ttrust_blog_page'); ?>
 		<?php $blog_page = get_page($blog_page_id); ?>
-		<h1><?php echo $blog_page->post_title; ?></h1>
+		<div class="title"><h1>BLOG</h1></div>
+		<div class="line"></div>
 		<?php $page_description = get_post_meta($blog_page_id, "_ttrust_page_description_value", true); ?>
 		<?php if ($page_description) : ?>
 			<p><?php echo $page_description; ?></p>

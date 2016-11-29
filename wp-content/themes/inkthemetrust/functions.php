@@ -194,6 +194,7 @@ if ( is_singular() && has_single_custom_background()) {
 		echo 'body { background-image: none !important; background-color: #d4d4d4 !important;}';
 	}			
 }
+
 ?>
 </style>
 
@@ -319,11 +320,11 @@ add_theme_support( 'custom-background');
 
 add_theme_support('post-thumbnails');
 
-set_post_thumbnail_size(100, 100, true);
-add_image_size('ttrust_post_thumb_big', 850, 400, true);
+set_post_thumbnail_size(600, 358, true);
+add_image_size('ttrust_post_thumb_big', 600, 358, true);
 add_image_size('ttrust_post_thumb_small', 150, 150, true);
 add_image_size('ttrust_post_thumb_tiny', 50, 50, true);
-add_image_size('ttrust_portfolio', 300, 200, true);
+add_image_size('ttrust_portfolio', 700, 400, true);
 add_image_size('ttrust_one_fourth_short', 220, 100, true);
 add_image_size('ttrust_one_fourth', 220, 9999);
 
@@ -369,6 +370,30 @@ function get_single_custom_background() {
 	$is_tiled_bkg = get_post_meta($post->ID, "_ttrust_background_tile_value", true);
 	$custom_background_img = MultiPostThumbnails::get_the_post_thumbnail_url($post_type, "background_image", $post->ID, "ttrust_background_image_full");
 	return $custom_background_img;	
+}
+
+function get_featured_image_color() {	
+	global $wp_query;
+	global $post;
+
+	$post_type = get_post_type($post->ID);
+	$bg_color = get_post_meta($post->ID, "_ttrust_featured_background_color_value", true);
+	
+	return $bg_color;	
+}
+
+function get_slideshow() {	
+
+	global $wp_query;
+	global $post;
+
+	$post_type = get_post_type($post->ID);
+	$slideshow = get_post_meta($post->ID, "_ttrust_slideshow_description_value", true);
+
+	$slideshow = apply_filters( 'the_content', $slideshow );
+	$slideshow = str_replace( ']]>', ']]&gt;', $slideshow );
+	
+	return $slideshow;	
 }
 
 function has_single_custom_background() {	
@@ -513,7 +538,7 @@ function ttrust_slideshow( $atts, $content = null ) {
     $content = str_replace('<br />', '', $content);
 	$content = preg_replace("/<a\b[^>]*>/", "", $content);
 	$content = preg_replace("/<\/a>/", "", $content);
-	$content = str_replace('<img', '<li><img', $content);
+	$content = str_replace('<img', '<li style="background-color: '.get_featured_image_color().'"><img', $content);
 	$content = str_replace('/>', '/></li>', $content);
 	return '<div class="flexslider"><ul class="slides">' . $content . '</ul></div>';
 }
@@ -770,13 +795,31 @@ $background_options = array(
 		"featured" => array(
     	"type" => "checkbox",
 		"name" => $prefix."background_tile",
-    	"std" => "",
+    	"std" => "#555555",
     	"title" => __('Tile Background','themetrust'),
     	"description" => __('Check this box if you want the background image to be tiled instead of full screen.','themetrust'))
 );
 
+$color_options = array(
+		"featured" => array(
+    	"type" => "color",
+		"name" => $prefix."featured_background_color",
+    	"std" => "",
+    	"title" => __('Featured Background Color','themetrust'),
+    	"description" => __('Select the color for the featured image background.','themetrust'))
+);
 
-$meta_box_groups = array($project_details, $page_options, $portfolio_options, $background_options);
+$slideshow_options = array(
+	"description" => array(
+		"type" => "textarea",
+		"name" => $prefix."slideshow_description",
+		"std" => "",
+		"title" => __('Images','themetrust'),
+		"description" => __('Enter slideshow images.','themetrust'))	
+);
+
+
+$meta_box_groups = array($slideshow_options, $project_details, $page_options, $portfolio_options, $background_options, $color_options);
 
 function new_meta_box($post, $metabox) {	
 	
@@ -827,15 +870,22 @@ function new_meta_box($post, $metabox) {
 } // end meta boxes
 
 function create_meta_box() {	
-	global $project_details, $page_options, $portfolio_options, $background_options;	
+	global $slideshow_options, $project_details, $page_options, $portfolio_options, $background_options, $color_options;	
 	
 	if ( function_exists('add_meta_box') ) {
-		add_meta_box( 'new-meta-boxes-details', __('Project Options','themetrust'), 'new_meta_box', 'project', 'normal', 'high', array('inputs'=>$project_details) );				
+	
+		add_meta_box( 'new-meta-boxes-slideshow-options', __('Slideshow Options','themetrust'), 'new_meta_box', 'project', 'normal', 'high', array('inputs'=>$slideshow_options) );
+
+		add_meta_box( 'new-meta-boxes-details', __('Project Options','themetrust'), 'new_meta_box', 'project', 'normal', 'high', array('inputs'=>$project_details) );
+
+
 		add_meta_box( 'new-meta-boxes-page-options', __('Page Options','themetrust'), 'new_meta_box', 'page', 'side', 'low', array('inputs'=>$page_options) );	
 		add_meta_box( 'new-meta-boxes-portfolio-options', __('Portfolio Options','themetrust'), 'new_meta_box', 'page', 'side', 'low', array('inputs'=>$portfolio_options) );		
 		add_meta_box( 'new-meta-boxes-background-options', __('Background Options','themetrust'), 'new_meta_box', 'page', 'side', 'low', array('inputs'=>$background_options) );
-		add_meta_box( 'new-meta-boxes-background-options', __('Background Options','themetrust'), 'new_meta_box', 'post', 'side', 'low', array('inputs'=>$background_options) );
-		add_meta_box( 'new-meta-boxes-background-options', __('Background Options','themetrust'), 'new_meta_box', 'project', 'side', 'low', array('inputs'=>$background_options) );
+		/*add_meta_box( 'new-meta-boxes-background-options', __('Background Options','themetrust'), 'new_meta_box', 'post', 'side', 'low', array('inputs'=>$background_options) );
+		add_meta_box( 'new-meta-boxes-background-options', __('Background Options','themetrust'), 'new_meta_box', 'project', 'side', 'low', array('inputs'=>$background_options) );*/
+		add_meta_box( 'new-meta-boxes-color-options', __('Color Options','themetrust'), 'new_meta_box', 'project', 'side', 'low', array('inputs'=>$color_options) );
+
 	}
 }
 
@@ -979,6 +1029,7 @@ function trim_indices(&$item1, $key) {
 	$parts = explode(": ", $item1->name);
 	$item1->name = $parts[1];
 }
+
 
 
 ?>

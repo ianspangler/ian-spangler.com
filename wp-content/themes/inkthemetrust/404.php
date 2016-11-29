@@ -1,12 +1,17 @@
 <?php get_header(); ?>	
 							 
 		<div id="content">
-			<div class="page clearfix box">
+			<div class="page clearfix">
 				<div id="pageHead">
-					<h1><?php _e('Page Not Found', 'themetrust'); ?></h1>
+					<div class="title">
+						<h1><?php _e('Page Not Found', 'themetrust'); ?></h1>
+						<div class="line"></div>
+					</div>
 				</div>
-				<div class="inside">
-					<p><?php _e("Sorry, but what you're looking for could not be found.", 'themetrust'); ?></p> 
+				<div class="clearfix box">
+					<div class="inside">
+						<p><?php _e("Sorry, but what you're looking for could not be found.", 'themetrust'); ?></p> 
+					</div>
 				</div>
 			</div>
 		</div>

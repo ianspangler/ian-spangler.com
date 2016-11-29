@@ -2,8 +2,8 @@
 Tags: markdown, editor, quicktags
 Requires at least: 4.0
 Contributors: ttscoff
-Tested up to: 4.2.4
-Stable tag: 0.9.5
+Tested up to: 4.4
+Stable tag: 0.9.6
 Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=7BQFXA7YN9EPQ
 
 Replace the WordPress HTML editor with a Markdown one. Auto-pairing, wrapping, preview/render, customizable editor fonts and more.
@@ -59,11 +59,11 @@ The "more" button inserts the WordPress &lt;!--more--&gt; tag, for page breaks. 
 The "]:" button, which pops up a dialog for pasting, can actually handle just about any kind of text which contains urls, and it can handle multiple urls. It will extract the links from the text, create a title based on their domain, and insert a list of references for use in your post. The resulting list will be sorted by title, and titles will be unique automatically (it scans the titles it's creating, as well as existing references in your document).
 
 Once you have more than one url, the "][]" button will give you a menu of references to choose from and apply your choice to the selected text.
-    
+
 **Full Screen Edit Mode**
 
 Full screen edit mode not only gives you more space, it disable the scrollbars on the rest of the page, so no more frustration with the whole editor moving around when you scroll off either end. Preview, Render and Markdownify all work in Full screen mode.
-      
+
 **Preview**
 
 Click "Preview" in the upper right to change the edit field into a read-only preview of how your Markdown will render. It fully supports Markdown Extra, and SmartyPants is an option in the Settings->Markdown QuickTags menu. In Preview mode, it will also run the default content filters on your text, so you can see the results of most shorttags and plugins. Click the Preview button again (now labeled "Return to editing") to exit. Preview mode makes no changes to your work.
@@ -73,7 +73,7 @@ Click "Preview" in the upper right to change the edit field into a read-only pre
 Clicking the question mark in the upper right will provide a Markdown reference. Dismiss it with Escape.
 
 **Render and Markdownify**
-    
+
 The Render link will process your text in the edit area and change it to rendered HTML. It uses Markdown Extra, but unlike Preview, it doesn't run the content_filters, keeping any dynamic parts of your post dynamic until they're displayed. If you have the visual editor enabled, you can switch over at that point and edit in the WYSIWYG version. If you're using a Markdown Plugin, you don't need to render.
 
 The Markdownify button does the opposite, taking HTML (either from the WYSIWYG editor, pasted by you, or from a previous post) and turning it into the closest representation of Markdown it can. It works quite well on clean markup, but will run into trouble with anything very complex.
@@ -94,7 +94,7 @@ If there's a particular style you don't like in the Markdown QuickTags editor--a
 
 **Typing in the editor**
 
-There are quite a few features in the editor that will manifest themselves as you type. 
+There are quite a few features in the editor that will manifest themselves as you type.
 
 **Auto-pairing**
 
@@ -110,7 +110,7 @@ Typing the first character or two of a reference link ([link text][***reference 
 
 **List continuation**
 
-If you start a list, either with a "1. " (with any digit) or a *, + or -, pressing enter within or at the end of the line will continue the list with the same delimiter. Pressing enter on an empty list item will remove the delimiter and end the list. 
+If you start a list, either with a "1. " (with any digit) or a *, + or -, pressing enter within or at the end of the line will continue the list with the same delimiter. Pressing enter on an empty list item will remove the delimiter and end the list.
 
 **Indentation**
 
@@ -159,6 +159,9 @@ Sure. You'll just need a plugin to render it to HTML on the front end. I recomme
 2. The Markdown QuickTags settings panel (v0.8)
 
 == Changelog ==
+
+= 0.9.6 =
+* Fix appearance on WordPress 4.4
 
 = 0.9.5 =
 * Headline button (H) cycles header levels for current line

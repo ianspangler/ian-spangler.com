@@ -6,7 +6,7 @@
 var gridContainer = jQuery('.thumbs.masonry');
 var colW;
 var gridGutter = 0;
-var thumbWidth = 275;
+//var thumbWidth = 1000;
 var widgetsHidden = false;
 
 
@@ -15,6 +15,7 @@ var widgetsHidden = false;
 ///////////////////////////////
 
 function isMobile(){
+	
     return (
         (navigator.userAgent.match(/Android/i)) ||
 		(navigator.userAgent.match(/webOS/i)) ||
@@ -24,6 +25,11 @@ function isMobile(){
 		(navigator.userAgent.match(/BlackBerry/))
     );
 }
+
+/*function screenWidth() {
+	return (window.innerWidth > 0) ? window.innerWidth : screen.width;
+}*/
+
 
 ///////////////////////////////
 // Project Filtering 
@@ -116,25 +122,24 @@ function projectThumbInit() {
 		}
 	});	
 
-	jQuery(".project.small").css("visibility", "visible");	
+	//jQuery(".project.small").css("visibility", "visible");	
 	jQuery("#floatingCirclesG").fadeOut("slow");
 
 	if (!isMobile()) {
 
 		//rollover thumbs
-		jQuery(".project.small a").hover(
+		jQuery(".project.small").hover(
 			function() {
-				jQuery(this).find('.overlay').stop().fadeTo("fast", 0.8);
-				//jQuery('.overlay').not(this).stop().fadeTo(0.25, 0.85);
-				//jQuery(this).find('.overlay').stop().fadeOut();
-				//jQuery(this).find('.overlay').stop().fadeTo("fast", .7);
-				jQuery(this).find('.description').stop().fadeTo("fast", 1);
-				jQuery(this).find('img:last').attr('title','');	
+				//jQuery(this).find('button').css('border', '1px solid rgba(255,255,255,0.9)');
+				//jQuery(this).find('.overlay').stop().fadeTo("fast", 0.8);
+				
+				/*jQuery(this).find('.description').stop().fadeTo("fast", 1);
+				jQuery(this).find('img:last').attr('title','');	*/
 			},
 			function() {
-				///jQuery('.overlay').not(this).stop().fadeOut();
-				jQuery(this).find('.overlay').stop().fadeTo("fast", 0);	
-				jQuery(this).find('.description').stop().fadeTo("fast", 0);	
+				//jQuery(this).find('button').css('border', '1px solid rgba(255,255,255,0.5)');
+				//jQuery(this).find('.overlay').stop().fadeTo("fast", 0);	
+				//jQuery(this).find('.description').stop().fadeTo("fast", 0);	
 			});	
 	}
 
@@ -157,7 +162,8 @@ function showAll() {
 	jQuery('.filter_wrap').show();
 	jQuery('#sidebar').show();*/
 	jQuery('.project.small').css('pointer-events', "auto");
-	jQuery('.project.small img').css('opacity', 1);
+	jQuery('.project.small').css('opacity', 1);
+	//jQuery('.logo_subline').show();
 
 }
 
@@ -168,7 +174,6 @@ function animateIn() {
 		//animate in main sidebar
 		jQuery("#header .inside").delay(200).fadeIn(500);
 
-		
 		//animate my logo
 		jQuery('#logo #i_left').delay(600).animate({height:0, top:'183px'}, 200, "easeInSine");
 		jQuery('#logo #s_bottom').delay(780).animate({width:0, left:'168px'}, 100);
@@ -178,15 +183,15 @@ function animateIn() {
 		jQuery('#logo #s_top').delay(1100).animate({width:0, left:'183px'}, 100);
 		jQuery('#logo #i_right').delay(1260).animate({height:0, top:'183px'}, 300, "easeOutSine");
 
-		jQuery('#logo #subline').delay(1600).fadeOut(1000);
+		jQuery('#logo #subline').delay(1600).fadeOut(600);
 
 		//animate in main nav and filter nav
 		jQuery('#mainNav').delay(1600).fadeIn(1000);
 		//jQuery('ul#filterNav').delay(1800).fadeIn(1000);
 		jQuery('.filter_wrap').delay(2600).animate({opacity: 1}, 800);
-		jQuery('.projectPage').delay(2600).animate({opacity: 1}, 800);
+		jQuery('#content').delay(2600).animate({opacity: 1}, 800);
 
-		var projects_delay = 2600;
+		var projects_delay = 2800;
 
 	}
 	else { //mobile
@@ -195,7 +200,7 @@ function animateIn() {
 		///jQuery("#header").delay(200).animate({opacity: 1}, 450, "easeOutSine");
 		jQuery("#header .inside").delay(200).fadeIn(450, "easeOutSine");
 		jQuery('.filter_wrap').delay(800).animate({opacity: 1}, 450, "easeOutSine");
-		jQuery('.projectPage').delay(1600).animate({opacity: 1}, 800);
+		jQuery('#content').delay(1600).animate({opacity: 1}, 800);
 		//jQuery('.filter_wrap').fadeIn(500);
 
 		var projects_delay = 1000;
@@ -208,16 +213,17 @@ function animateIn() {
 
 
 	//animate in project thumbs 
-	jQuery(".project.small img").each(function() {
-		jQuery(this).css('margin-top', (jQuery(this).height()/4)+'px');
-		jQuery(this).css('margin-left', (jQuery(this).width()/4)+'px');
-		jQuery(this).css('width', '50%');
+	jQuery(".project.small").each(function() {
+
+		//jQuery(this).css('margin-top', (jQuery(this).height()/4)+'px');
+		//jQuery(this).css('margin-left', (jQuery(this).width()/4)+'px');
+		//jQuery(this).css('width', '50%');
 
 		if (jQuery(this).is(':visible')) {
-			jQuery(this).delay(projects_delay).animate({width: '100%', marginTop: 0, marginLeft: 0, opacity: 1}, 400, "easeOutSine", 
-					function() { jQuery(this).parent().parent().css('pointer-events', "auto"); });
 
-			projects_delay += 100;
+			jQuery(this).delay(projects_delay).animate({opacity: 1}, 300, "easeOutQuad");
+
+			projects_delay += 450;
 		}
 	});
 
@@ -258,12 +264,24 @@ function relocateElements()
 
 function setColumns()
 {	
-	var columns;
+	/*var columns;
 	columns = Math.ceil(gridContainer.width()/thumbWidth);
 	colW = Math.floor(gridContainer.width() / columns);
 	jQuery('.thumbs.masonry .project.small').each(function(id){
 		jQuery(this).css('width',colW-gridGutter+'px');
+	});*/
+
+	var columns = 2;
+
+	if(gridContainer.width() < 600) { //mobile
+		columns = 1;
+	}
+
+	colW = Math.floor(gridContainer.width() / columns);
+	jQuery('.thumbs.masonry .project.small').each(function(id){
+		jQuery(this).css('width',colW-gridGutter+'px');
 	});
+
 }
 
 function gridResize() {	
