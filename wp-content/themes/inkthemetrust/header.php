@@ -68,7 +68,7 @@
 			<?php else : ?>				
 				<h1><a href="<?php bloginfo('url'); ?>"><?php bloginfo('name'); ?></a></h1>				
 			<?php endif; ?>	
-			<div id="letters_mask" class="<?php if ($_SESSION['intro'] != 'Y'): ?> hidden<?php endif; ?>">
+			<div id="letters_mask" class="<?php if ($_SESSION['intro'] != 'Y'): ?>hidden<?php endif; ?>">
 				<div class="letter_part" id="i_left"></div>
 				<div class="letter_part" id="s_bottom"></div>
 				<div class="letter_part" id="s_right"></div>
