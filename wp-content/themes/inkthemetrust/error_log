@@ -1,0 +1,1 @@
+[27-Feb-2016 08:04:56 America/Denver] PHP Fatal error:  Call to undefined function get_header() in /home5/ianspang/public_html/portfolio/wp-content/themes/inkthemetrust/index.php on line 1
