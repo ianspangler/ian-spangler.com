@@ -10,3 +10,6 @@ tests/*
 /wp-admin/css/.DS_Store
 /wp-includes/js/.DS_Store
 /wp-includes/.DS_Store
+/wp-content/plugins/w3-total-cache/.DS_Store
+/wp-content/.DS_Store
+/wp-content/plugins/.DS_Store
