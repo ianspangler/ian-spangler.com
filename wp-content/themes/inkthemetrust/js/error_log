@@ -1,0 +1,2 @@
+[27-Feb-2016 08:04:58 America/Denver] PHP Fatal error:  Call to undefined function have_posts() in /home5/ianspang/public_html/portfolio/wp-content/themes/inkthemetrust/js/background_single.php on line 24
+[27-Feb-2016 08:04:59 America/Denver] PHP Fatal error:  Call to undefined function of_get_option() in /home5/ianspang/public_html/portfolio/wp-content/themes/inkthemetrust/js/slideshow.php on line 1
