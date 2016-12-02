@@ -1,7 +1,14 @@
 search-replace-db/*
 wp-config.php
 wp-content/uploads/*
+<<<<<<< HEAD
 tests/*
+=======
+wp-content/advanced-cache.php
+wp-content/cache/*
+wp-content/w3tc-config/*
+/tests/*
+>>>>>>> design_update_alt
 .htaccess
 /.htaccess
 /.DS_Store
