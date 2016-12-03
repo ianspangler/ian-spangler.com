@@ -16,3 +16,4 @@ wp-content/uploads/*
 /wp-includes/Text/.DS_Store
 /wp-includes/images/.DS_Store
 .DS_Store
+/wp-content/plugins/.DS_Store
