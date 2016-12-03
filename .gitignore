@@ -1,22 +1,19 @@
-search-replace-db/*
+/search-replace-db/*
 wp-config.php
 wp-content/uploads/*
-<<<<<<< HEAD
-tests/*
-=======
-wp-content/advanced-cache.php
-wp-content/cache/*
-wp-content/w3tc-config/*
 /tests/*
->>>>>>> design_update_alt
 .htaccess
 /.htaccess
+/phpinfo.php
 /.DS_Store
 /videos/.DS_Store
-/wp-admin/.DS_Store
 /wp-admin/css/.DS_Store
+/videos/html5/.DS_Store
+/wp-includes/Requests/.DS_Store
 /wp-includes/js/.DS_Store
-/wp-includes/.DS_Store
-/wp-content/plugins/w3-total-cache/.DS_Store
-/wp-content/.DS_Store
+/wp-includes/SimplePie/.DS_Store
+/videos/html5/eh5v.files/.DS_Store
+/wp-includes/Text/.DS_Store
+/wp-includes/images/.DS_Store
+.DS_Store
 /wp-content/plugins/.DS_Store
