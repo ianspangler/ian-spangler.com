@@ -318,6 +318,7 @@ jQuery(window).load(function(){
 	//sidebarAbsolute(1);
 	relocateElements();
 	setSlideNav();
+	setEmailLinks();
 
 	if (isMobile()) {
 		//fix background for iOS
@@ -374,38 +375,15 @@ function launchPopup(width,height) {
 }
 
 // SET EMAIL LINK
-var username = "ian";
-var hostname = "ian-spangler.com";
-jQuery('.email_link').attr('href', "mailto:" + username + "@" + hostname);
+function setEmailLinks() {
 
+	var mailto = String.fromCharCode(109,97,105,108,116,111,58);
+	var username = "ian";
+	var hostname = "ian-spangler.com";
+	jQuery('.email_link').attr('href', mailto + username + "@" + hostname);
 
+}
 
-//old tooltip code
-/*jQuery('.project.small a').tooltip(
-{
-		content: function() {
-	
-			var html = '<div class="pointer-container"><div class="pointer"></div></div>'
-			html += '<div class="content">';
-			html += '<h3>'+jQuery(this).attr('title')+'</h3>';
-			html += '<p>'+jQuery(this).parent().find('.description p').html()+'</p>';
-			html += '</div>';
-			return html;
-
-		},
-		show: { duration: 300, delay: 20 },
-		tooltipClass: "project_tooltip",
-		position: {my: "left+3 bottom+48", at: "left+3 bottom+48", collision: "flipfit",
-					using: function( position, feedback ) {
-
-		            jQuery(this).css( position );
-		            jQuery('.pointer-container')
-		                .addClass( feedback.vertical )
-		                .addClass( feedback.horizontal );
-		                ///.appendTo( this );
-		        }
-		}
-});*/
 
 
 
