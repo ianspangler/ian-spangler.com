@@ -1,0 +1,51 @@
+/* Back-end styles */
+/* styles for theme options page */
+#author-dashboard-wrap h2 {
+  margin-bottom: 24px;
+}
+#author-dashboard-wrap .content {
+  box-sizing: border-box;
+  margin-top: 12px;
+  padding: 12px 24px 24px;
+  border: solid 1px #e5e5e5;
+  background: white;
+}
+#author-dashboard-wrap .content .button-primary,
+#author-dashboard-wrap .content #delete {
+  margin: 12px 0;
+}
+#author-dashboard-wrap .content ul {
+  list-style: disc;
+  margin-left: 36px;
+}
+
+/* 600px */
+@media all and (min-width: 37.5em) {
+  #author-dashboard-wrap .content {
+    width: 49%;
+    float: left;
+    margin-right: 2%;
+    min-height: 250px;
+  }
+  #author-dashboard-wrap .content:nth-child(2n) {
+    margin-right: 0;
+  }
+  #author-dashboard-wrap .content p {
+    min-height: 57px;
+  }
+}
+/* 1100px */
+@media all and (min-width: 68.75em) {
+  #author-dashboard-wrap .content {
+    width: 32%;
+  }
+  #author-dashboard-wrap .content:nth-child(2n) {
+    margin-right: 2%;
+  }
+  #author-dashboard-wrap .content:nth-child(3n) {
+    margin-right: 0;
+  }
+  #author-dashboard-wrap .content:nth-child(4n) {
+    clear: left;
+  }
+}
