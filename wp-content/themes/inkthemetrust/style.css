@@ -359,7 +359,7 @@ a img {
 }
 
 h1, h2, h3, h4, h5, h6 {
-	/*margin: 0 0 15px 0;*/
+	font-family: 'FJalla One', 'Roboto Condensed', sans-serif;
 	font-weight: normal;
 	color: rgba(255,255,255,0.9);
 }
@@ -893,8 +893,12 @@ h1 a:hover {
 	opacity: 1;
 }
 
+.project.small:hover .title {
+	opacity: 0.6;
+}
+
 .project.small:hover .overlay {
-	opacity: 0.7;
+	opacity: 0.6;
 }
 
 /*.project.small:hover .gr-overlay {
@@ -939,6 +943,7 @@ h1 a:hover {
 	bottom: 0;
 	left: 0;
 	z-index: 100;
+	background: #000 !important;
 
 	-webkit-transition: opacity 0.3s linear; /* Saf3.2+, Chrome */
     -moz-transition: opacity 0.3s linear; /* FF3.7+ */
@@ -3025,17 +3030,11 @@ p.login_line {
 		display: none !important;
 	}
 
-	/*.projectNav .next_mobile {
-		display: block;
-		margin-left: 5px;
-		font-size: 1.6em;
-	}
+	.project.small img {
+		width: 104%;
+		margin-left: -2%;
 
-	.projectNav .previous_mobile {
-		display: block;
-		margin-right: 5px;
-		font-size: 1.6em;
-	}*/
+	}
 
 	#main #content {
 		/*padding-bottom: 30px !important;*/
@@ -3118,8 +3117,8 @@ p.login_line {
 
 
 	.project.small .title {
-		font-size: 5.3vw !important;
-		padding-top: 4% !important;
+		font-size: 5.5vw !important;
+		padding-top: 4.6% !important;
 	}
 
 
