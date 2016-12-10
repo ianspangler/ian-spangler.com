@@ -46,7 +46,7 @@
 
             .wrap h1 {
                 font-size: 50px;
-                font-family: 'FJalla One','Roboto',sans-serif;
+                font-family: 'Fjalla One','Roboto',sans-serif;
                 margin-bottom: 32px;
                 margin-top: 0;
                 line-height: 60px;
