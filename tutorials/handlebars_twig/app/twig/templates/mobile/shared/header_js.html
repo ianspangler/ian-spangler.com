@@ -1,0 +1,82 @@
+<!-- STORE USER INFO IN A GLOBALLY ACCESSIBLE OBJECT -->
+<script type="text/javascript">
+
+	var app_domain = "{{ constant('DOMAIN') }}";
+	var fb_domain = "{{ constant('FB_DOMAIN') }}";
+	var amazon = "{{ constant('CLOUDFRONT') }}";
+	var fb_app_id = "{{ constant('FB_APP_ID') }}";
+
+	var user_info = {};
+	user_info.user_id = "{{ session.id }}";
+	user_info.username = "{{ session.username }}";
+	user_info.is_admin = "{{ session.is_admin }}";
+	user_info.oauth_id = "{{ session.oauth_id }}";
+	user_info.picture = "{{ session.pic }}";
+	user_info.email = "{{ session.email }}";
+	user_info.displayname = "{{ header_vars.display_name }}";
+
+	
+	var login_success = "{{ get.success }}";
+	var submit_success = "{{ get.submit_success }}";
+	var link_error = "{{ get.link_error }}";
+	var logged_out = "{{ get.loggged_out }}";
+	var signup = "{{ get.signup }}";
+	
+	var reset_token_valid = "{{ session.reset_token_valid }}";
+	
+	var user = "{{ get.user }}";
+	var user_fn = "{{ header_vars.user_fn }}";
+	var user_email = "{{ header_vars.user_email }}";
+	
+	
+	var error = "{{ header_vars.error }}";
+	
+	form = "{{ header_vars.form }}";
+	form_type = "{{ header_vars.form_type }}";
+	form_proposal_id = "{{ header_vars.form_proposal_id }}";
+	form_item_type_id = "{{ header_vars.form_item_type_id }}";
+	form_item_user_id = "{{ header_vars.form_item_user_id }}";
+	form_item_name = "{{ header_vars.form_item_name }}";
+	form_sub_title = "{{ header_vars.form_sub_title }}";
+
+	form_mode = "{{ header_vars.form_mode }}";
+	form_role_id = "{{ header_vars.form_role_id }}";
+	form_role_name = "{{ header_vars.form_role_name }}";
+	form_role_pic = "{{ header_vars.form_role_pic }}";
+	role_names = "{{header_vars.role_names}}";
+	role_ids = "{{header_vars.role_ids}}";
+	role_pics = "{{header_vars.role_pics}}";
+	
+	var like = "{{header_vars.like}}";
+
+	var like_item_id = "{{header_vars.like_item_id}}";
+	var like_item_type_id = "{{header_vars.like_item_type_id}}";
+	var like_item_name = "{{header_vars.like_item_name}}";
+
+	var dislike = "{{ header_vars.dislike }}";
+	var dislike_item_id = "{{ header_vars.dislike_item_id }}";
+	var dislike_item_type_id = "{{ header_vars.dislike_item_type_id }}";
+	var dislike_item_name = "{{header_vars.dislike_item_name}}";
+	
+
+	var follow = "{{ header_vars.follow }}";
+	var followed_user_id = "{{ header_vars.followed_id }}";
+	var followed_user_name = "{{ header_vars.followed_name }}";
+
+	var messaged = "{{ header_vars.messaged }}";
+
+	
+	//STORE item type ids
+    var item_type_ids = {};
+    {% for key, value in header_vars.item_type_ids %}
+        item_type_ids['{{ key }}'] = {{ value }};
+    {% endfor %}
+
+    //STORE item types
+    var item_types = {};
+    {% for value, key in header_vars.item_type_ids %}
+        item_types[{{ key }}] = "{{ value }}";
+    {% endfor %}
+    
+
+</script>

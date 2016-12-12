@@ -1,0 +1,56 @@
+<!-- list items html -->
+{% spaceless %}
+ 
+{% if list_items|length < 1 %}
+    <div class="no_results">No matching results found.</div>
+{% endif %}
+
+{% for item in list_items %}
+
+{% set status_str = "" %} 
+{% if item.status_num != 10 and item.status_num != 0 %} {# check that status is not "Unknown/Other" #}
+   {% set status_str = "status-mark " ~ get_title_status(item.status_num).class %}
+{% endif %}
+
+
+{% if item.pic|length > 0 %}
+	{% set pic_url = constant('CLOUDFRONT') ~ item.pic_dir ~ "/LTN_" ~ item.pic %}
+{% else %}
+	{% if item.list_type == "stories" %}
+        {% set pic_url = "/images/Silhouette_Square_Graphic_light.jpg" %}
+    {% elseif item.list_type == "talent" %}
+        {% set pic_url = "/images/title_silhouette_light_new_wb.jpg" %}
+    {% endif %}
+{% endif %}
+
+	<div class="pure-g story_listing list_item" page="{{ item.setnum }}">
+        <div class="story_listing_row">
+            <a href="/{{ item.list_type }}/{{ item.url_handle }}" title="{{ item.name }} - {{ item.status_label }}"><img src="{{ pic_url }}" alt="{{ item.name }}" width="106" height="106"></a>
+            <div class="pure-u-1-24 story_listing_num">
+                {% if item.count < 100 %}
+                <div class="narrow_book">{{ number_format(item.count) }}</div>
+                {% endif%}        
+            </div>
+            <div class="pure-u-12-24 story_listing_text">
+                <div class="narrow_book">
+                    <a href="/{{ item.list_type }}/{{ item.url_handle }}" title="{{ item.name }} - {{ item.status_label }}">
+                    	<h2 class="heading upper">
+                            {% if status_str != "" %}
+                            <span class="{{status_str}}">{{item.name}}</span>
+                            {%else%}
+                            {{item.name}}
+                            {%endif%}
+                    	</h2></a>
+
+                </div>
+
+                 <p class="subline_txt">{{ item.subline_str }}</p>
+            <div class="sprite_high like_btn_sm"></div><p class="supporters narrow_book">{{ number_format(item.num_supporters) }}</p>
+     
+            </div>
+        </div>
+    </div>
+    
+
+{% endfor %}
+{% endspaceless %}

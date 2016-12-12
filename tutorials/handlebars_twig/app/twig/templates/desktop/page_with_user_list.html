@@ -1,0 +1,63 @@
+<!doctype html>
+<html>
+<head>
+
+	<meta charset="utf-8">	
+	<title>Page with List of Users</title>
+
+	<script type="text/javascript" src="//code.jquery.com/jquery-1.11.0.min.js"></script>
+	
+	<script type="text/javascript" src="/tutorials/handlebars_twig/js/plugins/handlebars-v4.0.2.js"></script>
+
+
+</head>
+ 
+<body>
+	<div class="list_container">
+	
+		{% for item in user_items %}
+			{% include '/shared/user/user_item.html' with {'user_id': item.user_id, 'user_name': item.user_name, 'user_pic': item.user_pic} %}
+		{% endfor %}
+	
+	</div>
+	
+	<input type="button" class="like_button" value="LIKE" />
+
+	<!-- handlebars template for inserting logged-in user -->
+	<script type="text/x-handlebars-template" id="user-item-template">​
+		
+			{% include '/shared/user/user_item.html' with {'user_id': '{{user_id}}', 'user_name': '{{user_name}}', 'user_pic': '{{user_pic}}'} %}
+		
+	</script>
+
+	<script type="text/javascript">
+		
+		$(function() {
+
+			// for Handlebars JS template compilation
+			function getTemplate(template_id) {
+
+				//Get the HTML from the template in the script tag​
+			    var templateScript = $('#'+template_id).html().replace(/[\u200B]/g, '');
+
+			    return Handlebars.compile(templateScript); 
+			}
+
+
+			$('.like_button').click(function(e) {
+				e.preventDefault();
+
+				var template = getTemplate('user-item-template');
+
+				var context = {'user_id': 29, 'user_name': "Ian Spangler", 'user_pic': "/path/to/image4.jpg"};
+				
+				$('.list_container').append(template(context));
+
+			});
+		
+		});
+
+	</script>
+
+</body>
+</​html>

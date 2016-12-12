@@ -1,0 +1,34 @@
+{% spaceless %}
+ 
+     {% for item in list_items %}
+
+        {% include '/shared/user/chat_list_item.html' with { 
+            
+            chat_id: item.chat_id,
+            user_id: item.user.user_id,
+            user_name: item.other.username,
+            user_image: item.other.pic,
+            time_stamp: item.excerpt.created_at, 
+            active: item.active,
+            online: item.other.online,
+            message_clip: item.excerpt.body,
+            excerpt_userid: item.excerpt.user_id,
+            unread_count: item.unread_count
+
+            } 
+        %}
+        
+    {% endfor %}
+
+    {#
+    {% if (set_num * limit) < total_count %}
+
+        <div class="pure-g story_border loading-bar notifications-loading">
+            <div class="pure-u-1 loading_box activity_loading noflex">
+                <a href="#">Loading more...</a>
+            </div>
+        </div>
+    {% endif %}
+    #}
+    
+{% endspaceless %}

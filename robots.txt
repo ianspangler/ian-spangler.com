@@ -1,0 +1,5 @@
+User-agent: *
+Disallow: /tests
+Disallow: /portfolio-2011
+Disallow: /portfolio_site_archive
+Disallow: /isiportfolio-1

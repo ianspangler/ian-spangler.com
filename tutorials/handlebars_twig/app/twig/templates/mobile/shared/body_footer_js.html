@@ -1,0 +1,97 @@
+</div>
+
+
+<nav id="menu">
+    <ul class="smoothtext">
+        <li class="pure-u-1 narrow_book Label">HOME</li>
+        
+        <li class="pure-u-1">
+            {% if session.id|length > 0 %}
+            <a href="/users/{{ session.id }}" onclick="ga('send', 'event', 'mobileMainMenu', 'clickMyProfile', '');"><img src="{{ session.pic_dark }}"><span class="profilemenu">My Profile</span></a>
+        </li>
+        <li class="pure-u-1"><a href="/chat" id="global_messages" onclick="ga('send', 'event', 'mobileMainMenu', 'clickMessages', '');"><div class="sprite_high messages_btn"></div><span>Messages</span>{% if session.unread_messages_count > 0 %}<span class="narrow_book"><span>{{session.unread_messages_count}}</span></span>{% endif %}</a>
+        </li>
+        <li class="pure-u-1"><a href="/notifications" id="global_notifications" onclick="ga('send', 'event', 'mobileMainMenu', 'clickNotifications', '');"><div class="sprite_high notifications_btn"></div><span>Notifications</span>{% if session.notifications_count > 0 %}<span class="narrow_book"><span>{{session.notifications_count}}</span></span>{% endif %}</a>
+        </li>
+        <li class="pure-u-1"><a href="/newsfeed" id="global_newsfeed" onclick="ga('send', 'event', 'mobileMainMenu', 'clickNewsfeed', '');"><div class="sprite_high newsfeed_btn"></div><span>News Feed</span></a>
+        </li>
+
+            {% else %}
+            <a href="/login" id="global_login"><div class="sprite_high silo_btn"></div><span>Log in</span></a>
+        </li>
+            {% endif %}
+        
+
+        <li class="Label pure-u-1 narrow_book">FEATURED</li>
+        <li class="pure-u-1"><a href="/featured-stories" id="global_ft_stories" onclick="ga('send', 'event', 'mobileMainMenu', 'clickFeaturedStories', '');"><div class="sprite_high featured_stories_btn"></div><span>Featured Stories</span></a>
+        </li>
+        <li class="pure-u-1"><a href="/featured-proposals" id="global_ft_proposals" onclick="ga('send', 'event', 'mobileMainMenu', 'clickFeaturedProposals', '');"><div class="sprite_high featured_proposals_btn"></div><span>Featured Casting</span></a>
+        </li>
+        <!--
+        <li class="pure-u-1"><a href="/featured-credits" id="global_ft_credits" onclick="ga('send', 'event', 'mobileMainMenu', 'clickFeaturedCredits', '');"><div class="sprite_high featured_credits_btn"></div><span>Featured Credits</span></a>
+        </li>
+        -->
+        <li class="Label pure-u-1 narrow_book">IN DEVELOPMENT</li>
+        <li class="pure-u-1"><a href="/stories?status=film-in-development" id="global_movies" onclick="ga('send', 'event', 'mobileMainMenu', 'clickMovies', '');"><div class="sprite_high movies_btn"></div><span>Movies</span></a>
+        </li>
+        <li class="pure-u-1"><a href="/stories?status=tv-series-in-development" id="global_tv_shows" onclick="ga('send', 'event', 'mobileMainMenu', 'clickTVShows', '');"><div class="sprite_high tv_shows_btn"></div><span>TV Shows</span></a>
+        </li>
+
+        <li class="Label pure-u-1 narrow_book">BROWSE ALL</li>
+
+        <li class="pure-u-1"><a href="/stories" id="global_stories" onclick="ga('send', 'event', 'mobileMainMenu', 'clickStories', '');"><div class="sprite_high stories_btn"></div><span>Stories</span></a>
+        </li>
+        <li class="pure-u-1"><a href="/actors" id="global_actors" onclick="ga('send', 'event', 'mobileMainMenu', 'clickActors', '');"><div class="sprite_high actors_btn"></div><span>Actors</span></a>
+        </li>
+        <li class="pure-u-1"><a href="/filmmakers" id="global_filmmakers" onclick="ga('send', 'event', 'mobileMainMenu', 'clickFilmmakers', '');"><div class="sprite_high filmmakers_btn"></div><span>Filmmakers</span></a>
+        </li>
+        <!--
+        <li class="pure-u-1"><a href="/acting-credits" id="global_browse_credits" onclick="ga('send', 'event', 'mobileMainMenu', 'clickBrowseCredits', '');"><div class="sprite_high browse_credits_btn"></div><span>Film & TV Credits</span></a>
+        </li>
+        -->
+        <li class="Label pure-u-1 narrow_book">MORE</li>
+
+        <li class="pure-u-1"><a href="http://blog.iflist.com/" target="_blank" id="global_blog" onclick="ga('send', 'event', 'mobileMainMenu', 'clickBlog', '');"><div class="sprite_high blog_btn"></div><span>Blog</span></a>
+        </li>
+       <li class="pure-u-1"><a href="/about" id="global_about" onclick="ga('send', 'event', 'mobileMainMenu', 'clickAbout', '');"><div class="sprite_high about_btn"></div><span>About</span></a>
+        </li>
+        <li class="pure-u-1"><a href="/partners" id="global_partners" onclick="ga('send', 'event', 'mobileMainMenu', 'clickPartners', '');"><div class="sprite_high partners_btn"></div><span>Our Partners</span></a>
+        </li>
+
+        {% if session.id|length > 0 %}
+        <li class="pure-u-1"><a href="/logout" id="global_logout" onclick="ga('send', 'event', 'mobileMainMenu', 'clickLogout', '');"><div class="sprite_high silo_btn"></div><span>Log out</span></a>
+        </li>
+        {% endif %}
+        <span class="pure-u-1 menuborder"></span>
+    </ul>
+</nav>
+
+<!-- FORM FOR POPULATING POST VARS (FOR MOBILE LOGIN) -->
+<form style="display:hidden" action="" method="POST" id="post_form">
+</form>
+	
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+
+<script src="/js/jquery-ui.min.js" type="text/javascript"></script>
+	
+<script src="/min/?f=js/global.js,js/jquery.mmenu.min.all.js,js/scroll_check.js,js/mobile.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+    var is_ie8 = false;
+    var is_ie8or9 = false;
+    var is_ie10 = false;
+    var is_IE = false;
+    /*@cc_on
+        if (/^10/.test(@_jscript_version)) {
+            is_ie10 = true;
+        }
+    @*/
+
+</script>
+  
+
+{% include '/shared/header_js.html' %} 
+{% include '/shared/analyticstracking.html' %} 
+<script type="text/javascript">
+	var device_is_mobile = "{{ device_is_mobile }}";
+</script>

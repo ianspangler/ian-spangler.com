@@ -1,0 +1,39 @@
+
+http://twig.sensiolabs.org/doc/installation.html
+
+
+lmon-MacBook-Pro:lib lmonaco$ curl -s http://getcomposer.org/installer | php
+PHP Warning:  PHP Startup: Unable to load dynamic library '/usr/lib/php/extensions/no-debug-non-zts-20100525/twig.so #For Unix systems' - dlopen(/usr/lib/php/extensions/no-debug-non-zts-20100525/twig.so #For Unix systems, 9): image not found in Unknown on line 0
+
+...
+
+
+lmon-MacBook-Pro:lib lmonaco$ vi composer.json
+lmon-MacBook-Pro:lib lmonaco$ php composer.phar install
+....
+installing dependencies (including require-dev)
+  - Installing twig/twig (v1.16.1)
+    Downloading: 100%         
+
+Writing lock file
+Generating autoload files
+
+lmon-MacBook-Pro:twig lmonaco$ cd ext/twig/
+lmon-MacBook-Pro:twig lmonaco$ /usr/bin/phpize 
+
+...
+
+lmon-MacBook-Pro:twig lmonaco$ make
+....
+
+Build complete.
+Don't forget to run 'make test'.
+
+
+lmon-MacBook-Pro:twig lmonaco$ sudo make install
+Password:
+
+...
+
+Installing shared extensions:     /usr/lib/php/extensions/no-debug-non-zts-20100525/
+lmon-MacBook-Pro:twig lmonaco$ vi /etc/php.ini (add extension anove )

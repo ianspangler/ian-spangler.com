@@ -1,0 +1,9 @@
+<div class="featured_top">
+	{% if credit_item_type == "non_featured" and item_number != "" %}<span class="story_listing_num"><span class="narrow_book">{{item_number}}</span></span>{% endif %}
+	<a href="{{credit_url}}" class="topLineClick"><h2 class="narrow_book {{credit_item_type}} upper status-mark ellipsis-mark">{{talent_name}} <span class="as_lower narrow_light">as</span> {{the_name}}</h2></a>
+
+	{% if movie_name|length > 0 %}
+	<p class="featured_p">{{movie_name}} ({{format_name}}, {{credit_year}})</p>
+	{% endif %}
+
+</div>

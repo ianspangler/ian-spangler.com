@@ -1,0 +1,72 @@
+{% include '/shared/mobile_head.html' %}
+
+{% include '/shared/mobile_head_bottom.html' %}
+
+{#{% include '/shared/body_header.html' %}#}
+
+ 
+<!-- ENTER CONTENT HERE -->
+<body class="graybody">
+ 
+<div class="pure-g noflex mainbody">  
+    {% include '/shared/mobile_header.html' %}
+
+    <div class="pure-g fullwidth_wrapper newsheader">
+        <div class="fullwidth_row">
+            <span class="narrow_light">{% if recipient_name == "" %}{{ new_recipient_name }}{% else %}{{ recipient_name }}{% endif %}</span>
+        </div>
+    </div>
+
+    {% include '/shared/user/chat_body.html' %}
+
+
+<!-- END ENTER CONTENT -->
+
+
+{% include '/shared/body_footer_js.html' %}
+
+<script src="//js.pusher.com/2.2/pusher.min.js"></script>
+
+<script type="text/javascript" src="/min/?f=js/plugins/jquery.expander.min.js,js/trunk8.min.js,js/ScrollManager.js,js/Chat.js"></script> 
+
+
+
+<script type="text/javascript">
+
+    ///var initial_section = "{{ initial_section }}";
+    var chat_total_count = "{{ total_count }}";
+   
+
+    var user_id = "{{ session.id }}";
+    var recipient_id = "{{ recipient_id }}";
+    var recipient_name = "{{ recipient_name }}";
+
+    var new_recipient_id = "{{ new_recipient_id }}";
+    var new_recipient_name = "{{ new_recipient_name }}";
+
+
+    var chat_config = {
+        channel_prefix: "{{ config.channel_prefix }}",
+        send_msg_url:  "{{ config.send_msg_url }}",
+        chat_list_url: "{{ config.chat_list_url }}",
+        history_url: "{{ config.history_url }}",
+        start_session_url: "{{ config.start_session_url }}",
+        auth_url: "{{ config.auth_url }}",
+        app_id: "{{ config.PUSHER_API_KEY }}"
+    };
+
+    var chat_limit = "{{ limit }}";
+    var chat_post_script = "{{ post_script }}";
+    
+    $(function() {
+        {% if action == "start" %} 
+            ChatWindow.init(user_id, new_recipient_id, new_recipient_name, chat_config);
+        {% else %}
+            ChatWindow.init(user_id, recipient_id, recipient_name, chat_config);    
+        {% endif %}
+    });
+    
+
+</script>
+
+{% include '/shared/body_footer.html' %}
