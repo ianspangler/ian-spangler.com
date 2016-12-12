@@ -31,7 +31,7 @@
 		<video controls="controls"  autoplay="autoplay" poster="<?php echo $path . $_GET['title']; ?>.jpg" style="width:100%" title="<?php echo $_GET['title']; ?>">
 			<source src="<?php echo $path . $_GET['title']; ?>.m4v" type="video/mp4" />
 			<source src="<?php echo $path . $_GET['title']; ?>.webm" type="video/webm" />
-			<object type="application/x-shockwave-flash" data="eh5v.files/html5video/flashfox.swf" width="<?php echo $_GET['width']; ?>" height="<?php echo $_GET['height']; ?>" style="position:relative;">
+			<object type="application/x-shockwave-flash" data="<?php echo $path ?>flashfox.swf" width="<?php echo $_GET['width']; ?>" height="<?php echo $_GET['height']; ?>" style="position:relative;">
 			<param name="movie" value="<?php echo $path ?>flashfox.swf" />
 			<param name="allowFullScreen" value="true" />
 			<param name="flashVars" value="autoplay=true&amp;controls=true&amp;fullScreenEnabled=true&amp;posterOnEnd=true&amp;loop=false&amp;poster=<?php echo $path . $_GET['title']; ?>.jpg&amp;src=<?php echo $_GET['title']; ?>.m4v" />
