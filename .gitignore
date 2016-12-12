@@ -17,3 +17,4 @@ wp-content/uploads/*
 /wp-includes/images/.DS_Store
 .DS_Store
 /wp-content/plugins/.DS_Store
+/wp-config.php
