@@ -1,0 +1,63 @@
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+<style type="text/css">
+
+	/* hide from ie on mac */
+	html {
+		height: 100%;
+		overflow: auto;
+	}
+
+	#flashcontent {
+		position: absolute;
+   		 top: 0px;
+   		left: 0px;
+    		height: 100%;
+   		width:  100%;
+	}
+	/* end hide */
+
+	body {
+		height: 100%;
+		margin: 0;
+		padding: 0;
+		font-family:Helvetica, sans-serif;
+	}
+
+
+
+</style>
+
+<script type="text/javascript" src="../js/swfobject.js"></script>
+<script type="text/javascript">
+
+	var thisURL = window.location.toString();
+	var beginIndex = thisURL.indexOf('?videoFile')+11;
+	var endIndex = thisURL.indexOf('&width');
+	//alert(endIndex);
+	var fileName = thisURL.substring(beginIndex, endIndex);
+	
+	beginIndex = thisURL.indexOf('&width')+7;
+	endIndex = thisURL.indexOf('&height');
+	var width = thisURL.substring(beginIndex, endIndex);
+
+	beginIndex = thisURL.indexOf('&height')+8;
+	endIndex = thisURL.length;
+	var height = thisURL.substring(beginIndex, endIndex);
+
+	var flashvars = {};
+	flashvars.videoFile = fileName;
+	flashvars.width = width;
+	flashvars.height = height;
+	var params = {};
+	params.bgcolor = "#000000";
+	params.allowScriptAccess = "always";
+	var attributes = {};
+	attributes.align = "middle";
+	swfobject.embedSWF("videoPlayer.swf", "site", "100%", "100%", "10.0.0", "../expressInstall.swf", flashvars, params, attributes);
+</script>
+</head>
+<body>
+	<div id="site"></div>
+</body>
+</html>
