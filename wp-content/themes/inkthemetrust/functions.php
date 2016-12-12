@@ -321,6 +321,7 @@ add_theme_support( 'custom-background');
 add_theme_support('post-thumbnails');
 
 set_post_thumbnail_size(600, 358, true);
+add_image_size('ttrust_post_thumb_orig', 850, 468, true);
 add_image_size('ttrust_post_thumb_big', 600, 358, true);
 add_image_size('ttrust_post_thumb_small', 150, 150, true);
 add_image_size('ttrust_post_thumb_tiny', 50, 50, true);

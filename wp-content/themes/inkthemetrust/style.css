@@ -1205,6 +1205,16 @@ ul#filterNav {
 	font-size: 2em;
 }
 
+#content ol {
+	margin: 15px 30px;
+}
+
+#content ol li {
+	line-height: 25px;
+	padding-bottom: 15px;
+}
+
+
 /*.clearfix .inside p, .clearfix .inside h3, .clearfix .inside ul {
 	max-width: 900px;
 	margin-left: auto;
@@ -1227,7 +1237,7 @@ ul#filterNav {
 	padding-top: 10px;
 }
 
-.project.box em, .page.box em, .post.box em {
+.project.box em, .page.box em {
 	color: rgba(255,255,255,0.6);
 	font-size: 0.9em;
 	line-height: 1.7em;
@@ -1327,8 +1337,14 @@ a.launch_link:hover {
 	font-family: 'Roboto Condensed', 'Roboto', Arial, Helvetica, sans-serif;
 }
 
+
 .resume_body h3 {
 	padding-bottom: 16px;
+}
+
+#content .box h2 {
+	padding-top: 20px;
+	padding-bottom: 10px;
 }
 
 
@@ -1695,34 +1711,6 @@ a.button, #footer a.button {
 
 /*Lists------------------*/
 
-/*#content ul{
-	margin:  0 0 25px 20px;
-	list-style-type: disc;
-}
-
-#content ul li{
-	margin: 0 0 10px 0;
-	line-height: 1.4em;
-	font-size: .75em;
-
-}
-
-#content ol li{
-	margin: 0 0 10px 0;
-	line-height: 1.4em;
-}
-
-#content ol{
-	margin: 0 0 20px 20px;
-}
-
-#content ul ul, #content ol ul, #content ul ol, #content ol ol {
-	padding-top: 10px;
-}
-
-#content ul ul li, #content ol ul li, #content ul ol li, #content ol ol li{
-	font-size: 1em !important;
-}*/
 
 /*////////////////////////////////////////////////////////////////////
 //  06 - Slideshow
