@@ -54,6 +54,7 @@ Thumbs.db
 *.log
 *.sql
 *.sqlite
+error_log
 
 # ignore compiled files
 *.com
