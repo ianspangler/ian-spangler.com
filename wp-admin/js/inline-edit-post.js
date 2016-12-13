@@ -83,7 +83,7 @@ inlineEditPost = {
 	},
 
 	setBulk : function(){
-		var te = '', type = this.type, c = true;
+		var te = '', type = this.type, tax, c = true;
 		this.revert();
 
 		$( '#bulk-edit td' ).attr( 'colspan', $( 'th:visible, td:visible', '.widefat:first thead' ).length );
@@ -114,9 +114,9 @@ inlineEditPost = {
 
 		// enable autocomplete for tags
 		if ( 'post' === type ) {
-			$( 'tr.inline-editor textarea[data-wp-taxonomy]' ).each( function ( i, element ) {
-				$( element ).wpTagsSuggest();
-			} );
+			// support multi taxonomies?
+			tax = 'post_tag';
+			$('tr.inline-editor textarea[name="tax_input['+tax+']"]').suggest( ajaxurl + '?action=ajax-tag-search&tax=' + tax, { delay: 500, minchars: 2, multiple: true, multipleSep: inlineEditL10n.comma } );
 		}
 		$('html, body').animate( { scrollTop: 0 }, 'fast' );
 	},
@@ -129,9 +129,9 @@ inlineEditPost = {
 			id = t.getId(id);
 		}
 
-		fields = ['post_title', 'post_name', 'post_author', '_status', 'jj', 'mm', 'aa', 'hh', 'mn', 'ss', 'post_password', 'post_format', 'menu_order', 'page_template'];
+		fields = ['post_title', 'post_name', 'post_author', '_status', 'jj', 'mm', 'aa', 'hh', 'mn', 'ss', 'post_password', 'post_format', 'menu_order'];
 		if ( t.type === 'page' ) {
-			fields.push('post_parent');
+			fields.push('post_parent', 'page_template');
 		}
 
 		// add the new edit row with an extra blank row underneath to maintain zebra striping.
@@ -196,7 +196,7 @@ inlineEditPost = {
 				textarea.val(terms);
 			}
 
-			textarea.wpTagsSuggest();
+			textarea.suggest( ajaxurl + '?action=ajax-tag-search&tax=' + taxname, { delay: 500, minchars: 2, multiple: true, multipleSep: inlineEditL10n.comma } );
 		});
 
 		// handle the post status

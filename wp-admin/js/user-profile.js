@@ -260,14 +260,12 @@
 
 			resetToggle();
 
-			if ( $pass1Row.closest( 'form' ).is( '#your-profile' ) ) {
-				// Clear password field to prevent update
-				$pass1.val( '' ).trigger( 'pwupdate' );
-				$submitButtons.prop( 'disabled', false );
-			}
+			// Clear password field to prevent update
+			$pass1.val( '' ).trigger( 'pwupdate' );
+			$submitButtons.prop( 'disabled', false );
 		} );
 
-		$pass1Row.closest( 'form' ).on( 'submit', function () {
+		$pass1Row.closest('form').on( 'submit', function () {
 			updateLock = false;
 
 			$pass1.prop( 'disabled', false );

@@ -240,3 +240,8 @@ class WP_Site_Icon {
 		return $value;
 	}
 }
+
+/**
+ * @global WP_Site_Icon $wp_site_icon
+ */
+$GLOBALS['wp_site_icon'] = new WP_Site_Icon;

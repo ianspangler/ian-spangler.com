@@ -318,7 +318,7 @@
 				topHeight = heights.textTopHeight;
 			}
 
-			// TinyMCE still initializing.
+			// TinyMCE still intializing.
 			if ( ! visual && ! $top.length ) {
 				return;
 			}

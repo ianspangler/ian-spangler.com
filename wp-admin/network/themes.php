@@ -10,6 +10,9 @@
 /** Load WordPress Administration Bootstrap */
 require_once( dirname( __FILE__ ) . '/admin.php' );
 
+if ( ! is_multisite() )
+	wp_die( __( 'Multisite support is not enabled.' ) );
+
 if ( !current_user_can('manage_network_themes') )
 	wp_die( __( 'Sorry, you are not allowed to manage network themes.' ) );
 
@@ -158,9 +161,9 @@ if ( $action ) {
 						wp_nonce_field( 'bulk-themes' );
 
 						if ( 1 == $themes_to_delete ) {
-							submit_button( __( 'Yes, delete this theme' ), '', 'submit', false );
+							submit_button( __( 'Yes, delete this theme' ), 'button', 'submit', false );
 						} else {
-							submit_button( __( 'Yes, delete these themes' ), '', 'submit', false );
+							submit_button( __( 'Yes, delete these themes' ), 'button', 'submit', false );
 						}
 					?>
 				</form>
@@ -168,7 +171,7 @@ if ( $action ) {
 				$referer = wp_get_referer();
 				?>
 				<form method="post" action="<?php echo $referer ? esc_url( $referer ) : ''; ?>" style="display:inline;">
-					<?php submit_button( __( 'No, return me to the theme list' ), '', 'submit', false ); ?>
+					<?php submit_button( __( 'No, return me to the theme list' ), 'button', 'submit', false ); ?>
 				</form>
 			</div>
 				<?php
@@ -192,21 +195,7 @@ if ( $action ) {
 				's' => $s
 			), network_admin_url( 'themes.php' ) ) );
 			exit;
-		default:
-			$themes = isset( $_POST['checked'] ) ? (array) $_POST['checked'] : array();
-			if ( empty( $themes ) ) {
-				wp_safe_redirect( add_query_arg( 'error', 'none', $referer ) );
-				exit;
-			}
-			check_admin_referer( 'bulk-themes' );
-
-			/** This action is documented in wp-admin/network/site-themes.php */
-			$referer = apply_filters( 'handle_network_bulk_actions-' . get_current_screen()->id, $referer, $action, $themes );
-
-			wp_safe_redirect( $referer );
-			exit;
 	}
-
 }
 
 $wp_list_table->prepare_items();
@@ -226,8 +215,8 @@ get_current_screen()->add_help_tab( array(
 
 get_current_screen()->set_help_sidebar(
 	'<p><strong>' . __('For more information:') . '</strong></p>' .
-	'<p>' . __('<a href="https://codex.wordpress.org/Network_Admin_Themes_Screen">Documentation on Network Themes</a>') . '</p>' .
-	'<p>' . __('<a href="https://wordpress.org/support/">Support Forums</a>') . '</p>'
+	'<p>' . __('<a href="https://codex.wordpress.org/Network_Admin_Themes_Screen" target="_blank">Documentation on Network Themes</a>') . '</p>' .
+	'<p>' . __('<a href="https://wordpress.org/support/" target="_blank">Support Forums</a>') . '</p>'
 );
 
 get_current_screen()->set_screen_reader_content( array(

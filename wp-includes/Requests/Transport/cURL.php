@@ -375,9 +375,8 @@ class Requests_Transport_cURL implements Requests_Transport {
 		curl_setopt($this->handle, CURLOPT_URL, $url);
 		curl_setopt($this->handle, CURLOPT_REFERER, $url);
 		curl_setopt($this->handle, CURLOPT_USERAGENT, $options['useragent']);
-		if (!empty($headers)) {
-			curl_setopt($this->handle, CURLOPT_HTTPHEADER, $headers);
-		}
+		curl_setopt($this->handle, CURLOPT_HTTPHEADER, $headers);
+
 		if ($options['protocol_version'] === 1.1) {
 			curl_setopt($this->handle, CURLOPT_HTTP_VERSION, CURL_HTTP_VERSION_1_1);
 		}
@@ -459,7 +458,7 @@ class Requests_Transport_cURL implements Requests_Transport {
 	 * @param string $data Body data
 	 * @return integer Length of provided data
 	 */
-	public function stream_body($handle, $data) {
+	protected function stream_body($handle, $data) {
 		$this->hooks->dispatch('request.progress', array($data, $this->response_bytes, $this->response_byte_limit));
 		$data_length = strlen($data);
 

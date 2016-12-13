@@ -29,12 +29,10 @@ function check_upload_size( $file ) {
 
 	$file_size = filesize( $file['tmp_name'] );
 	if ( $space_left < $file_size ) {
-		/* translators: 1: Required disk space in kilobytes */
 		$file['error'] = sprintf( __( 'Not enough space to upload. %1$s KB needed.' ), number_format( ( $file_size - $space_left ) / KB_IN_BYTES ) );
 	}
 
 	if ( $file_size > ( KB_IN_BYTES * get_site_option( 'fileupload_maxk', 1500 ) ) ) {
-		/* translators: 1: Maximum allowed file size in kilobytes */
 		$file['error'] = sprintf( __( 'This file is too big. Files must be less than %1$s KB in size.' ), get_site_option( 'fileupload_maxk', 1500 ) );
 	}
 
@@ -42,7 +40,7 @@ function check_upload_size( $file ) {
 		$file['error'] = __( 'You have used your space quota. Please delete files before uploading.' );
 	}
 
-	if ( $file['error'] != '0' && ! isset( $_POST['html-upload'] ) && ! wp_doing_ajax() ) {
+	if ( $file['error'] != '0' && ! isset( $_POST['html-upload'] ) && ( ! defined( 'DOING_AJAX' ) || ! DOING_AJAX ) ) {
 		wp_die( $file['error'] . ' <a href="javascript:history.go(-1)">' . __( 'Back' ) . '</a>' );
 	}
 
@@ -68,7 +66,7 @@ function wpmu_delete_blog( $blog_id, $drop = false ) {
 		switch_to_blog( $blog_id );
 	}
 
-	$blog = get_site( $blog_id );
+	$blog = get_blog_details( $blog_id );
 	/**
 	 * Fires before a site is deleted.
 	 *
@@ -90,7 +88,7 @@ function wpmu_delete_blog( $blog_id, $drop = false ) {
 
 	update_blog_status( $blog_id, 'deleted', 1 );
 
-	$current_network = get_network();
+	$current_site = get_current_site();
 
 	// If a full blog object is not available, do not destroy anything.
 	if ( $drop && ! $blog ) {
@@ -98,7 +96,7 @@ function wpmu_delete_blog( $blog_id, $drop = false ) {
 	}
 
 	// Don't destroy the initial, main, or root blog.
-	if ( $drop && ( 1 == $blog_id || is_main_site( $blog_id ) || ( $blog->path == $current_network->path && $blog->domain == $current_network->domain ) ) ) {
+	if ( $drop && ( 1 == $blog_id || is_main_site( $blog_id ) || ( $blog->path == $current_site->path && $blog->domain == $current_site->domain ) ) ) {
 		$drop = false;
 	}
 
@@ -274,8 +272,6 @@ function update_option_new_admin_email( $old_value, $value ) {
 	);
 	update_option( 'adminhash', $new_admin_email );
 
-	$switched_locale = switch_to_locale( get_user_locale() );
-
 	/* translators: Do not translate USERNAME, ADMIN_URL, EMAIL, SITENAME, SITEURL: those are placeholders. */
 	$email_text = __( 'Howdy ###USERNAME###,
 
@@ -319,10 +315,6 @@ All at ###SITENAME###
 	$content = str_replace( '###SITEURL###', network_home_url(), $content );
 
 	wp_mail( $value, sprintf( __( '[%s] New Admin Email Address' ), wp_specialchars_decode( get_option( 'blogname' ) ) ), $content );
-
-	if ( $switched_locale ) {
-		restore_previous_locale();
-	}
 }
 
 /**
@@ -361,8 +353,6 @@ function send_confirmation_on_profile_email() {
 		);
 		update_user_meta( $current_user->ID, '_new_email', $new_user_email );
 
-		$switched_locale = switch_to_locale( get_user_locale() );
-
 		/* translators: Do not translate USERNAME, ADMIN_URL, EMAIL, SITENAME, SITEURL: those are placeholders. */
 		$email_text = __( 'Howdy ###USERNAME###,
 
@@ -398,17 +388,13 @@ All at ###SITENAME###
 		$content = apply_filters( 'new_user_email_content', $email_text, $new_user_email );
 
 		$content = str_replace( '###USERNAME###', $current_user->user_login, $content );
-		$content = str_replace( '###ADMIN_URL###', esc_url( self_admin_url( 'profile.php?newuseremail=' . $hash ) ), $content );
+		$content = str_replace( '###ADMIN_URL###', esc_url( admin_url( 'profile.php?newuseremail='.$hash ) ), $content );
 		$content = str_replace( '###EMAIL###', $_POST['email'], $content);
 		$content = str_replace( '###SITENAME###', get_site_option( 'site_name' ), $content );
 		$content = str_replace( '###SITEURL###', network_home_url(), $content );
 
 		wp_mail( $_POST['email'], sprintf( __( '[%s] New Email Address' ), wp_specialchars_decode( get_option( 'blogname' ) ) ), $content );
 		$_POST['email'] = $current_user->user_email;
-
-		if ( $switched_locale ) {
-			restore_previous_locale();
-		}
 	}
 }
 
@@ -476,10 +462,7 @@ function display_space_usage() {
 		$space .= __( 'MB' );
 	}
 	?>
-	<strong><?php
-		/* translators: Storage space that's been used. 1: Percentage of used space, 2: Total space allowed in megabytes or gigabytes */
-		printf( __( 'Used: %1$s%% of %2$s' ), number_format( $percent_used ), $space );
-	?></strong>
+	<strong><?php printf( __( 'Used: %1$s%% of %2$s' ), number_format( $percent_used ), $space ); ?></strong>
 	<?php
 }
 

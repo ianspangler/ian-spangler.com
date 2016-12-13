@@ -560,8 +560,8 @@
 		} );
 
 		editor.addButton( 'wp_link_remove', {
-			tooltip: 'Remove link',
-			icon: 'dashicon dashicons-editor-unlink',
+			tooltip: 'Remove',
+			icon: 'dashicon dashicons-no',
 			cmd: 'wp_unlink'
 		} );
 

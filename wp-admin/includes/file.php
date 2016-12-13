@@ -77,10 +77,9 @@ $wp_file_descriptions = array(
 function get_file_description( $file ) {
 	global $wp_file_descriptions, $allowed_files;
 
-	$dirname = pathinfo( $file, PATHINFO_DIRNAME );
-
+	$relative_pathinfo = pathinfo( $file );
 	$file_path = $allowed_files[ $file ];
-	if ( isset( $wp_file_descriptions[ basename( $file ) ] ) && '.' === $dirname ) {
+	if ( isset( $wp_file_descriptions[ basename( $file ) ] ) && '.' === $relative_pathinfo['dirname'] ) {
 		return $wp_file_descriptions[ basename( $file ) ];
 	} elseif ( file_exists( $file_path ) && is_file( $file_path ) ) {
 		$template_data = implode( '', file( $file_path ) );
@@ -1261,7 +1260,7 @@ foreach ( (array) $extra_fields as $field ) {
 ?>
 	<p class="request-filesystem-credentials-action-buttons">
 		<button class="button cancel-button" data-js-action="close" type="button"><?php _e( 'Cancel' ); ?></button>
-		<?php submit_button( __( 'Proceed' ), '', 'upgrade', false ); ?>
+		<?php submit_button( __( 'Proceed' ), 'button', 'upgrade', false ); ?>
 	</p>
 </div>
 </form>

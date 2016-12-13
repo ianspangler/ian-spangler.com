@@ -346,8 +346,12 @@ abstract class WP_Image_Editor {
 		}
 
 		if ( $filename ) {
-			$dir = pathinfo( $filename, PATHINFO_DIRNAME );
-			$ext = pathinfo( $filename, PATHINFO_EXTENSION );
+			$ext = '';
+			$info = pathinfo( $filename );
+			$dir  = $info['dirname'];
+
+			if ( isset( $info['extension'] ) )
+				$ext = $info['extension'];
 
 			$filename = trailingslashit( $dir ) . wp_basename( $filename, ".$ext" ) . ".{$new_ext}";
 		}
@@ -371,8 +375,9 @@ abstract class WP_Image_Editor {
 		if ( ! $suffix )
 			$suffix = $this->get_suffix();
 
-		$dir  = pathinfo( $this->file, PATHINFO_DIRNAME );
-		$ext  = pathinfo( $this->file, PATHINFO_EXTENSION );
+		$info = pathinfo( $this->file );
+		$dir  = $info['dirname'];
+		$ext  = $info['extension'];
 
 		$name = wp_basename( $this->file, ".$ext" );
 		$new_ext = strtolower( $extension ? $extension : $ext );

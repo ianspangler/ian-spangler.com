@@ -610,11 +610,6 @@ themes.view.Theme = wp.Backbone.View.extend({
 
 	updateTheme: function( event ) {
 		var _this = this;
-
-		if ( ! this.model.get( 'hasPackage' ) ) {
-			return;
-		}
-
 		event.preventDefault();
 
 		wp.updates.maybeRequestFilesystemCredentials( event );
@@ -871,12 +866,8 @@ themes.view.Preview = themes.view.Details.extend({
 	html: themes.template( 'theme-preview' ),
 
 	render: function() {
-		var self = this,
-			currentPreviewDevice,
-			data = this.model.toJSON(),
-			$body = $( document.body );
-
-		$body.attr( 'aria-busy', 'true' );
+		var self = this, currentPreviewDevice,
+			data = this.model.toJSON();
 
 		this.$el.removeClass( 'iframe-ready' ).html( this.html( data ) );
 
@@ -888,7 +879,8 @@ themes.view.Preview = themes.view.Details.extend({
 		themes.router.navigate( themes.router.baseUrl( themes.router.themePath + this.model.get( 'id' ) ), { replace: true } );
 
 		this.$el.fadeIn( 200, function() {
-			$body.addClass( 'theme-installer-active full-overlay-active' );
+			$( 'body' ).addClass( 'theme-installer-active full-overlay-active' );
+			$( '.close-full-overlay' ).focus();
 		});
 
 		this.$el.find( 'iframe' ).one( 'load', function() {
@@ -898,7 +890,6 @@ themes.view.Preview = themes.view.Details.extend({
 
 	iframeLoaded: function() {
 		this.$el.addClass( 'iframe-ready' );
-		$( document.body ).attr( 'aria-busy', 'false' );
 	},
 
 	close: function() {
@@ -1528,7 +1519,6 @@ themes.view.InstallerSearch =  themes.view.Search.extend({
 
 		$( '.filter-links li > a.current' ).removeClass( 'current' );
 		$( 'body' ).removeClass( 'show-filters filters-applied show-favorites-form' );
-		$( '.drawer-toggle' ).attr( 'aria-expanded', 'false' );
 
 		// Get the themes by sending Ajax POST request to api.wordpress.org/themes
 		// or searching the local cache
@@ -1551,7 +1541,7 @@ themes.view.Installer = themes.view.Appearance.extend({
 		'click .filter-drawer .apply-filters': 'applyFilters',
 		'click .filter-group [type="checkbox"]': 'addFilter',
 		'click .filter-drawer .clear-filters': 'clearFilters',
-		'click .edit-filters': 'backToFilters',
+		'click .filtered-by': 'backToFilters',
 		'click .favorites-form-submit' : 'saveUsername',
 		'keyup #wporg-username-input': 'saveUsername'
 	},
@@ -1627,7 +1617,6 @@ themes.view.Installer = themes.view.Appearance.extend({
 		event.preventDefault();
 
 		$( 'body' ).removeClass( 'filters-applied show-filters' );
-		$( '.drawer-toggle' ).attr( 'aria-expanded', 'false' );
 
 		// Bail if this is already active
 		if ( $el.hasClass( this.activeClass ) ) {
@@ -1647,9 +1636,9 @@ themes.view.Installer = themes.view.Appearance.extend({
 		$( '[data-sort="' + sort + '"]' ).addClass( this.activeClass );
 
 		if ( 'favorites' === sort ) {
-			$( 'body' ).addClass( 'show-favorites-form' );
+			$ ( 'body' ).addClass( 'show-favorites-form' );
 		} else {
-			$( 'body' ).removeClass( 'show-favorites-form' );
+			$ ( 'body' ).removeClass( 'show-favorites-form' );
 		}
 
 		this.browse( sort );
@@ -1697,11 +1686,6 @@ themes.view.Installer = themes.view.Appearance.extend({
 
 		if ( event ) {
 			event.preventDefault();
-		}
-
-		if ( ! tags ) {
-			wp.a11y.speak( l10n.selectFeatureFilter );
-			return;
 		}
 
 		$( 'body' ).addClass( 'filters-applied' );
@@ -1794,22 +1778,22 @@ themes.view.Installer = themes.view.Appearance.extend({
 
 	// Toggle the full filters navigation
 	moreFilters: function( event ) {
-		var $body = $( 'body' ),
-			$toggleButton = $( '.drawer-toggle' );
-
 		event.preventDefault();
 
-		if ( $body.hasClass( 'filters-applied' ) ) {
+		if ( $( 'body' ).hasClass( 'filters-applied' ) ) {
 			return this.backToFilters();
+		}
+
+		// If the filters section is opened and filters are checked
+		// run the relevant query collapsing to filtered-by state
+		if ( $( 'body' ).hasClass( 'show-filters' ) && this.filtersChecked() ) {
+			return this.addFilter();
 		}
 
 		this.clearSearch();
 
 		themes.router.navigate( themes.router.baseUrl( '' ) );
-		// Toggle the feature filters view.
-		$body.toggleClass( 'show-filters' );
-		// Toggle the `aria-expanded` button attribute.
-		$toggleButton.attr( 'aria-expanded', $body.hasClass( 'show-filters' ) );
+		$( 'body' ).toggleClass( 'show-filters' );
 	},
 
 	// Clears all the checked filters

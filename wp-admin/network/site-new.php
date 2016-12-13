@@ -13,6 +13,9 @@ require_once( dirname( __FILE__ ) . '/admin.php' );
 /** WordPress Translation Install API */
 require_once( ABSPATH . 'wp-admin/includes/translation-install.php' );
 
+if ( ! is_multisite() )
+	wp_die( __( 'Multisite support is not enabled.' ) );
+
 if ( ! current_user_can( 'manage_sites' ) )
 	wp_die( __( 'Sorry, you are not allowed to add sites to this network.' ) );
 
@@ -26,8 +29,8 @@ get_current_screen()->add_help_tab( array(
 
 get_current_screen()->set_help_sidebar(
 	'<p><strong>' . __('For more information:') . '</strong></p>' .
-	'<p>' . __('<a href="https://codex.wordpress.org/Network_Admin_Sites_Screen">Documentation on Site Management</a>') . '</p>' .
-	'<p>' . __('<a href="https://wordpress.org/support/forum/multisite/">Support Forums</a>') . '</p>'
+	'<p>' . __('<a href="https://codex.wordpress.org/Network_Admin_Sites_Screen" target="_blank">Documentation on Site Management</a>') . '</p>' .
+	'<p>' . __('<a href="https://wordpress.org/support/forum/multisite/" target="_blank">Support Forums</a>') . '</p>'
 );
 
 if ( isset($_REQUEST['action']) && 'add-site' == $_REQUEST['action'] ) {
@@ -62,14 +65,10 @@ if ( isset($_REQUEST['action']) && 'add-site' == $_REQUEST['action'] ) {
 	);
 
 	// Handle translation install for the new site.
-	if ( isset( $_POST['WPLANG'] ) ) {
-		if ( '' === $_POST['WPLANG'] ) {
-			$meta['WPLANG'] = ''; // en_US
-		} elseif ( wp_can_install_language_pack() ) {
-			$language = wp_download_language_pack( wp_unslash( $_POST['WPLANG'] ) );
-			if ( $language ) {
-				$meta['WPLANG'] = $language;
-			}
+	if ( ! empty( $_POST['WPLANG'] ) && wp_can_install_language_pack() ) {
+		$language = wp_download_language_pack( wp_unslash( $_POST['WPLANG'] ) );
+		if ( $language ) {
+			$meta['WPLANG'] = $language;
 		}
 	}
 
@@ -86,11 +85,11 @@ if ( isset($_REQUEST['action']) && 'add-site' == $_REQUEST['action'] ) {
 	}
 
 	if ( is_subdomain_install() ) {
-		$newdomain = $domain . '.' . preg_replace( '|^www\.|', '', get_network()->domain );
-		$path      = get_network()->path;
+		$newdomain = $domain . '.' . preg_replace( '|^www\.|', '', $current_site->domain );
+		$path      = $current_site->path;
 	} else {
-		$newdomain = get_network()->domain;
-		$path      = get_network()->path . $domain . '/';
+		$newdomain = $current_site->domain;
+		$path      = $current_site->path . $domain . '/';
 	}
 
 	$password = 'N/A';
@@ -126,7 +125,7 @@ if ( isset($_REQUEST['action']) && 'add-site' == $_REQUEST['action'] ) {
 	}
 
 	$wpdb->hide_errors();
-	$id = wpmu_create_blog( $newdomain, $path, $title, $user_id, $meta, get_current_network_id() );
+	$id = wpmu_create_blog( $newdomain, $path, $title, $user_id, $meta, $current_site->id );
 	$wpdb->show_errors();
 	if ( ! is_wp_error( $id ) ) {
 		if ( ! is_super_admin( $user_id ) && !get_user_option( 'primary_blog', $user_id ) ) {
@@ -138,7 +137,7 @@ if ( isset($_REQUEST['action']) && 'add-site' == $_REQUEST['action'] ) {
 			sprintf(
 				/* translators: %s: network name */
 				__( '[%s] New Site Created' ),
-				get_network()->site_name
+				$current_site->site_name
 			),
 			sprintf(
 				/* translators: 1: user login, 2: site url, 3: site name/title */
@@ -198,9 +197,9 @@ if ( ! empty( $messages ) ) {
 			<th scope="row"><label for="site-address"><?php _e( 'Site Address (URL)' ) ?></label></th>
 			<td>
 			<?php if ( is_subdomain_install() ) { ?>
-				<input name="blog[domain]" type="text" class="regular-text" id="site-address" aria-describedby="site-address-desc" autocapitalize="none" autocorrect="off"/><span class="no-break">.<?php echo preg_replace( '|^www\.|', '', get_network()->domain ); ?></span>
+				<input name="blog[domain]" type="text" class="regular-text" id="site-address" aria-describedby="site-address-desc" autocapitalize="none" autocorrect="off"/><span class="no-break">.<?php echo preg_replace( '|^www\.|', '', $current_site->domain ); ?></span>
 			<?php } else {
-				echo get_network()->domain . get_network()->path ?><input name="blog[domain]" type="text" class="regular-text" id="site-address" aria-describedby="site-address-desc"  autocapitalize="none" autocorrect="off" />
+				echo $current_site->domain . $current_site->path ?><input name="blog[domain]" type="text" class="regular-text" id="site-address" aria-describedby="site-address-desc"  autocapitalize="none" autocorrect="off" />
 			<?php }
 			echo '<p class="description" id="site-address-desc">' . __( 'Only lowercase letters (a-z), numbers, and hyphens are allowed.' ) . '</p>';
 			?>

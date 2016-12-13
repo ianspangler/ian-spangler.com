@@ -13,8 +13,8 @@
  * @since 4.2.0
  */
 class WP_Press_This {
+
 	// Used to trigger the bookmarklet update notice.
-	const VERSION = 8;
 	public $version = 8;
 
 	private $images = array();
@@ -267,6 +267,8 @@ class WP_Press_This {
 	 * @return string Source's HTML sanitized markup
 	 */
 	public function fetch_source_html( $url ) {
+		global $wp_version;
+
 		if ( empty( $url ) ) {
 			return new WP_Error( 'invalid-url', __( 'A valid URL was not provided.' ) );
 		}
@@ -274,7 +276,7 @@ class WP_Press_This {
 		$remote_url = wp_safe_remote_get( $url, array(
 			'timeout' => 30,
 			// Use an explicit user-agent for Press This
-			'user-agent' => 'Press This (WordPress/' . get_bloginfo( 'version' ) . '); ' . get_bloginfo( 'url' )
+			'user-agent' => 'Press This (WordPress/' . $wp_version . '); ' . get_bloginfo( 'url' )
 		) );
 
 		if ( is_wp_error( $remote_url ) ) {
@@ -477,6 +479,7 @@ class WP_Press_This {
 			// Embedded Daily Motion videos
 			$src = 'https://www.dailymotion.com/video/' . $src_matches[2];
 		} else {
+			require_once( ABSPATH . WPINC . '/class-oembed.php' );
 			$oembed = _wp_oembed_get_object();
 
 			if ( ! $oembed->get_provider( $src, array( 'discover' => false ) ) ) {
@@ -940,7 +943,7 @@ class WP_Press_This {
 
 		if ( $user_can_assign_terms ) {
 			?>
-			<button type="button" class="button-link tagcloud-link" id="link-post_tag" aria-expanded="false"><?php echo $taxonomy->labels->choose_from_most_used; ?></button>
+			<button type="button" class="button-link tagcloud-link" id="link-post_tag"><?php echo $taxonomy->labels->choose_from_most_used; ?></button>
 			<?php
 		}
 	}
@@ -1187,12 +1190,11 @@ class WP_Press_This {
 	 * @access public
 	 *
 	 * @global WP_Locale $wp_locale
+	 * @global string    $wp_version
 	 * @global bool      $is_IE
 	 */
 	public function html() {
-		global $wp_locale;
-
-		$wp_version = get_bloginfo( 'version' );
+		global $wp_locale, $wp_version;
 
 		// Get data, new (POST) and old (GET).
 		$data = $this->merge_or_fetch_data();
@@ -1312,7 +1314,7 @@ class WP_Press_This {
 	$admin_body_class .= ' branch-' . str_replace( array( '.', ',' ), '-', floatval( $wp_version ) );
 	$admin_body_class .= ' version-' . str_replace( '.', '-', preg_replace( '/^([.0-9]+).*/', '$1', $wp_version ) );
 	$admin_body_class .= ' admin-color-' . sanitize_html_class( get_user_option( 'admin_color' ), 'fresh' );
-	$admin_body_class .= ' locale-' . sanitize_html_class( strtolower( str_replace( '_', '-', get_user_locale() ) ) );
+	$admin_body_class .= ' locale-' . sanitize_html_class( strtolower( str_replace( '_', '-', get_locale() ) ) );
 
 	/** This filter is documented in wp-admin/admin-header.php */
 	$admin_body_classes = apply_filters( 'admin_body_class', '' );
@@ -1515,3 +1517,9 @@ class WP_Press_This {
 		die();
 	}
 }
+
+/**
+ *
+ * @global WP_Press_This $wp_press_this
+ */
+$GLOBALS['wp_press_this'] = new WP_Press_This;

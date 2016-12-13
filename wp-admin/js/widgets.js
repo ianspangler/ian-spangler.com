@@ -354,12 +354,12 @@ wpWidgets = {
 			if ( $target.hasClass('button-primary') ) {
 				self.addWidget( chooser );
 				self.closeChooser();
-			} else if ( $target.hasClass( 'widgets-chooser-cancel' ) ) {
+			} else if ( $target.hasClass('button-secondary') ) {
 				self.closeChooser();
 			}
 		}).on( 'keyup.widgets-chooser', function( event ) {
 			if ( event.which === $.ui.keyCode.ENTER ) {
-				if ( $( event.target ).hasClass( 'widgets-chooser-cancel' ) ) {
+				if ( $( event.target ).hasClass('button-secondary') ) {
 					// Close instead of adding when pressing Enter on the Cancel button
 					self.closeChooser();
 				} else {

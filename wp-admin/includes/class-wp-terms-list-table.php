@@ -151,10 +151,7 @@ class WP_Terms_List_Table extends WP_List_Table {
 	 */
 	protected function get_bulk_actions() {
 		$actions = array();
-
-		if ( current_user_can( get_taxonomy( $this->screen->taxonomy )->cap->delete_terms ) ) {
-			$actions['delete'] = __( 'Delete' );
-		}
+		$actions['delete'] = __( 'Delete' );
 
 		return $actions;
 	}
@@ -316,7 +313,7 @@ class WP_Terms_List_Table extends WP_List_Table {
 
 	/**
 	 * @global string $taxonomy
-	 * @param WP_Term $tag Term object.
+	 * @param object $tag
 	 * @param int $level
 	 */
 	public function single_row( $tag, $level = 0 ) {
@@ -331,20 +328,21 @@ class WP_Terms_List_Table extends WP_List_Table {
 	}
 
 	/**
-	 * @param WP_Term $tag Term object.
+	 * @param object $tag
 	 * @return string
 	 */
 	public function column_cb( $tag ) {
-		if ( current_user_can( 'delete_term', $tag->term_id ) ) {
+		$default_term = get_option( 'default_' . $this->screen->taxonomy );
+
+		if ( current_user_can( get_taxonomy( $this->screen->taxonomy )->cap->delete_terms ) && $tag->term_id != $default_term )
 			return '<label class="screen-reader-text" for="cb-select-' . $tag->term_id . '">' . sprintf( __( 'Select %s' ), $tag->name ) . '</label>'
 				. '<input type="checkbox" name="delete_tags[]" value="' . $tag->term_id . '" id="cb-select-' . $tag->term_id . '" />';
-		}
 
 		return '&nbsp;';
 	}
 
 	/**
-	 * @param WP_Term $tag Term object.
+	 * @param object $tag
 	 * @return string
 	 */
 	public function column_name( $tag ) {
@@ -363,13 +361,13 @@ class WP_Terms_List_Table extends WP_List_Table {
 		 * @see WP_Terms_List_Table::column_name()
 		 *
 		 * @param string $pad_tag_name The term name, padded if not top-level.
-		 * @param WP_Term $tag         Term object.
+		 * @param object $tag          Term object.
 		 */
 		$name = apply_filters( 'term_name', $pad . ' ' . $tag->name, $tag );
 
 		$qe_data = get_term( $tag->term_id, $taxonomy, OBJECT, 'edit' );
 
-		$uri = wp_doing_ajax() ? wp_get_referer() : $_SERVER['REQUEST_URI'];
+		$uri = ( defined( 'DOING_AJAX' ) && DOING_AJAX ) ? wp_get_referer() : $_SERVER['REQUEST_URI'];
 
 		$edit_link = add_query_arg(
 			'wp_http_referer',
@@ -413,9 +411,9 @@ class WP_Terms_List_Table extends WP_List_Table {
 	 * @since 4.3.0
 	 * @access protected
 	 *
-	 * @param WP_Term $tag         Tag being acted upon.
-	 * @param string  $column_name Current column name.
-	 * @param string  $primary     Primary column name.
+	 * @param object $tag         Tag being acted upon.
+	 * @param string $column_name Current column name.
+	 * @param string $primary     Primary column name.
 	 * @return string Row actions output for terms.
 	 */
 	protected function handle_row_actions( $tag, $column_name, $primary ) {
@@ -425,7 +423,9 @@ class WP_Terms_List_Table extends WP_List_Table {
 
 		$taxonomy = $this->screen->taxonomy;
 		$tax = get_taxonomy( $taxonomy );
-		$uri = wp_doing_ajax() ? wp_get_referer() : $_SERVER['REQUEST_URI'];
+		$default_term = get_option( 'default_' . $taxonomy );
+
+		$uri = ( defined( 'DOING_AJAX' ) && DOING_AJAX ) ? wp_get_referer() : $_SERVER['REQUEST_URI'];
 
 		$edit_link = add_query_arg(
 			'wp_http_referer',
@@ -434,7 +434,7 @@ class WP_Terms_List_Table extends WP_List_Table {
 		);
 
 		$actions = array();
-		if ( current_user_can( 'edit_term', $tag->term_id ) ) {
+		if ( current_user_can( $tax->cap->edit_terms ) ) {
 			$actions['edit'] = sprintf(
 				'<a href="%s" aria-label="%s">%s</a>',
 				esc_url( $edit_link ),
@@ -449,7 +449,7 @@ class WP_Terms_List_Table extends WP_List_Table {
 				__( 'Quick&nbsp;Edit' )
 			);
 		}
-		if ( current_user_can( 'delete_term', $tag->term_id ) ) {
+		if ( current_user_can( $tax->cap->delete_terms ) && $tag->term_id != $default_term ) {
 			$actions['delete'] = sprintf(
 				'<a href="%s" class="delete-tag aria-button-if-js" aria-label="%s">%s</a>',
 				wp_nonce_url( "edit-tags.php?action=delete&amp;taxonomy=$taxonomy&amp;tag_ID=$tag->term_id", 'delete-tag_' . $tag->term_id ),
@@ -476,7 +476,7 @@ class WP_Terms_List_Table extends WP_List_Table {
 		 *
 		 * @param array  $actions An array of action links to be displayed. Default
 		 *                        'Edit', 'Quick Edit', 'Delete', and 'View'.
-		 * @param WP_Term $tag    Term object.
+		 * @param object $tag     Term object.
 		 */
 		$actions = apply_filters( 'tag_row_actions', $actions, $tag );
 
@@ -489,7 +489,7 @@ class WP_Terms_List_Table extends WP_List_Table {
 		 *
 		 * @param array  $actions An array of action links to be displayed. Default
 		 *                        'Edit', 'Quick Edit', 'Delete', and 'View'.
-		 * @param WP_Term $tag    Term object.
+		 * @param object $tag     Term object.
 		 */
 		$actions = apply_filters( "{$taxonomy}_row_actions", $actions, $tag );
 
@@ -497,7 +497,7 @@ class WP_Terms_List_Table extends WP_List_Table {
 	}
 
 	/**
-	 * @param WP_Term $tag Term object.
+	 * @param object $tag
 	 * @return string
 	 */
 	public function column_description( $tag ) {
@@ -505,7 +505,7 @@ class WP_Terms_List_Table extends WP_List_Table {
 	}
 
 	/**
-	 * @param WP_Term $tag Term object.
+	 * @param object $tag
 	 * @return string
 	 */
 	public function column_slug( $tag ) {
@@ -514,7 +514,7 @@ class WP_Terms_List_Table extends WP_List_Table {
 	}
 
 	/**
-	 * @param WP_Term $tag Term object.
+	 * @param object $tag
 	 * @return string
 	 */
 	public function column_posts( $tag ) {
@@ -542,7 +542,7 @@ class WP_Terms_List_Table extends WP_List_Table {
 	}
 
 	/**
-	 * @param WP_Term $tag Term object.
+	 * @param object $tag
 	 * @return string
 	 */
 	public function column_links( $tag ) {
@@ -553,7 +553,7 @@ class WP_Terms_List_Table extends WP_List_Table {
 	}
 
 	/**
-	 * @param WP_Term $tag Term object.
+	 * @param object $tag
 	 * @param string $column_name
 	 * @return string
 	 */
@@ -619,8 +619,8 @@ class WP_Terms_List_Table extends WP_List_Table {
 	?>
 
 		<p class="inline-edit-save submit">
-			<button type="button" class="cancel button alignleft"><?php _e( 'Cancel' ); ?></button>
-			<button type="button" class="save button button-primary alignright"><?php echo $tax->labels->update_item; ?></button>
+			<button type="button" class="cancel button-secondary alignleft"><?php _e( 'Cancel' ); ?></button>
+			<button type="button" class="save button-primary alignright"><?php echo $tax->labels->update_item; ?></button>
 			<span class="spinner"></span>
 			<span class="error" style="display:none;"></span>
 			<?php wp_nonce_field( 'taxinlineeditnonce', '_inline_edit', false ); ?>

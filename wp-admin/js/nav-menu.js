@@ -82,15 +82,9 @@ var wpNavMenu;
 				shiftDepthClass : function(change) {
 					return this.each(function(){
 						var t = $(this),
-							depth = t.menuItemDepth(),
-							newDepth = depth + change;
-
-						t.removeClass( 'menu-item-depth-'+ depth )
-							.addClass( 'menu-item-depth-'+ ( newDepth ) );
-
-						if ( 0 === newDepth ) {
-							t.find( '.is-submenu' ).hide();
-						}
+							depth = t.menuItemDepth();
+						$(this).removeClass('menu-item-depth-'+ depth )
+							.addClass('menu-item-depth-'+ (depth + change) );
 					});
 				},
 				childMenuItems : function() {
@@ -406,13 +400,14 @@ var wpNavMenu;
 			} );
 
 			// Links for moving items
-			menu.on( 'click', '.menus-move', function () {
+			menu.on( 'click', '.menus-move', function ( e ) {
 				var $this = $( this ),
 					dir = $this.data( 'dir' );
 
 				if ( 'undefined' !== typeof dir ) {
 					api.moveMenuItem( $( this ).parents( 'li.menu-item' ).find( 'a.item-edit' ), dir );
 				}
+				e.preventDefault();
 			});
 		},
 
@@ -514,8 +509,8 @@ var wpNavMenu;
 		 */
 		refreshAdvancedAccessibility : function() {
 
-			// Hide all the move buttons by default.
-			$( '.menu-item-settings .field-move .menus-move' ).hide();
+			// Hide all links by default
+			$( '.menu-item-settings .field-move a' ).hide();
 
 			// Mark all menu items as unprocessed
 			$( 'a.item-edit' ).data( 'needs_accessibility_refresh', true );
@@ -887,21 +882,17 @@ var wpNavMenu;
 				inputEvent = 'keyup';
 			}
 
-			$( '#nav-menu-meta' ).on( inputEvent, '.quick-search', function() {
-				var $this = $( this );
+			$( '.quick-search' ).on( inputEvent, function() {
+				var t = $(this);
 
-				$this.attr( 'autocomplete', 'off' );
+				if( searchTimer ) clearTimeout(searchTimer);
 
-				if ( searchTimer ) {
-					clearTimeout( searchTimer );
-				}
-
-				searchTimer = setTimeout( function() {
-					api.updateQuickSearchResults( $this );
- 				}, 500 );
-			}).on( 'blur', '.quick-search', function() {
+				searchTimer = setTimeout(function(){
+					api.updateQuickSearchResults( t );
+				}, 500 );
+			}).on( 'blur', function() {
 				api.lastSearch = '';
-			});
+			}).attr('autocomplete','off');
 		},
 
 		updateQuickSearchResults : function(input) {
@@ -1063,13 +1054,6 @@ var wpNavMenu;
 					// select the search bar
 					$('.quick-search', wrapper).focus();
 
-					// Hide controls in the search tab if no items found.
-					if ( ! wrapper.find( '.tabs-panel-active .menu-item-title' ).length ) {
-						wrapper.addClass( 'has-no-menu-item' );
-					} else {
-						wrapper.removeClass( 'has-no-menu-item' );
-					}
-
 					e.preventDefault();
 				} else if ( target.hasClass('select-all') ) {
 					selectAreaMatch = /#(.*)$/.exec(e.target.href);
@@ -1089,38 +1073,34 @@ var wpNavMenu;
 					else if ( e.target.id && -1 != e.target.id.indexOf('submit-') )
 						$('#' + e.target.id.replace(/submit-/, '')).addSelectedToMenu( api.addMenuItemToBottom );
 					return false;
+				} else if ( target.hasClass('page-numbers') ) {
+					$.post( ajaxurl, e.target.href.replace(/.*\?/, '').replace(/action=([^&]*)/, '') + '&action=menu-get-metabox',
+						function( resp ) {
+							if ( -1 == resp.indexOf('replace-id') )
+								return;
+
+							var metaBoxData = $.parseJSON(resp),
+							toReplace = document.getElementById(metaBoxData['replace-id']),
+							placeholder = document.createElement('div'),
+							wrap = document.createElement('div');
+
+							if ( ! metaBoxData.markup || ! toReplace )
+								return;
+
+							wrap.innerHTML = metaBoxData.markup ? metaBoxData.markup : '';
+
+							toReplace.parentNode.insertBefore( placeholder, toReplace );
+							placeholder.parentNode.removeChild( toReplace );
+
+							placeholder.parentNode.insertBefore( wrap, placeholder );
+
+							placeholder.parentNode.removeChild( placeholder );
+
+						}
+					);
+
+					return false;
 				}
-			});
-
-			/*
-			 * Delegate the `click` event and attach it just to the pagination
-			 * links thus excluding the current page `<span>`. See ticket #35577.
-			 */
-			$( '#nav-menu-meta' ).on( 'click', 'a.page-numbers', function() {
-				var $container = $( this ).closest( '.inside' );
-
-				$.post( ajaxurl, this.href.replace( /.*\?/, '' ).replace( /action=([^&]*)/, '' ) + '&action=menu-get-metabox',
-					function( resp ) {
-						var metaBoxData = $.parseJSON( resp ),
-							toReplace;
-
-						if ( -1 === resp.indexOf( 'replace-id' ) ) {
-							return;
-						}
-
-						// Get the post type menu meta box to update.
-						toReplace = document.getElementById( metaBoxData['replace-id'] );
-
-						if ( ! metaBoxData.markup || ! toReplace ) {
-							return;
-						}
-
-						// Update the post type menu meta box with new content from the response.
-						$container.html( metaBoxData.markup );
-					}
-				);
-
-				return false;
 			});
 		},
 
@@ -1206,13 +1186,11 @@ var wpNavMenu;
 			form = document.getElementById('nav-menu-meta'),
 			pattern = /menu-item[(\[^]\]*/,
 			$items = $('<div>').html(resp).find('li'),
-			wrapper = panel.closest( '.accordion-section-content' ),
 			$item;
 
 			if( ! $items.length ) {
 				$('.categorychecklist', panel).html( '<li><p>' + navMenuL10n.noResultsFound + '</p></li>' );
 				$( '.spinner', panel ).removeClass( 'is-active' );
-				wrapper.addClass( 'has-no-menu-item' );
 				return;
 			}
 
@@ -1240,7 +1218,6 @@ var wpNavMenu;
 
 			$('.categorychecklist', panel).html( $items );
 			$( '.spinner', panel ).removeClass( 'is-active' );
-			wrapper.removeClass( 'has-no-menu-item' );
 		},
 
 		removeMenuItem : function(el) {
