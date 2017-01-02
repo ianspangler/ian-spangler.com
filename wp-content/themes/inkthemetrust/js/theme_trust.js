@@ -125,6 +125,7 @@ function projectThumbInit() {
 	//jQuery(".project.small").css("visibility", "visible");	
 	jQuery("#floatingCirclesG").fadeOut("slow");
 
+
 	if (!isMobile()) {
 
 		//rollover thumbs
@@ -143,11 +144,11 @@ function projectThumbInit() {
 			});	
 	}
 
+
 	if (show_intro == 'Y') {
 
 		animateIn(); 
 	} else { 
-
 		showAll(); 
 	}
 
@@ -183,47 +184,42 @@ function animateIn() {
 		jQuery('#logo #s_top').delay(1100).animate({width:0, left:'183px'}, 100);
 		jQuery('#logo #i_right').delay(1260).animate({height:0, top:'183px'}, 300, "easeOutSine");
 
-		jQuery('#logo #subline').delay(1600).fadeOut(600);
+		jQuery('#logo #subline').delay(1500).fadeOut(600);
 
 		//animate in main nav and filter nav
-		jQuery('#mainNav').delay(1600).fadeIn(1000);
+		jQuery('#mainNav').delay(1500).fadeIn(1000);
 		//jQuery('ul#filterNav').delay(1800).fadeIn(1000);
-		jQuery('.filter_wrap').delay(2600).animate({opacity: 1}, 800);
-		jQuery('#content').delay(2600).animate({opacity: 1}, 800);
+		jQuery('.filter_wrap').delay(1500).animate({opacity: 1}, 500);
+		jQuery('#content').delay(1500).animate({opacity: 1}, 500);
 
-		var projects_delay = 2800;
+		var projects_delay = 1500;
 
 	}
 	else { //mobile
 
 		//animate in main sidebar and filter nav
 		///jQuery("#header").delay(200).animate({opacity: 1}, 450, "easeOutSine");
-		jQuery("#header .inside").delay(200).fadeIn(450, "easeOutSine");
-		jQuery('.filter_wrap').delay(800).animate({opacity: 1}, 450, "easeOutSine");
-		jQuery('#content').delay(1600).animate({opacity: 1}, 800);
+		jQuery("#header .inside").fadeIn(450, "easeOutSine");
+		jQuery('.filter_wrap').delay(200).animate({opacity: 1}, 450, "easeOutSine");
+		jQuery('#content').delay(400).animate({opacity: 1}, 500);
 		//jQuery('.filter_wrap').fadeIn(500);
 
-		var projects_delay = 1000;
+		var projects_delay = 400;
 	}
 	
 
 	//animate in widgets and footer
-	jQuery('#sidebar').delay(1600).fadeIn(1000);
-	jQuery('#footer').delay(1800).fadeIn(1000);
-
+	jQuery('#sidebar').delay(1500).fadeIn(600);
+	jQuery('#footer').delay(1500).fadeIn(600);
 
 	//animate in project thumbs 
 	jQuery(".project.small").each(function() {
-
-		//jQuery(this).css('margin-top', (jQuery(this).height()/4)+'px');
-		//jQuery(this).css('margin-left', (jQuery(this).width()/4)+'px');
-		//jQuery(this).css('width', '50%');
 
 		if (jQuery(this).is(':visible')) {
 
 			jQuery(this).delay(projects_delay).animate({opacity: 1}, 300, "easeOutQuad");
 
-			projects_delay += 450;
+			projects_delay += 200;
 		}
 	});
 

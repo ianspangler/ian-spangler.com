@@ -3018,10 +3018,18 @@ p.login_line {
 		display: none !important;
 	}
 
+	.project.small {
+		
+	}
+
 	.project.small img {
 		width: 104%;
 		margin-left: -2%;
+		margin-top: -9%;
+	}
 
+	.project.small .text {
+		display: none;
 	}
 
 	#main #content {
