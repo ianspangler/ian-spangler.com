@@ -1782,7 +1782,7 @@ a.button, #footer a.button {
 
 /* Control Nav */
 .flex-control-nav { margin: 20px auto !important; width: 100% !important; bottom: -15px !important;}
-.flex-control-nav li {margin: 0 0 0 8px !important; display: inline-block !important; zoom: 1; display: inline !important;}
+.flex-control-nav li {margin: 0 0 0 8px !important; display: inline-block !important; zoom: 1;}
 .flex-control-nav li:first-child {margin: 0 !important;}
 .flex-control-nav li a {box-shadow: 0 0 0 !important; width: 10px !important; height: 10px !important; display: block !important; background: rgba(180,180,180,0.4) !important; cursor: pointer; text-indent: -9999px;}
 .flex-control-nav li a:hover {background: rgba(235,235,235,0.7) !important;}
