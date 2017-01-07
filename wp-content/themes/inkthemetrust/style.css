@@ -93,7 +93,7 @@ input[type="submit"]::-webkit-focus-inner {border:0;}
 
 
 .wp-caption {
-	max-width: auto !important;
+	max-width: none !important;
 	width: auto !important;
 }
 
@@ -147,7 +147,7 @@ input[type="submit"]::-webkit-focus-inner {border:0;}
 }
 
 .isotope-hidden.isotope-item {
-	pointer-events: none;
+	/*pointer-events: none;*/
 	z-index: 1;
 }
 
@@ -1755,10 +1755,9 @@ a.button, #footer a.button {
 
 /* Caption style */
 /* IE rgba() hack */
-.flex-caption {background:none; -ms-filter:progid:DXImageTransform.Microsoft.gradient(startColorstr=#4C000000,endColorstr=#4C000000);
-filter:progid:DXImageTransform.Microsoft.gradient(startColorstr=#4C000000,endColorstr=#4C000000); zoom: 1;}
-.flex-caption {display: inline-block; width: auto; padding: 2%; position: absolute; left: 0; bottom: 0; background: rgba(0,0,0,.5); color: #fff; font-size: .9em !important; line-height: 1.3em;}
-.flex-caption p {font-size: .9em !important; margin-bottom: 0;}
+.flex-caption {background:none; zoom: 1;}
+.flex-caption {display: inline-block; width: auto; padding: 2%; position: absolute; left: 0; bottom: 0; background: rgba(0,0,0,.5); color: #fff; font-size: .9em !important; line-height: 1.3em}
+.flex-caption p {font-size: .9em !important; margin-bottom: 0}
 
 /* Direction Nav */
 
@@ -1783,7 +1782,7 @@ filter:progid:DXImageTransform.Microsoft.gradient(startColorstr=#4C000000,endCol
 
 /* Control Nav */
 .flex-control-nav { margin: 20px auto !important; width: 100% !important; bottom: -15px !important;}
-.flex-control-nav li {margin: 0 0 0 8px !important; display: inline-block !important; zoom: 1; *display: inline !important;}
+.flex-control-nav li {margin: 0 0 0 8px !important; display: inline-block !important; zoom: 1; display: inline !important;}
 .flex-control-nav li:first-child {margin: 0 !important;}
 .flex-control-nav li a {box-shadow: 0 0 0 !important; width: 10px !important; height: 10px !important; display: block !important; background: rgba(180,180,180,0.4) !important; cursor: pointer; text-indent: -9999px;}
 .flex-control-nav li a:hover {background: rgba(235,235,235,0.7) !important;}
@@ -2301,7 +2300,6 @@ ul#twitter_update_list li{
 ol#commentslist {
 	margin: 0 0 0 0px;
 	list-style: none;
-	padding: none;
 	padding: 0;
 }
 
@@ -2403,9 +2401,6 @@ p.login_line {
 	position: relative;
 }
 
-#commentBox #respond p {
-	
-}
 
 #commentBox h4 {
 	
@@ -2420,8 +2415,8 @@ p.login_line {
 
 
 #respond form {
-	margin: none;
-	padding: none;
+	margin: 0;
+	padding: 0;
 	position: relative;
 }
 
@@ -3198,7 +3193,4 @@ span.message {
 	}
 
 
-	#commentForm label, #comments label {
-		/*font-size: .8em;*/
-	}
 }
